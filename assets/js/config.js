@@ -96,7 +96,7 @@ window.PORTFOLIO_CONFIG = {
     // (palette / font / layout builder panel). Set to true to bring it back,
     // false to keep it hidden. This is the ONLY line you need to change —
     // the dark/light theme toggle in the navbar keeps working either way.
-    enableCustomizer: false
+    enableCustomizer: true
   },
 
   /* -------------------------------------------------- sections ---------- */
