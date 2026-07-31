@@ -1,0 +1,14 @@
+# Executive Portfolio Template
+# Replace the Sitemap host with your own domain before going live.
+
+User-agent: *
+Allow: /
+
+# Nothing here is private, but there is no value in indexing the raw assets.
+Disallow: /assets/downloads/
+Disallow: /assets/dev/
+Disallow: /assets/tests/
+Disallow: /studio.html
+
+Sitemap: https://surajkumarnavodya.com/sitemap.xml
+Host: surajkumarnavodya.com

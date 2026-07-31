@@ -1,0 +1,266 @@
+/*!
+ * responsive.css
+ * All media queries: 1400 / 1200 / 992 / 768 / 576 / 400px. Loaded after style.css.
+ * Executive Portfolio Template
+ */
+
+@media (min-width:992px) and (max-width:1399px){
+  .navbar .nav-link{font-size:13px;margin:0 1px;padding-left:.35rem;padding-right:.35rem}
+  .navbar-nav{margin-left:.5rem!important;margin-right:.5rem!important}
+}
+@media (max-width:768px){.case{padding:26px 22px}}
+@media (max-width:576px){
+  .cred-grid{grid-template-columns:1fr;column-gap:0}
+  .cred-grid .cred-row{font-size:13.8px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+  /* CSS fallback: if JS IntersectionObserver never fires (CDN offline, blocked JS),
+     this animation ensures reveals become visible after a short delay so content
+     is never permanently hidden. The animation runs once and holds at opacity:1. */
+  .reveal{animation:reveal-fallback 0.7s ease 1.2s both}
+  .reveal.in{animation:none}
+}
+@keyframes reveal-fallback{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:none}
+}
+@media (max-width:768px){
+  
+  .pov-card h3{font-size:21px}
+  .pov-label{font-size:10.5px;letter-spacing:.12em}
+}
+@media (max-width:576px){.rotator .ph{white-space:normal}}
+@media (prefers-reduced-motion:reduce){
+  .telemetry .lane{flex-wrap:wrap;width:auto}
+}
+@media (hover:hover) and (pointer:fine){
+  .kpi-board{transform-style:preserve-3d;will-change:transform;transition:transform .18s ease}
+}
+@media (prefers-reduced-motion:reduce){
+  .pipeline .flow{animation:none}
+  .pipeline .node-pulse{animation:none;opacity:0}
+}
+@media (max-width:576px){.copilot-fab kbd{display:none}}
+@media (prefers-reduced-motion:reduce){.copilot-panel.open{animation:none}}
+@media (max-width:576px){
+  .copilot-panel{right:8px;left:8px;top:auto;bottom:150px;width:auto;transform:none;max-height:min(560px,calc(100vh - 190px))}
+  .copilot-panel.open{animation-name:copin-bottom}
+  
+}
+@media (max-height:640px) and (min-width:577px){
+  .copilot-panel{top:12px;bottom:12px;transform:none;max-height:calc(100vh - 24px)}
+  
+  .copilot-panel.open{animation-name:copin-bottom}
+}
+@media (prefers-reduced-motion:reduce){
+  /* keep a single non-animated line inside the fixed bar */
+  .telemetry .lane{flex-wrap:nowrap;width:max-content}
+  .telemetry,.navbar.fixed-top{transition:none}
+}
+@media (max-width:576px){
+  :root{--tele-h:34px}
+  .telemetry .ti{margin-right:30px}
+}
+@media (max-width:768px){
+  .sec-sub.mb-5{margin-bottom:1.5rem !important}
+  
+}
+@media (min-width:992px){
+  .kpi-board{margin-top:0}
+}
+@media (max-width:400px){
+  .exec-scorecard .sc-track{display:none}
+  .exec-scorecard .val{margin-left:auto}
+}
+@media (min-width:992px){
+  .hero > .container > .row{align-items:stretch}
+  .hero-right{display:flex;flex-direction:column}
+  .hero-right .kpi-board{flex:1 1 auto;display:flex;flex-direction:column}
+  .hero-right .kpi-board > .row{flex:1 1 auto;align-content:space-evenly}
+  /* Reserve two lines for every label so cell bottoms line up */
+  .kpi-lbl{min-height:2.5em}
+}
+@media(max-width:992px){
+.hero h1{font-size:38px}
+}
+@media (max-width:420px){
+  .hero-stat h4{font-size:16px}
+  .hero-stat small{font-size:9.5px}
+  
+  
+  
+}
+@media (max-width:768px){
+  .container.sub-block{margin-top:28px;padding-top:24px}
+}
+@media (min-width:992px) and (max-width:1399px){
+  .navbar .btn-accent{padding:7.45px 13px;font-size:12.5px}
+}
+@media (max-width:991.98px){
+  .navbar .btn-accent{padding:10.85px 18px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .telemetry .tele-rotator .ti{transition:none}
+}
+@media (max-width:768px){
+  .hero .value-statement{font-size:15px;padding-left:12px;margin-bottom:13px}
+}
+@media (max-width:1199px){ .hero h1{font-size:clamp(34px,4.4vw,50px)} }
+@media (max-width:991px){  .hero h1{font-size:clamp(31px,4.6vw,40px)} }
+@media (max-width:767px){  .hero h1{font-size:30px;line-height:1.1;margin-bottom:16px} }
+@media (max-width:479px){  .hero h1{font-size:26px} }
+@media (max-width:991px){  .sec-title{font-size:clamp(26px,4vw,34px)} }
+@media (max-width:767px){  .sub-sec-title{font-size:clamp(21px,4vw,26px)} }
+@media (min-width:992px){
+  .hero > .container > .row.align-items-start{align-items:stretch!important}
+  .hero > .container > .row > .col-lg-7{display:flex;flex-direction:column}
+  .hero .hero-cta{margin-top:auto!important;padding-top:14px}
+}
+@media (max-width:768px){
+  .so-panel{padding:20px 18px}
+  .so-topics{grid-template-columns:1fr;gap:13px}
+  .so-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .so-meta{grid-template-columns:1fr;gap:18px}
+  .so-cta{margin-left:0;width:100%;justify-content:center;margin-top:4px}
+  .so-lede{font-size:14px}
+}
+@media (max-width:576px){
+  .dom{font-size:11.5px;padding:3px 9px}
+}
+@media (max-width:576px){
+  .cta-final{flex-direction:column}
+  .cta-final .cta-primary,
+  .cta-final .cta-secondary{width:100%;justify-content:center;font-size:14.5px}
+}
+@media (max-width:1399px){
+  .executive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .exec-item:not(:nth-child(3n+1))::before{content:none}
+  .exec-item:nth-child(-n+3)::after{content:none}
+  .exec-item:nth-child(even)::before{content:"";position:absolute;left:0;top:14%;bottom:14%;width:1px;background:var(--navy-line-soft)}
+  .exec-item:not(:nth-last-child(-n+2))::after{content:"";position:absolute;bottom:0;left:20px;right:20px;height:1px;background:var(--navy-line-soft)}
+}
+@media (max-width:768px){
+  .executive-grid{grid-template-columns:1fr}
+  
+  .exec-item:nth-child(even)::before{content:none}
+  .exec-item:not(:last-child)::after{content:"";position:absolute;bottom:0;left:8px;right:8px;height:1px;background:var(--navy-line-soft)}
+  .exec-item:last-child::after{content:none}
+}
+@media (max-width:576px){
+  .eyebrow.eyebrow-chip{font-size:9.4px;padding:3px 11px 3px 3px;letter-spacing:.09em}
+  .eyebrow-badge{width:17px;height:17px;font-size:9px}
+}
+@media (max-width:1199px){
+  .kpi-lbl{font-size:10.5px;line-height:1.25}
+  .exec-item{font-size:12.5px}
+  
+  .kpi-cell{gap:11px;padding:13px 11px}
+}
+@media (max-width:575px){
+  .kpi-lbl{font-size:10.5px}
+}
+@media (max-width:575px){
+  .row.g-5{--bs-gutter-x:1.5rem}
+}
+@media (max-width:399px){
+  .kpi-board .row-cols-2 > *{flex:0 0 100%;max-width:100%}
+}
+@media (max-width:420px){
+  .hero-stat .stat-icon{width:38px;height:38px;font-size:18px;border-radius:50%}
+  .kpi-icon{width:38px;height:38px;font-size:17px;border-radius:50%}
+}
+@media (min-width:992px) and (max-width:1199px){
+  .kpi-icon{width:40px;height:40px;font-size:18px}
+  .kpi-cell{gap:10px;padding:13px 10px}
+  .kpi-lbl{font-size:10.2px}
+}
+@media (max-width:575px){
+  .navbar-brand{gap:9px}
+  .brand-avatar{width:29px;height:29px}
+}
+@media (min-width:768px) and (max-width:1399px){
+  .hero-cta{gap:8px}
+  .hero-cta > a{font-size:13.5px;padding-left:10px;padding-right:10px}
+  .hero-cta a[aria-label="LinkedIn profile"]{flex:0 0 48px}
+}
+@media (max-width:767px){
+  .hero-cta{flex-wrap:wrap}
+  .hero-cta > a{flex:1 1 45%}
+  .hero-cta a[aria-label="LinkedIn profile"]{flex:0 0 52px}
+}
+@media (max-width:768px){
+  .hero{padding-top:calc(72px + var(--tele-h))}
+}
+@media (max-width:575px){
+  .hero{padding-top:calc(66px + var(--tele-h))}
+}
+@media (max-width:767px){
+  body{font-size:17px}
+  p{line-height:1.68}
+  .sec-sub{font-size:17.5px;line-height:1.62}
+  /* .lede is the hero body copy — targeting `.hero p` instead would also
+     hit the eyebrow chip and the highlights label. */
+  .hero .lede{font-size:16px;line-height:1.7}
+  .hero .value-statement{font-size:17px;line-height:1.5}
+  .pov-card p,.x-card p{font-size:16px;line-height:1.65}
+  .exec-item{font-size:13.5px}
+  .hero-cta > a{min-height:46px;font-size:15.5px}
+  .navbar .nav-link{padding-top:10px;padding-bottom:10px}
+  section{padding-top:34px}
+  #leadership{padding-top:34px!important}
+}
+@media (max-width:575px){
+  .kpi-lbl{font-size:11.2px;line-height:1.3}
+  .highlights-label{font-size:10px}
+}
+/* ---- Executive Scorecard bars on small phones ----------------------------
+   An earlier rule in this file hides .sc-track below 400px because label +
+   bar + value cannot share one line. Hiding it dropped the whole visual
+   signal, so the row wraps instead: label and value on line 1, bar
+   full-width underneath. This block must stay last in the file. */
+@media (max-width:400px){
+  .exec-scorecard .row-item{flex-wrap:wrap;row-gap:7px;padding:7px 0}
+  .exec-scorecard .sc-label{order:1}
+  .exec-scorecard .val{order:2;margin-left:auto}
+  .exec-scorecard .sc-track{display:block;order:3;flex:0 0 100%;min-width:0;height:4px}
+}
+
+/* ---- Palette picker: six swatches in a row are ~135px wide, which overflows
+        the navbar between 992px and 1199px where the nav links are still
+        inline. Collapse to a 3x2 grid there and on phones — about 62px. ---- */
+@media (max-width:1199px){
+  .palette-picker{
+    display:grid;
+    grid-template-columns:repeat(3,16px);
+    gap:4px;
+    margin-left:6px;
+  }
+  .pal-swatch{width:16px;height:16px}
+}
+@media (max-width:575px){
+  .palette-picker{grid-template-columns:repeat(3,18px);gap:4px}
+  .pal-swatch{width:18px;height:18px}
+}
+@media (max-width:576px){
+  .customizer-toggle{right:10px;bottom:10px}
+  .customizer-panel{right:8px;left:8px;bottom:64px;width:auto}
+  .customizer-row-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .customizer-preset-grid{grid-template-columns:1fr}
+}
+
+
+/* ---- Navbar ---------------------------------------------------------------
+   The menu now collapses at 1200px rather than 992px (navbar-expand-xl).
+   Seven inline links plus the theme toggle, palette picker and CTA did not
+   fit between 992 and 1199px — the container overflowed by 22px even before
+   the picker existed, verified against v1.0.1. Collapsing one breakpoint
+   later removes the overflow instead of shrinking type to hide it.
+   -------------------------------------------------------------------------- */
+@media (max-width:1199px){
+  /* Inside the collapsed menu the picker has room for a single row again. */
+  .palette-picker{display:inline-flex;grid-template-columns:none;gap:5px;margin-left:0}
+  .pal-swatch{width:18px;height:18px}
+}

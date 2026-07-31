@@ -1,0 +1,66 @@
+EXECUTIVE PORTFOLIO TEMPLATE
+Copyright (c) 2026 Suraj Kumar. All rights reserved.
+
+https://surajkumarnavodya.com
+
+
+LICENCE TIERS
+-------------------------------------------------------------------------------
+This template is distributed under one of three licences. The tier you
+purchased is the one that applies to you.
+
+  PERSONAL LICENCE
+    Use on ONE website that represents you personally.
+    You may modify the template freely for that site.
+
+  PROFESSIONAL LICENCE
+    Use on up to FIVE websites, including client work, as a freelancer or
+    independent consultant.
+
+  AGENCY LICENCE
+    Unlimited client projects. One purchase per agency, not per seat.
+
+
+PERMITTED UNDER ALL TIERS
+-------------------------------------------------------------------------------
+  1. Modifying the HTML, CSS and JavaScript for your own or your client's use.
+  2. Using the template on commercial websites.
+  3. Keeping a private copy under version control.
+
+
+NOT PERMITTED UNDER ANY TIER
+-------------------------------------------------------------------------------
+  1. Reselling, redistributing or sublicensing the template, modified or not.
+  2. Including it in another template, theme, starter kit or paid course.
+  3. Publishing it to a public repository, template gallery or marketplace.
+  4. Using the sample content — the biography, case studies, metrics,
+     certifications or photograph of Suraj Kumar. These are illustrative only
+     and are not licensed. Replace them with your own before publishing.
+  5. Removing or obscuring the copyright notices embedded in the source.
+
+
+THIRD-PARTY COMPONENTS
+-------------------------------------------------------------------------------
+These remain the property of their authors under their own licences. Nothing
+here asserts any claim over them.
+
+  Bootstrap 5.3.3 ........... MIT ............ getbootstrap.com
+  Bootstrap Icons 1.11.3 .... MIT ............ icons.getbootstrap.com
+  jQuery 3.7.1 .............. MIT ............ jquery.org/license
+  Inter ..................... SIL OFL 1.1 .... rsms.me/inter
+  Instrument Serif .......... SIL OFL 1.1 .... fonts.google.com
+  JetBrains Mono ............ SIL OFL 1.1 .... jetbrains.com/lp/mono
+
+
+NO WARRANTY
+-------------------------------------------------------------------------------
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE
+USE OF THE SOFTWARE.
+
+
+SUPPORT
+-------------------------------------------------------------------------------
+Installation and customisation questions: surajkumar.navodya@gmail.com

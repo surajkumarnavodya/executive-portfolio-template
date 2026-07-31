@@ -1,0 +1,1732 @@
+/*!
+ * style.css
+ * Layout, components and typography. Source order is significant.
+ * Executive Portfolio Template
+ */
+
+/* ============================================================
+   THEME TOKENS — dark navy / electric blue, glass with restraint
+   ============================================================ */
+/* ============================================================
+   BASE
+   ============================================================ */
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:var(--text-md);line-height:var(--lh-relaxed);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--heading);letter-spacing:-.02em}
+.mono{font-family:var(--font-mono)}
+.text-2{color:var(--text-2)}
+.eyebrow{
+  font-family:var(--font-mono);font-size:12px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:10px;margin-bottom:16px;
+}
+.eyebrow::before{content:"";width:26px;height:1.5px;background:var(--accent)}
+.sec-title{font-size:clamp(28px,3.6vw,40px);font-weight:800;margin-bottom:14px}
+.sec-sub{color:var(--text-2);max-width:640px;font-size:17px}
+/* subtle grid backdrop for the dashboard feel */
+.grid-bg{
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%);
+          mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%);
+  position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
+}
+/* ============================================================
+   NAV
+   ============================================================ */
+.navbar{
+  background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);padding-top:.45rem;padding-bottom:.45rem;
+}
+.navbar-brand{font-family:var(--font-display);color:var(--heading)!important}
+.navbar-brand .dot{color:var(--accent)}
+.navbar .nav-link{color:var(--text-2);font-weight:500;font-size:14.5px;margin:0 4px;white-space:nowrap}
+.navbar .nav-link:hover,.navbar .nav-link.active{color:var(--heading)}
+.theme-toggle{
+  border:1px solid var(--border);background:var(--surface);color:var(--text);
+  border-radius:50%;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;
+}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn-accent{
+  background:var(--accent);border:none;color:var(--heading);font-weight:600;
+  padding:12px 26px;border-radius:var(--radius-sm);
+  transition:transform calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard),box-shadow calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard);
+}
+.btn-accent:hover{color:var(--heading);transform:translateY(-2px);box-shadow:0 10px 26px rgba(var(--accent-rgb),.35)}
+.btn-outline{
+  background:transparent;border:1.5px solid var(--border);color:var(--heading);
+  font-weight:600;padding:12px 26px;border-radius:var(--radius-sm);transition:border-color calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard);
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;padding:130px 0 90px;overflow:hidden;background:var(--bg)}
+/* ---- Hero background gradient ---- */
+.hero-overlay{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(10,18,32,.88) 0%, rgba(10,18,32,.82) 55%, var(--bg) 100%);
+}
+[data-bs-theme="light"] .hero-overlay{
+  background:linear-gradient(180deg, rgba(240,245,252,.92) 0%, rgba(240,245,252,.88) 55%, var(--bg) 100%);
+}
+.hero .status-chip{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--surface);border:1px solid var(--border);border-radius:30px;
+  padding:7px 16px;font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;
+  color:var(--text-2);margin-bottom:26px;
+}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--accent-2);position:relative}
+.pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent-2);opacity:.6;animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{to{transform:scale(1.9);opacity:0}}
+.hero h1{font-size:clamp(38px,5.6vw,64px);font-weight:800;line-height:1.08;margin-bottom:22px}
+.hero h1 .grad{
+  background:linear-gradient(92deg,var(--accent),var(--accent-3));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero .lede{font-size:18.5px;color:var(--text-2);max-width:100%;margin-bottom:36px;text-align:justify;text-justify:inter-word}
+.hero .lede strong{color:var(--heading);font-weight:600}
+/* ---- Hero CTA row: a little more air above the buttons ---- */
+.hero-cta{margin-top:30px;row-gap:12px}
+/* ---- Hero stat strip: colorful icon cards ---- */
+.hero-stats{--bs-gutter-x:.6rem}
+.hero-stat{
+  border-radius:12px;border:none;
+  padding:11px 10px;height:100%;
+  display:flex;align-items:center;gap:9px;text-align:left;
+  box-shadow:0 8px 18px rgba(4,10,26,.22);
+}
+[data-bs-theme="dark"] .hero-stat .stat-icon{
+  flex-shrink:0;width:30px;height:30px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.22);color:var(--heading);font-size:13px;
+}
+[data-bs-theme="dark"] .hero-stat h4{
+  font-size:clamp(16px,1.6vw,20px);line-height:1;margin:0 0 1px;
+  color:var(--heading);white-space:nowrap;
+}
+/* Light-mode fallbacks are defined below to override the dark defaults */
+.hero-stat small{
+  display:block;white-space:nowrap;
+  font-size:clamp(9.5px,.9vw,11px);line-height:1.2;
+  color:rgba(255,255,255,.82);letter-spacing:.005em;
+}
+.hero-stat.s-blue{background:linear-gradient(135deg,var(--hero-blue-start),var(--hero-blue-end))}
+.hero-stat.s-purple{background:linear-gradient(135deg,var(--hero-purple-start),var(--hero-purple-end))}
+.hero-stat.s-teal{background:linear-gradient(135deg,var(--hero-teal-start),var(--hero-teal-end))}
+.hero-stat.s-amber{background:linear-gradient(135deg,var(--hero-amber-start),var(--hero-amber-end))}
+
+/* Light theme overrides for hero stat colours so icons and labels remain
+   readable when the page uses the light colour scheme. These mirror the
+   dark-mode defaults but use theme tokens instead of hard-coded white. */
+[data-bs-theme="light"] .hero-stat .stat-icon{
+  /* lighter translucent surface with dark icon for contrast */
+  background:rgba(2,8,20,.04);
+  color:var(--heading);
+}
+[data-bs-theme="light"] .hero-stat h4{ color:var(--heading); }
+[data-bs-theme="light"] .hero-stat small{ color:var(--text-2); }
+
+/* ============================================================
+   KPI DASHBOARD — glass, restrained
+   ============================================================ */
+.kpi-board{
+  background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:16px 18px;position:relative;z-index:1;
+}
+.kpi-board .board-head{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-2);border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:12px;
+}
+.rag{margin-left:auto;display:inline-flex;align-items:center;gap:7px;color:var(--accent-2);font-weight:600}
+.rag .d{width:8px;height:8px;border-radius:50%;background:var(--accent-2)}
+.kpi-val{font-family:var(--font-display);font-weight:400;font-size:clamp(19px,2.1vw,24px);color:var(--heading);line-height:1.05}
+.kpi-val small{font-size:.5em;color:var(--accent);font-weight:700;vertical-align:4px}
+.kpi-lbl{font-size:11.3px;color:var(--text-2);margin-top:1px;line-height:1.25}
+.kpi-cell{
+  display:flex;align-items:center;gap:10px;
+  padding:11px;height:100%;
+  background:rgba(255,255,255,.02);
+  border:1px solid var(--border);border-radius:11px;
+  transition:border-color .2s ease,transform .2s ease;
+}
+.kpi-cell:hover{border-color:rgba(148,178,224,.32);transform:translateY(-2px)}
+.kpi-icon{
+  flex-shrink:0;width:34px;height:34px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+}
+.kpi-icon.i-blue{background:rgba(var(--accent-rgb),.15);color:var(--accent)}
+.kpi-icon.i-violet{background:rgba(139,107,242,.16);color:var(--violet)}
+.kpi-icon.i-magenta{background:rgba(208,96,196,.16);color:var(--magenta)}
+.kpi-icon.i-green{background:rgba(34,192,122,.15);color:var(--accent-2)}
+.kpi-icon.i-amber{background:rgba(224,166,60,.16);color:var(--amber)}
+/* ============================================================
+   CARDS (shared)
+   ============================================================ */
+.x-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:30px;height:100%;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.x-card:hover{transform:translateY(-4px);border-color:rgba(var(--accent-rgb),.45);box-shadow:var(--shadow)}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:4px 12px;
+  font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.06em;
+}
+.chip .cd{width:7px;height:7px;border-radius:50%;background:currentColor}
+.chip.green{background:rgba(34,192,122,.12);color:var(--accent-2)}
+.chip.amber{background:rgba(224,166,60,.14);color:var(--amber)}
+.chip.blue{background:rgba(var(--accent-rgb),.13);color:var(--accent)}
+.tag{
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--text-2);border:1px solid var(--border);border-radius:5px;padding:3px 9px;display:inline-block;
+}
+/* ============================================================
+   CASE STUDIES — CAR layout
+   ============================================================ */
+.case{border-left:3px solid var(--accent);padding:38px 42px}
+.case .row{--bs-gutter-x:2.2rem}
+.case .car-k{
+  font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:6px;
+}
+.case ul{padding-left:1.15rem;margin-bottom:0}
+.case li{margin-bottom:7px;font-size:15.3px}
+.case li::marker{color:var(--accent)}
+.result-line{
+  background:rgba(34,192,122,.08);border:1px solid rgba(34,192,122,.25);
+  border-radius:10px;padding:14px 18px;font-size:15px;
+}
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.t-card{display:flex;flex-direction:column;padding:32px 30px}
+.t-quote{font-size:34px;color:var(--accent);line-height:1;opacity:.85}
+.t-text{font-size:15px;color:var(--text-2);line-height:1.7;margin:10px 0 22px;flex-grow:1}
+.t-person{display:flex;align-items:center;gap:13px;border-top:1px solid var(--border);padding-top:18px}
+.t-avatar{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  background:rgba(var(--accent-rgb),.14);color:var(--accent);
+}
+.t-person strong{display:block;font-size:14.5px;color:var(--heading)}
+.t-role{font-size:12.5px;color:var(--text-2);font-family:var(--font-mono);letter-spacing:.03em}
+.result-line i{color:var(--accent-2)}
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.timeline{position:relative;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.t-item{position:relative;padding-bottom:44px}
+.t-item:last-child{padding-bottom:0}
+.t-item::before{
+  content:"";position:absolute;left:-31px;top:6px;width:16px;height:16px;border-radius:50%;
+  background:var(--bg);border:3px solid var(--accent);z-index:1;
+}
+.t-item.dev::before{border-color:var(--text-2)}
+.t-when{font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:.06em;margin-bottom:4px}
+.t-item.dev .t-when{color:var(--text-2)}
+.t-role{font-family:var(--font-display);font-weight:400;font-size:18px;color:var(--heading)}
+.t-org{font-size:14px;color:var(--text-2);margin-bottom:10px}
+.t-body{font-size:15px;color:var(--text-2)}
+.t-body strong{color:var(--heading)}
+/* ============================================================
+   CAPABILITIES / SKILLS
+   ============================================================ */
+.skill-pill{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:7px 14px;font-size:13.5px;font-weight:500;color:var(--heading);display:inline-block;margin:0 8px 10px 0;
+}
+.cred-row{
+  display:flex;align-items:center;gap:12px;padding:13px 0;
+  border-bottom:1px dashed var(--border);font-size:15px;
+}
+.cred-row:last-child{border-bottom:none}
+.cred-row .chip{margin-left:auto}
+.cred-row i{color:var(--accent);font-size:17px}
+/* Credentials laid out horizontally so the cards stay short instead of
+   stacking into one tall column. Rows reflow to one column on mobile. */
+.cred-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  column-gap:34px;
+}
+.cred-grid .cred-row{
+  padding:11px 0;
+  font-size:14.4px;
+  align-items:flex-start;
+}
+.cred-grid .cred-row i{margin-top:1px;flex-shrink:0}
+.cred-grid .cred-row > span:not(.chip){line-height:1.4}
+.cred-grid .cred-row .chip{margin-top:1px;flex-shrink:0}
+/* Keep the divider on every row for an even rhythm across columns */
+.cred-grid .cred-row:last-child{border-bottom:1px dashed var(--border)}
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-panel{
+  background:var(--surface-solid);border:1px solid var(--border);border-radius:18px;
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.contact-side{background:linear-gradient(160deg,var(--contact-side-a),var(--contact-side-b));color:var(--text);padding:44px 40px;height:100%}
+[data-bs-theme="light"] .contact-side{background:linear-gradient(160deg,var(--contact-side-a),var(--contact-side-b))}
+[data-bs-theme="dark"] .contact-side h3{color:var(--heading)}
+.contact-side a{color:var(--accent-3);text-decoration:none}
+[data-bs-theme="dark"] .contact-side a:hover{color:var(--heading)}
+[data-bs-theme="light"] .contact-side a:hover{ color:var(--accent) !important; }
+.contact-side .c-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:22px;font-size:15px}
+.contact-side .c-item i{color:var(--accent-3);font-size:18px;margin-top:2px}
+.form-control,.form-select{
+  background:var(--bg-2);border:1px solid var(--border);color:var(--text);
+  border-radius:9px;padding:11px 14px;font-size:15px;
+}
+.form-control:focus,.form-select:focus{background:var(--bg-2);color:var(--text);border-color:var(--accent);box-shadow:0 0 0 .2rem rgba(var(--accent-rgb),.18)}
+.form-label{font-weight:600;font-size:13.5px;color:var(--heading)}
+.invalid-feedback{font-size:12.5px}
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{border-top:1px solid var(--border);padding:34px 0;font-size:13.5px;color:var(--text-2)}
+footer a{color:var(--text-2);text-decoration:none;margin-left:18px}
+footer a:hover{color:var(--accent)}
+/* Inline call-to-action inside the copyright line (no left margin, accented) */
+footer a.footer-cta{margin-left:0;color:var(--accent);border-bottom:1px solid transparent;transition:border-color .18s ease}
+footer a.footer-cta:hover{border-bottom-color:var(--accent)}
+/* ============================================================
+   MOTION — reveals (disabled for reduced-motion users)
+   ============================================================ */
+a:focus-visible,button:focus-visible,.form-control:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+/* ============================================================
+   EDITORIAL TREATMENT — positioning & point-of-view cards
+   Mono category label + large serif statement + muted body.
+   ============================================================ */
+.pov-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:34px 36px;height:100%;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.pov-card:hover{transform:translateY(-4px);border-color:rgba(var(--accent-rgb),.45);box-shadow:var(--shadow)}
+.pov-label{
+  font-family:var(--font-mono);font-size:11.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 14px;
+}
+.pov-label.dim{color:var(--text-2)}
+.pov-card h3{
+  font-family:var(--font-serif);font-weight:400;color:var(--heading);
+  font-size:clamp(22px,2.2vw,30px);line-height:1.12;letter-spacing:-.02em;margin:0 0 12px;
+}
+.pov-card p{font-size:15px;color:var(--text-2);margin:0}
+/* ============================================================
+   TYPE CONSISTENCY — one display voice everywhere
+   Instrument Serif ships regular (400) only, so every heading
+   is normalized to 400 (killing faux-bold) and small headings
+   get a size bump so the serif holds presence at card scale.
+   ============================================================ */
+h1,h2,h3,h4{font-weight:400 !important;letter-spacing:-.02em}
+.sec-title{font-weight:400;letter-spacing:-.025em;font-size:clamp(32px,4.2vw,50px);line-height:1.06}
+.hero h1{font-weight:400;letter-spacing:-.03em}
+.navbar-brand{font-weight:400;letter-spacing:.01em}
+.kpi-val{font-weight:400;letter-spacing:-.02em}
+.kpi-val small{font-family:var(--font-mono);font-weight:600}
+.t-role{font-weight:400;font-size:21px}
+/* Bootstrap size utilities read too small for a 400-weight serif */
+h3.fs-5{font-size:1.45rem !important;line-height:1.15}
+h3.fs-6{font-size:1.22rem !important;line-height:1.2}
+h3.fs-4{font-size:1.7rem !important;line-height:1.12}
+/* Body copy, buttons, chips, labels stay Inter/Mono — bold allowed there */
+.btn,.chip,.tag,.eyebrow,.status-chip{font-family:var(--font-body)}
+.btn-accent,.btn-outline{font-weight:600}
+/* ============================================================
+   DYNAMIC LAYER — scroll progress, hero rotator, telemetry
+   ticker, KPI tilt, agentic pipeline, Portfolio Copilot
+   ============================================================ */
+/* --- Scroll progress bar --- */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:3px;width:0;z-index:2000;
+  background:linear-gradient(90deg,var(--accent),var(--accent-3));
+  box-shadow:0 0 12px rgba(var(--accent-rgb),.55);
+  transition:width .08s linear;pointer-events:none;
+}
+/* --- Hero phrase rotator (grad span cycles value props) --- */
+.rotator{display:inline-block;position:relative}
+.rotator .ph{
+  display:inline-block;opacity:0;position:absolute;left:0;top:0;white-space:nowrap;
+  transform:translateY(12px);transition:opacity .5s ease,transform .5s cubic-bezier(.16,1,.3,1);
+}
+.rotator .ph.on{opacity:1;transform:none;position:relative;white-space:normal}
+/* --- Delivery telemetry ticker --- */
+.telemetry{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--surface);overflow:hidden;position:relative;
+}
+.telemetry .lane{display:flex;width:max-content;animation:tick 46s linear infinite;padding:11px 0}
+.telemetry:hover .lane{animation-play-state:paused}
+.telemetry .ti{
+  display:inline-flex;align-items:center;gap:9px;margin-right:44px;
+  font-family:var(--font-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-2);white-space:nowrap;
+}
+.telemetry .ti b{color:var(--accent);font-weight:600}
+.telemetry .ti::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent-2);flex-shrink:0}
+@keyframes tick{to{transform:translateX(-50%)}}
+/* --- KPI board 3D tilt (hover-capable pointers only) --- */
+/* --- Agentic pipeline --- */
+.pipeline{margin:6px 0 18px}
+.pipeline svg{width:100%;height:auto;display:block}
+.pipeline .flow{stroke:var(--accent);stroke-dasharray:7 9;animation:flow 1.6s linear infinite;opacity:.85}
+.pipeline .node{fill:var(--surface-solid);stroke:var(--accent);stroke-width:1.6}
+.pipeline .node-pulse{fill:var(--accent);transform-origin:center;animation:nodepulse 2.4s ease-out infinite}
+.pipeline text{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;fill:var(--text-2);text-transform:uppercase}
+.pipeline .stage-on text{fill:var(--accent);font-weight:600}
+@keyframes flow{to{stroke-dashoffset:-16}}
+@keyframes nodepulse{0%{opacity:.9;r:4}70%{opacity:0;r:11}100%{opacity:0;r:11}}
+/* --- Portfolio Copilot --- */
+.copilot-fab{
+  position:fixed;right:22px;bottom:22px;z-index:1500;
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--accent),var(--copilot-fab-end));color:var(--heading);border:none;cursor:pointer;
+  border-radius:999px;padding:13px 20px;font-weight:600;font-size:14.5px;font-family:var(--font-body);
+  box-shadow:0 14px 34px rgba(var(--accent-rgb),.45);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.copilot-fab:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(var(--accent-rgb),.55)}
+.copilot-fab .spark{font-size:17px;line-height:1}
+.copilot-fab kbd{
+  font-family:var(--font-mono);font-size:10px;background:rgba(255,255,255,.18);
+  border-radius:5px;padding:2px 6px;border:1px solid rgba(255,255,255,.25);
+}
+.copilot-panel{
+  position:fixed;right:22px;top:auto;bottom:170px;transform:none;z-index:1600;
+  width:min(400px, calc(100vw - 32px));max-height:min(560px, calc(100vh - 210px));
+  display:none;flex-direction:column;overflow:hidden;
+  background:var(--surface-solid);border:1px solid var(--border);border-radius:18px;
+  box-shadow:0 30px 80px rgba(2,8,20,.55);
+}
+.copilot-panel.open{display:flex;animation:copin-bottom .28s cubic-bezier(.16,1,.3,1)}
+@keyframes copin-bottom{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+/* Short viewports: centring would clip the panel, so pin it with safe margins */
+.copilot-head{
+  display:flex;align-items:center;gap:11px;padding:15px 17px;
+  background:linear-gradient(135deg,rgba(var(--accent-rgb),.16),transparent);
+  border-bottom:1px solid var(--border);
+}
+.copilot-head .dot{width:9px;height:9px;border-radius:50%;background:var(--accent-2);position:relative;flex-shrink:0}
+.copilot-head .dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent-2);opacity:.6;animation:pulse 1.8s ease-out infinite}
+.copilot-head b{font-size:14.5px;color:var(--heading);font-family:var(--font-body)}
+.copilot-head small{display:block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.07em;color:var(--text-2)}
+.copilot-close{margin-left:auto;background:none;border:none;color:var(--text-2);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:8px}
+.copilot-close:hover{color:var(--heading);background:var(--surface)}
+.copilot-log{flex:1;overflow-y:auto;padding:15px 17px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin}
+.cmsg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.55}
+.cmsg.bot{background:var(--surface);border:1px solid var(--border);color:var(--text);border-bottom-left-radius:5px;align-self:flex-start}
+[data-bs-theme="dark"] .cmsg.user{background:var(--accent);color:var(--heading);border-bottom-right-radius:5px;align-self:flex-end}
+.cmsg.bot b{color:var(--heading)}
+.cmsg .caret{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:-2px;animation:blinkc .8s steps(1) infinite;margin-left:2px}
+@keyframes blinkc{50%{opacity:0}}
+.copilot-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 17px 12px}
+.copilot-chips button{
+  background:var(--surface);border:1px solid var(--border);color:var(--text-2);cursor:pointer;
+  border-radius:999px;padding:6px 12px;font-size:12px;font-family:var(--font-body);
+  transition:border-color .15s ease,color .15s ease;
+}
+.copilot-chips button:hover{border-color:var(--accent);color:var(--accent)}
+.copilot-input{display:flex;gap:9px;padding:12px 15px;border-top:1px solid var(--border);background:var(--surface)}
+.copilot-input input{
+  flex:1;background:var(--bg-2);border:1px solid var(--border);color:var(--text);
+  border-radius:11px;padding:10px 13px;font-size:14px;font-family:var(--font-body);min-width:0;
+}
+.copilot-input input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 .18rem rgba(var(--accent-rgb),.18)}
+.copilot-input button{
+  background:var(--accent);border:none;color:var(--heading);border-radius:11px;width:44px;flex-shrink:0;
+  font-size:16px;cursor:pointer;transition:background .15s ease;
+}
+.copilot-input button:hover{background:var(--copilot-fab-hover)}
+/* ============================================================
+   TELEMETRY BAR AT TOP — fixed above the navbar, slides away
+   on scroll-down; navbar takes its place with a smooth shift.
+   ============================================================ */
+.telemetry{
+  position:fixed;top:0;left:0;right:0;z-index:1040;
+  height:var(--tele-h);display:flex;align-items:center;
+  border-top:none;
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+  will-change:transform;
+}
+.telemetry .lane{padding:0}
+body.tele-hide .telemetry{transform:translateY(-100%)}
+/* Navbar sits below the bar, then rises when the bar hides */
+.navbar.fixed-top{top:var(--tele-h);transition:top .35s cubic-bezier(.16,1,.3,1)}
+body.tele-hide .navbar.fixed-top{top:0}
+/* Hero clears bar + navbar on load */
+.hero{padding-top:calc(90px + var(--tele-h))}
+html{scroll-padding-top:calc(84px + var(--tele-h))}
+body.tele-hide{scroll-padding-top:84px}
+/* ============================================================
+   COPILOT DOCK — dismissible floating button
+   ============================================================ */
+/* Always on screen from page load; only a deliberate dismiss hides it. */
+.copilot-dock{position:fixed;right:22px;top:auto;bottom:104px;transform:none;z-index:1500}
+.copilot-dock .copilot-fab{position:static}
+.copilot-dismiss{
+  position:absolute;top:-9px;right:-9px;width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface-solid);color:var(--text-2);
+  border:1px solid var(--border);border-radius:50%;cursor:pointer;
+  font-size:16px;line-height:1;padding:0;
+  box-shadow:0 4px 12px rgba(2,8,20,.4);
+  transition:color .15s ease,border-color .15s ease,transform .15s ease;
+}
+.copilot-dismiss:hover{color:var(--heading);border-color:var(--accent);transform:scale(1.08)}
+.copilot-dock[hidden]{display:none}
+/* --- Leadership vision statement --- */
+.vision-quote{
+  font-family:var(--font-display);font-size:clamp(19px,2vw,24px);font-style:italic;
+  color:var(--heading);line-height:1.45;max-width:56rem;
+  border-left:3px solid var(--accent);padding-left:20px;margin:18px 0 14px;
+}
+/* --- Case architecture stack line --- */
+.case-stack{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-2);margin:10px 0 0;
+}
+.case-stack b{color:var(--accent);font-weight:600}
+/* --- Skills matrix --- */
+.skill-cat .skill-pill{margin:0 6px 8px 0;display:inline-block}
+.skill-cat .learn{font-style:normal;color:var(--accent-3,#e0a63c);font-size:.85em}
+/* --- Timeline: aspirational next-phase item --- */
+.t-item.next{border-left-style:dashed}
+.t-item.next::before{background:transparent;border:2px dashed var(--accent)}
+.t-item.next .t-when{color:var(--accent)}
+/* --- Contact quick form --- */
+.c-form input,.c-form textarea{
+  width:100%;background:var(--bg-2);border:1px solid var(--border);color:var(--text);
+  border-radius:10px;padding:10px 13px;font-size:14px;font-family:var(--font-body);
+  margin-bottom:10px;resize:vertical;
+}
+.c-form input:focus,.c-form textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 .18rem rgba(var(--accent-rgb),.16)}
+.cf-note{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;color:var(--text-2);margin:8px 0 0;text-align:center}
+/* ============================================================
+   SPACING TIGHTENING — sections were running too airy
+   ============================================================ */
+.sec-sub.mb-5{margin-bottom:2rem !important}
+.sec-title{margin-bottom:10px}
+.eyebrow{margin-bottom:12px}
+.vision-quote{margin:14px 0 12px}
+.timeline .t-item{padding-bottom:30px}
+.hero{padding-bottom:64px}
+/* --- KPI dashboard sits higher, closer to the headline --- */
+/* ============================================================
+   EXECUTIVE SCORECARD — delivery health at a glance
+   Status dots are CSS (not emoji) so they inherit the theme,
+   stay crisp at any zoom, and never read out to screen readers.
+   ============================================================ */
+.exec-scorecard{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px 18px;
+  margin-bottom:12px;
+}
+.exec-scorecard .sc-head{
+  display:flex;align-items:center;gap:8px;
+  margin:0 0 11px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+.exec-scorecard .sc-head i{color:var(--accent);font-size:13px}
+.exec-scorecard h6{
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--text);
+  margin:0;
+}
+.exec-scorecard .sc-status{
+  margin-left:auto;
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:10px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:var(--accent-2);white-space:nowrap;
+}
+.exec-scorecard .sc-status .d{
+  width:6px;height:6px;border-radius:50%;background:var(--accent-2);
+  box-shadow:0 0 0 3px rgba(34,192,122,.18);
+  flex-shrink:0;
+}
+.exec-scorecard .row-item{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:6px 0;
+  font-size:13.5px;
+  line-height:1.25;
+}
+.exec-scorecard .sc-label{
+  display:flex;align-items:center;gap:8px;color:var(--text);
+  flex:0 0 auto;min-width:0;
+  white-space:nowrap;              /* keep two-word metrics on one line */
+}
+.exec-scorecard .sc-dot{
+  width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  background:var(--accent-2);
+  box-shadow:0 0 0 3px rgba(34,192,122,.16);
+}
+.exec-scorecard .sc-track{
+  display:block;                   /* spans are inline by default */
+  flex:1 1 auto;min-width:18px;
+  height:5px;border-radius:5px;
+  background:rgba(148,178,224,.12);
+  overflow:hidden;position:relative;
+}
+.exec-scorecard .sc-fill{
+  display:block;                   /* width/height need a block box */
+  height:100%;border-radius:5px;
+  background:linear-gradient(90deg,var(--accent-2),var(--accent-2-3));
+  width:0;
+}
+.exec-scorecard .val{
+  margin-left:0;
+  flex:0 0 auto;
+  font-weight:700;
+  font-size:12.5px;
+  color:var(--heading);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  text-align:right;
+  min-width:40px;
+}
+/* Very narrow screens: drop the bar rather than wrap the label */
+/* ============================================================
+   HERO COLUMN ALIGNMENT — both columns finish on the same line,
+   and every KPI row sits on a shared baseline regardless of
+   whether its label runs to one line or two.
+   ============================================================ */
+.executive-ribbon{
+background:rgba(255,255,255,.03);
+border:1px solid var(--border);
+border-radius:12px;
+padding:14px 18px;
+margin-top:20px;
+}
+.executive-grid{
+display:grid;
+grid-template-columns:repeat(3,minmax(220px,1fr));
+gap:14px 32px;
+align-items:start;
+}
+.exec-item{
+display:flex;align-items:flex-start;gap:10px;
+text-align:left;
+font-family:var(--font-body);
+font-size:13px;
+color:var(--text-2);
+line-height:1.35;
+}
+.exec-item b{
+color:var(--heading);
+font-weight:800;
+letter-spacing:-.01em;
+-webkit-font-smoothing:antialiased;
+font-variant-numeric:tabular-nums;
+}
+.exec-item i{
+flex-shrink:0;width:24px;height:24px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:12px;margin-top:-1px;
+}
+.exec-item.i-green i{background:rgba(34,192,122,.16);color:var(--accent-2)}
+.exec-item.i-violet i{background:rgba(139,107,242,.18);color:var(--exec-violet)}
+.exec-item.i-amber i{background:rgba(224,166,60,.18);color:var(--amber)}
+.executive-ribbon strong{color:var(--heading)}
+.hero-cta{margin-top:12px!important}
+.hero{padding-bottom:6px!important}
+/* Leadership section sat only 32px below the hero, so the LEADERSHIP
+   eyebrow read as part of the hero. Opened up to give it a clear break. */
+#leadership{padding-top:72px!important}
+/* Global paragraph justification */
+p, .text-2, .sec-sub, .lede, .t-text, .t-body, .case p,
+.pov-card p, .result-line, .contact-side p, .x-card p{
+  text-align:justify;
+  text-justify:inter-word;
+}
+/* Executive top ribbon theme */
+.telemetry{
+  background:var(--tele-bg);
+  border-top:none;
+  border-bottom:2px solid var(--tele-border);
+  color:var(--tele-text);
+}
+.telemetry .lane{
+  animation:tick 55s linear infinite;
+  display:flex;
+  align-items:center;
+  gap:48px;
+  padding:0 18px;
+}
+.telemetry .ti{
+  font-family:var(--font-mono);
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--tele-text);
+}
+.telemetry .ti::before{display:none}
+.telemetry .ti b{color:var(--tele-accent);font-weight:800}
+/* ============================================================================
+   SITE OVERRIDES — single consolidated block.
+
+   This file previously carried four separate trailing style blocks. Because
+   same-specificity CSS is resolved by SOURCE ORDER, rules added to an earlier
+   block were silently beaten by later ones — that caused four real bugs
+   (mobile KPI icon size, section padding, the 992-1199px badge step-down,
+   and the CTA row layout).
+
+   They are now merged in their original order, so rendering is unchanged.
+   ADD ANY NEW RULE AT THE VERY BOTTOM, under the marker at the end.
+   ============================================================================ */
+/* ---------- section executive-v3-enhancements ---------- */
+.hero h1{font-size:clamp(40px,4.6vw,60px);line-height:1.04}
+.hero .lede{font-size:15px;max-width:92%;margin-bottom:18px;line-height:1.6}
+.executive-ribbon{padding:12px 16px;margin-top:12px}
+.exec-scorecard,.kpi-board{border-radius:14px}
+.btn-accent{padding:18px 30px;border-radius:11px;font-weight:700}
+.btn-outline{padding:18px 22px;border-radius:11px}
+section{padding:48px 0}
+.x-card,.pov-card{padding:22px}
+p{line-height:1.6}
+/* ---------- section hd-bold-metrics ---------- */
+/* ============================================================
+   METRIC TYPOGRAPHY — numbers read as bold sans data, not thin
+   serif. Overrides the global 400-weight display normalization
+   so every figure stays crisp and legible at any zoom.
+   ============================================================ */
+.hero-stat h4,
+.kpi-val,
+.exec-scorecard .val{
+  font-family:var(--font-body) !important;
+  font-weight:800 !important;
+  letter-spacing:-.01em;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  font-variant-numeric:tabular-nums;
+}
+/* --- Hero stat cards: 10% smaller box, larger icon badge --- */
+.hero-stat{
+  padding:18px 12px;gap:9px;
+  max-width:169px;margin-inline:auto;
+  min-height:86px;align-items:center;
+}
+.hero-stat .stat-icon{
+  width:44px;height:44px;font-size:21px;border-radius:50%;
+  background:rgba(255,255,255,.26);
+}
+[data-bs-theme="dark"] .hero-stat h4{font-size:clamp(17px,1.7vw,21.5px);margin:0 0 1px;color:var(--heading)}
+[data-bs-theme="light"] .hero-stat h4{ color:var(--heading) !important; }
+.hero-stat small{font-size:clamp(9.5px,.9vw,10.5px);font-weight:600;color:rgba(255,255,255,.92)}
+/* --- Steering snapshot: taller cells, navy panel --- */
+.kpi-cell{padding:17px 14px;gap:12px;min-height:94px;align-items:center}
+.kpi-icon{width:36px;height:36px;font-size:16px}
+.kpi-val{font-size:clamp(20px,2.2vw,25px);line-height:1.05}
+.kpi-val small{
+  font-family:var(--font-body) !important;
+  font-weight:700 !important;font-size:.56em;vertical-align:2px;
+}
+.kpi-lbl{font-size:12px;color:var(--text);opacity:.86;line-height:1.3}
+/* Navy blue panel — solid instead of translucent glass, so the board
+   reads clearly against the hero background. */
+[data-bs-theme="dark"] .kpi-board{
+  background:linear-gradient(180deg,var(--navy-panel-a) 0%, var(--navy-panel-b) 100%);
+  backdrop-filter:none;-webkit-backdrop-filter:none;
+  border-color:rgba(96,146,224,.30);
+  box-shadow:0 20px 48px rgba(2,8,20,.58);
+}
+[data-bs-theme="dark"] .kpi-board .board-head{
+  border-bottom-color:rgba(96,146,224,.26);
+  color:#cfe0f7;
+}
+[data-bs-theme="dark"] .kpi-cell{
+  background:var(--navy-cell);
+  border-color:rgba(108,158,232,.24);
+}
+[data-bs-theme="dark"] .kpi-cell:hover{
+  background:var(--navy-cell-hi);
+  border-color:rgba(124,178,255,.46);
+}
+[data-bs-theme="dark"] .kpi-lbl{color:#c3d4ec;opacity:1}
+[data-bs-theme="dark"] .kpi-val{color:var(--heading)}
+/* --- Executive scorecard: bolder values and labels --- */
+.exec-scorecard .val{font-size:14px}
+.exec-scorecard .sc-label{font-weight:600;color:var(--text)}
+.exec-scorecard .row-item{font-size:14px}
+.exec-scorecard h6{color:var(--heading);font-weight:700}
+.kpi-board .board-head{color:var(--text);font-weight:600}
+/* ---------- section merged-section-structure ---------- */
+/* ============================================================
+   MERGED SECTIONS — six top-level destinations, each holding
+   one or two content blocks. The second block in a merged
+   section is separated by a rule + sub-heading rather than by
+   a whole new section, so the nav stays short.
+   ============================================================ */
+.container.sub-block{
+  margin-top:40px;
+  padding-top:34px;
+  border-top:1px solid var(--border);
+}
+.sub-sec-title{
+  font-family:var(--font-display);
+  font-weight:400 !important;
+  letter-spacing:-.02em;
+  font-size:clamp(25px,3vw,34px);
+  line-height:1.1;
+  color:var(--heading);
+  margin:0 0 10px;
+}
+.eyebrow.dim-eyebrow{color:var(--text-2)}
+.eyebrow.dim-eyebrow::before{background:var(--text-2);opacity:.6}
+/* ============================================================
+   NAVBAR CTA — the top-right "Let's talk" button inherits the
+   tall hero button padding, which oversizes the nav bar. Scope
+   it back down so it sits level with the nav links.
+   ============================================================ */
+.navbar .btn-accent{
+  padding:8.6px 16px;
+  border-radius:9px;
+  font-size:13.5px;
+  font-weight:600;
+  line-height:1.35;
+}
+.navbar .btn-accent:hover{transform:none;box-shadow:0 6px 16px rgba(var(--accent-rgb),.3)}
+/* ============================================================
+   TOP RIBBON — rotator instead of marquee
+   One achievement at a time keeps the bar calm while still
+   cycling through everything. Pauses on hover and when the
+   tab is hidden.
+   ============================================================ */
+.telemetry .lane.tele-rotator{
+  animation:none !important;
+  position:relative;
+  width:100%;
+  height:100%;
+  gap:0;
+  padding:0 16px;
+  justify-content:center;
+  overflow:hidden;
+}
+.telemetry .tele-rotator .ti{
+  position:absolute;
+  left:50%;
+  top:50%;
+  margin-right:0;
+  opacity:0;
+  transform:translate(-50%,calc(-50% + 9px));
+  transition:opacity .45s ease,transform .45s ease;
+  pointer-events:none;
+}
+.telemetry .tele-rotator .ti.on{
+  opacity:1;
+  transform:translate(-50%,-50%);
+  pointer-events:auto;
+}
+/* ============================================================
+   EXECUTIVE VALUE STATEMENT — the one-line business promise
+   sitting between the headline and the detailed lede.
+   ============================================================ */
+.hero .value-statement{
+  font-size:clamp(16px,1.5vw,19px);
+  font-weight:500;
+  line-height:1.5;
+  color:var(--heading);
+  max-width:62ch;
+  margin:0 0 16px;
+  padding-left:15px;
+  border-left:3px solid var(--accent);
+  text-align:justify;
+  text-justify:inter-word;
+}
+/* ============================================================
+   HEADLINE SCALE — the serif display is the signature at desktop
+   width, but it should step back on smaller screens so it does
+   not dominate the rest of the hero.
+   ============================================================ */
+/* ============================================================
+   HERO BOTTOM ALIGNMENT — the CTA row is pushed to the bottom of
+   the left column so it finishes level with the Steering Snapshot
+   on the right, instead of floating mid-column.
+   ============================================================ */
+/* ============================================================
+   STACK OVERFLOW PANEL — public SQL Server answers as engineering
+   credibility. Orange is borrowed only for the mark so the panel
+   still reads as part of the site, not as a vendor badge.
+   ============================================================ */
+.so-panel{
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  border-left:3px solid #e8873a;
+  border-radius:var(--radius);
+  padding:26px 28px;
+}
+.so-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.so-mark{
+  flex-shrink:0;width:44px;height:44px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(232,135,58,.14);color:#e8873a;font-size:22px;
+}
+.so-title{
+  font-family:var(--font-display);font-weight:400!important;
+  letter-spacing:-.02em;font-size:clamp(20px,2.2vw,26px);
+  line-height:1.15;color:var(--heading);margin:0;
+}
+.so-cta{margin-left:auto}
+.so-lede{
+  font-size:14.6px;color:var(--text-2);line-height:1.6;
+  margin:16px 0 20px;max-width:78ch;
+}
+.so-topics{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px 26px;
+}
+.so-topic{display:flex;align-items:flex-start;gap:12px}
+.so-topic i{
+  flex-shrink:0;width:30px;height:30px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(var(--accent-rgb),.13);color:var(--accent);font-size:14px;margin-top:2px;
+}
+.so-topic strong{
+  display:block;font-size:14px;font-weight:700;
+  color:var(--heading);margin-bottom:2px;letter-spacing:-.005em;
+}
+.so-topic span{display:block;font-size:13.2px;color:var(--text-2);line-height:1.5}
+.so-topic code{
+  font-family:var(--font-mono);font-size:.92em;
+  background:rgba(148,178,224,.12);border-radius:4px;padding:1px 5px;color:var(--text);
+}
+.so-stats{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;margin-top:22px;padding-top:20px;
+  border-top:1px solid var(--border);
+}
+.so-stat b{
+  display:block;font-family:var(--font-body);font-weight:800;
+  font-size:clamp(17px,1.8vw,21px);color:var(--heading);
+  letter-spacing:-.01em;line-height:1.1;
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+.so-stat span{
+  display:block;font-size:11.6px;color:var(--text-2);
+  margin-top:3px;line-height:1.3;
+}
+.so-foot{
+  font-size:13.4px;color:var(--text-2);line-height:1.55;
+  margin:18px 0 0;padding-top:16px;border-top:1px dashed var(--border);
+}
+.so-foot::before{
+  content:'';display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--accent-2);margin-right:9px;vertical-align:2px;
+}
+/* --- tags + badges footer grid --- */
+.so-meta{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px 32px;
+  margin-top:20px;padding-top:18px;border-top:1px solid var(--border);
+}
+.so-meta-label{
+  font-family:var(--font-mono);font-size:10.5px;font-weight:600;
+  letter-spacing:.11em;text-transform:uppercase;
+  color:var(--text-2);margin:0 0 10px;
+}
+.so-tag-row{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:6px 0;
+}
+.so-tag{
+  font-family:var(--font-mono);font-size:11.5px;font-weight:600;
+  background:rgba(var(--accent-rgb),.13);color:var(--accent);
+  border-radius:5px;padding:3px 9px;white-space:nowrap;
+}
+.so-tag-fig{
+  font-size:12.4px;color:var(--text-2);
+  font-variant-numeric:tabular-nums;
+}
+.so-badge-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.so-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--border);border-radius:20px;
+  padding:4px 11px;font-size:12.2px;color:var(--text-2);white-space:nowrap;
+}
+.so-badge b{
+  font-weight:800;color:var(--heading);
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+.so-badge .bdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.so-badge.gold .bdot{background:var(--badge-gold)}
+.so-badge.silver .bdot{background:var(--badge-silver)}
+.so-badge.bronze .bdot{background:var(--badge-bronze)}
+.so-badge-note{
+  font-size:12.2px;color:var(--text-2);line-height:1.5;margin:11px 0 0;
+}
+/* ============================================================
+   HERO DOMAIN STRIP — the domain list pulled out of the lede so
+   breadth scans as evidence instead of disappearing into prose.
+   ============================================================ */
+.domain-strip{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin:0 0 4px;
+}
+.dom-label{
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-2);margin-right:2px;
+}
+.dom{
+  font-size:12.4px;font-weight:600;color:var(--text);
+  background:rgba(148,178,224,.10);
+  border:1px solid var(--border);
+  border-radius:20px;padding:3px 11px;white-space:nowrap;
+}
+[data-bs-theme="light"] .dom{background:var(--surface)}
+/* ============================================================
+   FINAL CTA — one primary action, one secondary, LinkedIn
+   demoted to a text link so the next step is unambiguous.
+   ============================================================ */
+.cta-final{display:flex;flex-wrap:wrap;gap:12px;align-items:stretch}
+.cta-final .cta-primary{
+  font-size:15.5px;
+  padding:16px 30px;
+  box-shadow:0 8px 24px rgba(var(--accent-rgb),.28);
+}
+.cta-final .cta-secondary{padding:16px 24px}
+.cta-alt{font-size:13.6px;color:var(--text-2);margin:0}
+.cta-alt a{color:var(--accent);text-decoration:none;font-weight:600}
+.cta-alt a:hover{text-decoration:underline}
+/* build:3d11912f-ef26-4bba-a3f7-edaf974b7874 */
+/* ---------- section hero-navy-refinement ---------- */
+/* ============================================================
+   HERO UI — navy panels, ruled ribbon, bolder metrics.
+   Loaded last so it wins over the earlier hero rules without
+   having to edit them in place.
+   ============================================================ */
+/* ---- Executive scorecard: same solid navy shell as the KPI board ---- */
+[data-bs-theme="dark"] .exec-scorecard{
+  background:linear-gradient(180deg,var(--navy-panel-a) 0%,var(--navy-panel-b) 100%);
+  border-color:var(--navy-line);
+  box-shadow:0 20px 48px rgba(2,8,20,.58);
+}
+[data-bs-theme="dark"] .exec-scorecard .sc-head{border-bottom-color:var(--navy-line-soft)}
+[data-bs-theme="dark"] .exec-scorecard h6{color:var(--text)}
+[data-bs-theme="dark"] .exec-scorecard .sc-label{color:var(--text)}
+[data-bs-theme="dark"] .exec-scorecard .val{color:var(--heading)}
+.exec-scorecard .sc-label{font-size:14.5px;font-weight:600}
+.exec-scorecard .val{font-size:15px}
+.exec-scorecard .row-item{padding:7px 0}
+/* ---- KPI cells: more air between the icon and the figure ---- */
+.kpi-cell{gap:16px;padding:18px 16px}
+.kpi-icon{width:46px;height:46px;font-size:21px;border-radius:50%}
+.kpi-lbl{margin-top:3px}
+/* light mode needs a solid cell surface, otherwise the base
+   rgba(255,255,255,.02) fill disappears against a light page */
+[data-bs-theme="light"] .kpi-cell{
+  background:var(--navy-cell);
+  border-color:var(--navy-line);
+}
+[data-bs-theme="light"] .kpi-cell:hover{background:var(--navy-cell-hi)}
+/* ============================================================
+   EXECUTIVE RIBBON — 3 across, ruled into a grid.
+   Separators are inset pseudo-elements rather than borders, so
+   the vertical and horizontal rules stop short of each other
+   instead of meeting at a cross.
+   ============================================================ */
+.executive-ribbon{
+  background:linear-gradient(180deg,var(--navy-panel-a) 0%,var(--navy-panel-b) 100%);
+  border:1px solid var(--navy-line);
+  border-radius:14px;
+  padding:8px 16px;
+}
+.executive-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  column-gap:0;row-gap:0;
+  align-items:center;
+}
+.exec-item{
+  position:relative;
+  padding:15px 20px;
+  gap:13px;
+  font-size:15px;
+  line-height:1.35;
+  align-items:center;
+}
+.exec-item b{font-weight:800}
+/* vertical rule — inset top and bottom so it never touches the
+   horizontal rule or the panel edge */
+.exec-item:not(:nth-child(3n+1))::before{
+  content:"";position:absolute;left:0;top:14%;bottom:14%;
+  width:1px;background:var(--navy-line-soft);
+}
+/* horizontal rule — inset left and right for the same reason */
+.exec-item:nth-child(-n+3)::after{
+  content:"";position:absolute;bottom:0;left:20px;right:20px;
+  height:1px;background:var(--navy-line-soft);
+}
+/* Bigger, brighter icon badges */
+.exec-item i{
+  margin-top:0;
+  border-radius:50%;
+}
+[data-bs-theme="dark"] .exec-item{color:#dbe7f7}
+[data-bs-theme="dark"] .exec-item b{color:var(--heading)}
+[data-bs-theme="dark"] .exec-item.i-green i{background:rgba(34,192,122,.90);color:#04240f}
+[data-bs-theme="dark"] .exec-item.i-violet i{background:rgba(124,96,246,.92);color:var(--heading)}
+[data-bs-theme="dark"] .exec-item.i-amber i{background:rgba(232,172,58,.95);color:#3a2503}
+/* Two across on medium — separator map follows the column count */
+/* Single column on small — horizontal rules only */
+/* ============================================================
+   HERO CTA ROW — one type treatment across all four buttons,
+   only the fill differs.
+   ============================================================ */
+.hero-cta .btn-accent,
+.hero-cta .btn-outline{
+  font-family:var(--font-body);
+  font-size:15.5px;
+  font-weight:700;
+  letter-spacing:-.005em;
+  padding:14px 24px;
+  border-radius:11px;
+  line-height:1.2;
+}
+.hero-cta .btn-accent{
+  /* accent-driven: a light-to-dark sheen laid over var(--accent), so the
+     button follows the palette without needing color-mix() support. */
+  background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.20)),var(--accent);
+  border:1px solid rgba(120,170,255,.45);
+  color:var(--heading);
+}
+.hero-cta .btn-accent:hover{
+  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(0,0,0,.08)),var(--accent);
+  color:var(--heading);
+}
+[data-bs-theme="dark"] .hero-cta .btn-outline{
+  background:rgba(16,30,56,.72);
+  border:1px solid var(--navy-line);
+  color:var(--heading);
+}
+[data-bs-theme="dark"] .hero-cta .btn-outline:hover{
+  background:rgba(24,45,82,.85);
+  border-color:rgba(124,178,255,.50);
+  color:var(--heading);
+}
+.hero-cta .btn-outline i,
+.hero-cta .btn-accent i{font-size:16px}
+/* LinkedIn button — brand blue glyph, brand blue fill on hover */
+.hero-cta a[aria-label="LinkedIn profile"]{
+  padding:14px 18px;
+}
+.hero-cta a[aria-label="LinkedIn profile"] i{
+  color:#2e8fd9;font-size:20px;
+}
+[data-bs-theme="dark"] .hero-cta a[aria-label="LinkedIn profile"]:hover{
+  background:var(--accent);border-color:var(--accent);
+}
+[data-bs-theme="dark"] .hero-cta a[aria-label="LinkedIn profile"]:hover i{color:var(--heading)}
+[data-bs-theme="light"] .hero-cta a[aria-label="LinkedIn profile"]:hover i{color:inherit}
+/* ============================================================
+   HERO EYEBROW — pill with a circular icon badge
+   ============================================================ */
+.eyebrow.eyebrow-chip{
+  display:inline-flex;align-items:center;gap:10px;
+  /* the hero column is a flex container, which blockifies inline-flex
+     into flex — so constrain the box explicitly instead */
+  width:fit-content;max-width:100%;align-self:flex-start;
+  padding:3px 14px 3px 4px;
+  border:1px solid rgba(96,146,224,.42);
+  border-radius:999px;
+  background:rgba(16,30,56,.60);
+  font-size:10.6px;
+  letter-spacing:.13em;
+  margin-bottom:18px;
+}
+.eyebrow.eyebrow-chip::before{content:none;display:none}
+.eyebrow.eyebrow-chip > span:last-child{line-height:1.15}
+.eyebrow-badge{
+  flex-shrink:0;
+  width:19px;height:19px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(var(--accent-rgb),.20);
+  color:var(--accent);
+  font-size:9.8px;line-height:1;
+}
+[data-bs-theme="light"] .eyebrow.eyebrow-chip{
+  background:#fff;border-color:var(--navy-line);
+}
+/* ============================================================
+   RIBBON TEXT — one line per item, icon glyph matched to the
+   text size (1em) with the circle just large enough to hold it.
+   ============================================================ */
+.exec-item{font-size:13.5px}
+.exec-item span{white-space:nowrap}
+.exec-item i{
+  width:1.55em;height:1.55em;
+  font-size:1em;
+  line-height:1;
+}
+/* ============================================================
+   STAT CARDS — mockup colour pattern: the CARD is a deep tinted
+   navy and the ICON carries the saturated brand gradient (the
+   original had this the other way round).
+   ============================================================ */
+[data-bs-theme="dark"] .hero-stat.s-blue  {background:linear-gradient(150deg,var(--hero-blue-start) 0%, var(--hero-blue-end) 100%)}
+[data-bs-theme="dark"] .hero-stat.s-purple{background:linear-gradient(150deg,var(--hero-purple-start) 0%, var(--hero-purple-end) 100%)}
+[data-bs-theme="dark"] .hero-stat.s-teal  {background:linear-gradient(150deg,var(--hero-teal-start) 0%, var(--hero-teal-end) 100%)}
+[data-bs-theme="dark"] .hero-stat.s-amber {background:linear-gradient(150deg,var(--hero-amber-start) 0%, var(--hero-amber-end) 100%)}
+[data-bs-theme="dark"] .hero-stat{
+  border:1px solid rgba(120,160,225,.20);
+  box-shadow:0 10px 24px rgba(2,8,20,.42);
+}
+.hero-stat .stat-icon{color:var(--heading)}
+.hero-stat.s-blue   .stat-icon{background:linear-gradient(145deg,var(--stat-icon-blue-start),var(--stat-icon-blue-end))}
+.hero-stat.s-purple .stat-icon{background:linear-gradient(145deg,var(--stat-icon-purple-start),var(--stat-icon-purple-end))}
+.hero-stat.s-teal   .stat-icon{background:linear-gradient(145deg,var(--stat-icon-teal-start),var(--stat-icon-teal-end))}
+.hero-stat.s-amber  .stat-icon{background:linear-gradient(145deg,var(--stat-icon-amber-start),var(--stat-icon-amber-end))}
+/* ---- Tighter hero rhythm: less air between the stat row, the
+        ribbon and the CTA row, and less gutter between cards ---- */
+.hero-stats{--bs-gutter-x:.5rem;margin-top:14px;margin-bottom:10px}
+.executive-ribbon{margin-top:0;margin-bottom:12px}
+.hero-cta{margin-top:0!important;row-gap:8px}
+.hero-stat{padding:14px 11px;min-height:78px;gap:10px}
+/* ---- Buttons sit closer together with less internal padding ---- */
+.hero-cta .btn-accent,
+.hero-cta .btn-outline{padding:11px 18px;font-size:15px}
+.hero-cta a[aria-label="LinkedIn profile"]{padding:11px 15px}
+/* ---- Steering snapshot labels: never more than two lines ---- */
+.kpi-lbl{
+  font-size:11.5px;line-height:1.28;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+  overflow:hidden;
+}
+.kpi-cell{padding:14px 13px;gap:13px;min-height:84px}
+.kpi-icon{width:42px;height:42px;font-size:19px}
+.kpi-val{font-size:clamp(19px,2vw,23px)}
+.kpi-board{padding:14px 15px}
+.exec-scorecard{padding:14px 15px}
+/* Hero uses the same container width as every other section — an
+   over-wide hero made the page look misaligned. The ribbon is fitted
+   to that width below instead of the container being stretched. */
+/* Ribbon fits the narrower left column: less padding, tighter gap */
+.exec-item{padding:13px 9px;gap:7px;font-size:12px}
+.exec-item i{width:1.35em;height:1.35em}
+.exec-item:nth-child(-n+3)::after{left:9px;right:9px}
+/* ---- Cramped column widths (lg where the right panel is only ~400px,
+        and phones) need a smaller label so two lines still hold the whole
+        string rather than the clamp truncating it. ---- */
+/* ============================================================
+   STEERING SNAPSHOT ICONS — matched to the mockup: a mid-tone
+   saturated fill with a bright pastel glyph, instead of the old
+   15%-opacity tint that made them recede into the cell.
+   Measured from the mockup at ~0.20 x cell width.
+   ============================================================ */
+.kpi-icon{
+  width:48px;height:48px;font-size:22px;border-radius:50%;
+  box-shadow:0 4px 12px rgba(2,8,20,.45);
+}
+[data-bs-theme="dark"] .kpi-icon.i-blue{
+  background:linear-gradient(145deg,#1e5199 0%,#102a5c 100%);
+  border:1px solid rgba(120,178,255,.34);color:#8cc4ff;
+}
+[data-bs-theme="dark"] .kpi-icon.i-violet{
+  background:linear-gradient(145deg,#4d2d93 0%,#241547 100%);
+  border:1px solid rgba(180,150,255,.34);color:#d3b4ff;
+}
+[data-bs-theme="dark"] .kpi-icon.i-magenta{
+  background:linear-gradient(145deg,#7d3177 0%,#3d1339 100%);
+  border:1px solid rgba(240,160,228,.34);color:#f2b8ea;
+}
+[data-bs-theme="dark"] .kpi-icon.i-green{
+  background:linear-gradient(145deg,#136a51 0%,#0a3328 100%);
+  border:1px solid rgba(90,224,174,.34);color:#5ce0ae;
+}
+[data-bs-theme="dark"] .kpi-icon.i-amber{
+  background:linear-gradient(145deg,#8d5c18 0%,#43290d 100%);
+  border:1px solid rgba(255,206,122,.34);color:#ffce7a;
+}
+/* Light mode keeps a soft tint so the glyph stays readable */
+[data-bs-theme="light"] .kpi-icon{box-shadow:none}
+/* Pre-existing fix (not hero-related): Bootstrap `g-5` rows carry a
+   -24px horizontal margin while `.container` only pads 12px, so they
+   overhang the viewport on phones and cause sideways page scroll.
+   Reducing the gutter below 576px costs nothing in a single-column
+   layout and removes the horizontal scrollbar. */
+/* Very narrow phones: two KPI cells per row leaves ~165px, too little
+   for a two-line label. Stack them so each cell gets the full width. */
+/* Small screens: scale the round badges down but keep them circular.
+   These live at the end of the last stylesheet so they win over the
+   full-size icon rules above. */
+/* KPI badge steps down where the right column is narrow (~168px cells at
+   lg), otherwise the bigger badge squeezes the label past two lines.
+   Must sit last in the cascade to beat the base .kpi-icon size above. */
+/* ============================================================
+   SECTION TOP SPACING — halved (bottom spacing left alone).
+   Was 48px for every section and 72px for #leadership.
+   This must sit last: an earlier `section{padding:48px 0}`
+   declaration further up the sheet would otherwise win.
+   ============================================================ */
+section{padding-top:24px}
+#leadership{padding-top:36px!important}
+/* ============================================================
+   NAVBAR BRAND — small circular headshot to the left of the name.
+   Image is inlined as a data URI so the file stays self-contained
+   and the avatar can't break if the HTML is moved on its own.
+   ============================================================ */
+.navbar-brand{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;          /* this is what shifts the name to the right */
+}
+.brand-avatar{
+  width:34px;height:34px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+  border:1.5px solid rgba(120,170,255,.45);
+  box-shadow:0 2px 8px rgba(2,8,20,.55);
+}
+.brand-name{display:inline-block;line-height:1}
+[data-bs-theme="light"] .brand-avatar{
+  border-color:rgba(30,80,160,.30);
+  box-shadow:0 2px 6px rgba(20,40,80,.18);
+}
+/* ============================================================
+   CTA ROW — stretch to the full column width so the three rows
+   (stat cards / ribbon / buttons) line up flush with each other.
+   The three text buttons share the space equally; the LinkedIn
+   square keeps its own fixed width.
+   ============================================================ */
+.hero-cta{
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:stretch;   /* equal button heights */
+  flex-wrap:nowrap;
+  width:100%;
+  gap:10px;
+}
+.hero-cta > a{
+  /* basis = intrinsic content width, then grow equally into the spare
+     space. Prevents the longest label being squeezed to a clip. */
+  flex:1 1 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:nowrap;
+  /* keeps every button the same height, including on wrapped mobile rows */
+  min-height:42px;
+}
+.hero-cta a[aria-label="LinkedIn profile"]{
+  flex:0 0 58px;
+  padding-left:0;padding-right:0;
+}
+/* Stat cards fill their grid cells so row 1 is flush with rows 2 and 3 */
+.hero-stat{max-width:none}
+/* Mid widths: the column is tight for four buttons on one line, so trim
+   the type and padding rather than let the longest label clip. */
+/* ---- Mobile hero top spacing ----
+   The hero cleared the fixed chrome (34px telemetry bar + 54px navbar = 88px)
+   with a 124px padding-top, leaving a 40px empty gap above the eyebrow chip.
+   Trimmed so the gap is ~18px. Still expressed relative to --tele-h so it
+   stays correct if the telemetry bar height changes. */
+/* ############################################################################
+   REVIEW PASS — hero focus, spacing, mobile readability, hierarchy
+   ############################################################################ */
+/* ---- 1. ONE CLEAR CTA ------------------------------------------------------
+   Four equally-weighted buttons gave the eye no entry point. The primary now
+   carries the only saturated fill and a lift; the rest drop to quiet ghost
+   buttons. Nothing is removed — only re-ranked. */
+.hero-cta .btn-accent{
+  flex:1.4 1 auto;
+  font-size:16px;font-weight:800;
+  box-shadow:0 10px 24px rgba(42,106,228,.34);
+}
+[data-bs-theme="dark"] .hero-cta .btn-outline{
+  background:transparent;
+  border-color:rgba(96,146,224,.26);
+  color:#b6c7e3;
+  font-weight:600;
+  box-shadow:none;
+}
+[data-bs-theme="dark"] .hero-cta .btn-outline:hover{
+  background:rgba(20,39,74,.62);
+  border-color:rgba(124,178,255,.42);
+  color:var(--heading);
+}
+[data-bs-theme="dark"] .hero-cta a[aria-label="LinkedIn profile"]{
+  background:transparent;
+}
+/* ---- 2. SELECTED HIGHLIGHTS label ---------------------------------------- */
+.highlights-label{
+  font-family:var(--font-mono);
+  font-size:10.5px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-2);
+  margin:0 0 7px 2px;
+}
+/* ---- 3. MORE VISUAL SPACING ---------------------------------------------
+   NOTE: this partly reverses the earlier "halve all section top padding"
+   change — 24px was too tight to give sections their own air. Landed at 44px
+   as a middle ground rather than the original 48px. */
+section{padding-top:44px}
+#leadership{padding-top:56px!important}
+.hero-stats{margin-top:18px;margin-bottom:14px}
+.executive-ribbon{margin-bottom:18px}
+.sec-sub{margin-bottom:26px}
+/* ---- 4. CLEANER VISUAL HIERARCHY ---------------------------------------
+   Widen the gap between heading, lead statement and body copy so the eye
+   ranks them instead of reading one grey block. */
+.hero h1{letter-spacing:-.022em}
+.hero .value-statement{font-weight:600}
+.hero .lede{color:var(--text-2)}
+.sec-title{letter-spacing:-.018em}
+.eyebrow,.highlights-label{opacity:.9}
+/* ---- 5. BETTER MOBILE READABILITY -------------------------------------
+   Body copy was rendering at 15px/1.6 on phones and the ribbon at 13px.
+   Bumped to 16px/1.68 with larger tap targets (44px, the accessibility
+   minimum) and a slightly larger ribbon and KPI label. */
+/* ============================================================================
+   ADD NEW OVERRIDES BELOW THIS LINE — nothing else follows, so anything
+   placed here is guaranteed to win against every rule above.
+   ============================================================================ */
+
+/* Fixes for light theme so interactive elements remain readable.
+   Some components intentionally use white glyphs in dark mode; ensure
+   they switch to a dark glyph when the page uses the light colour scheme. */
+[data-bs-theme="light"] .hero-stat .stat-icon{ background:rgba(2,8,20,.04) !important; color:var(--heading) !important; }
+[data-bs-theme="light"] .hero-stat h4{ color:var(--heading) !important; }
+[data-bs-theme="light"] .hero-stat small{ color:var(--text-2) !important; }
+
+/* LinkedIn square button shows a light glyph in dark mode; in light mode
+   keep the icon colour consistent with the button text rather than forcing
+   a white icon which becomes invisible on a light page. */
+[data-bs-theme="light"] .hero-cta a[aria-label="LinkedIn profile"] i{ color:inherit !important; }
+
+/* Contact panel headings use white on dark panels; ensure they fall back
+   to the theme heading token when the page is light. */
+[data-bs-theme="light"] .contact-side h3{ color:var(--heading) !important; }
+
+/* Ensure focus rings remain visible in both themes (contrast against bg). */
+[data-bs-theme="light"] a:focus-visible, [data-bs-theme="light"] button:focus-visible{ outline-color:var(--accent) !important; }
+
+/* Additional light-theme fallbacks for selectors that previously used hard-coded white.
+   These keep the dark-mode white glyphs intact while ensuring readable colours on light pages. */
+[data-bs-theme="light"] .contact-side a:hover{ color:var(--accent) !important; }
+[data-bs-theme="light"] .cmsg.user{ color:var(--heading) !important; }
+[data-bs-theme="light"] .exec-item.i-violet i{ color:var(--violet) !important; }
+[data-bs-theme="light"] .exec-item.i-green i{ color:var(--accent-2) !important; }
+[data-bs-theme="light"] .exec-item.i-amber i{ color:var(--amber) !important; }
+[data-bs-theme="light"] .hero-cta .btn-outline:hover { color: var(--accent) !important; background: transparent !important; }
+
+/* Safety: ensure that any remaining explicit white outlines used in dark-only
+   contexts don't leave invisible focus rings in light mode. */
+[data-bs-theme="light"] .kpi-cell a:focus-visible,
+[data-bs-theme="light"] .exec-scorecard a:focus-visible,
+[data-bs-theme="light"] .hero-cta a:focus-visible{ outline-color:var(--accent) !important; }
+
+
+/* ===========================================================================
+   ACCESSIBILITY
+   =========================================================================== */
+
+/* Skip link — the first tab stop. Hidden until focused, then pinned
+   top-left above everything else. */
+.skip-link{
+  position:fixed;
+  top:-100px;left:12px;
+  z-index:2000;
+  padding:11px 18px;
+  border-radius:0 0 10px 10px;
+  background:var(--accent);
+  color:var(--heading);
+  font-weight:700;
+  font-size:14px;
+  text-decoration:none;
+  transition:top .18s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible{
+  top:0;
+  outline:3px solid var(--heading);
+  outline-offset:-6px;
+}
+
+/* One visible focus ring for every interactive element. Uses :focus-visible
+   so it appears for keyboard users without ringing on mouse clicks. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible{
+  outline:3px solid var(--accent);
+  outline-offset:3px;
+  border-radius:6px;
+}
+/* Inside the dark panels a light ring reads better than the accent. */
+[data-bs-theme="dark"] .kpi-cell a:focus-visible,
+[data-bs-theme="dark"] .exec-scorecard a:focus-visible,
+[data-bs-theme="dark"] .hero-cta a:focus-visible{
+  outline-color:var(--heading);
+}
+/* main is a plain landmark wrapper — it must not introduce a focus ring. */
+main:focus{outline:none}
+
+/* ===========================================================================
+   PALETTE PICKER
+   =========================================================================== */
+.palette-picker{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin-left:8px;
+}
+.pal-swatch{
+  width:18px;height:18px;
+  padding:0;
+  border:1px solid var(--border);
+  border-radius:50%;
+  background:transparent;
+  cursor:pointer;
+  line-height:0;
+  transition:transform .15s ease, border-color .15s ease;
+}
+.pal-swatch > span{
+  display:block;
+  width:100%;height:100%;
+  border-radius:50%;
+}
+.pal-swatch:hover{transform:scale(1.14)}
+.pal-swatch[aria-pressed="true"]{
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+/* Swatch colours are literals on purpose: each must show its own palette,
+   not the one currently active. */
+.pal-swatch[data-palette="navy"]      > span{background:linear-gradient(135deg,#4f8cff,#22c07a)}
+.pal-swatch[data-palette="corporate"] > span{background:linear-gradient(135deg,#0a66c2,#00a37a)}
+.pal-swatch[data-palette="emerald"]   > span{background:linear-gradient(135deg,#10a37f,#34d399)}
+.pal-swatch[data-palette="executive"] > span{background:linear-gradient(135deg,#c9a227,#8fbf6a)}
+.pal-swatch[data-palette="purple"]    > span{background:linear-gradient(135deg,#7c5cff,#22c07a)}
+.pal-swatch[data-palette="charcoal"]  > span{background:linear-gradient(135deg,#8fa3bf,#6fbf9b)}
+
+/* ===========================================================================
+   THEME CUSTOMIZER
+   =========================================================================== */
+.customizer-toggle{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:1700;
+  width:46px;
+  height:46px;
+  border:1px solid var(--border);
+  border-radius:50%;
+  background:var(--surface-solid);
+  color:var(--heading);
+  box-shadow:var(--shadow-sm);
+}
+.customizer-panel{
+  position:fixed;
+  right:20px;
+  bottom:78px;
+  z-index:1700;
+  width:min(340px,calc(100vw - 24px));
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-xl);
+  padding:14px;
+}
+.customizer-panel[hidden]{display:none}
+.customizer-title{
+  font-size:var(--text-sm);
+  font-weight:var(--weight-bold);
+  margin-bottom:10px;
+}
+.customizer-group{margin-bottom:12px}
+.customizer-label{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-2);
+  margin-bottom:6px;
+}
+.customizer-panel select,.customizer-panel input[type="range"]{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:var(--radius-xs);
+  background:var(--bg-2);
+  color:var(--text);
+  padding:8px 10px;
+}
+.customizer-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.preset-chip{
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:var(--radius-round);
+  padding:6px 9px;
+  font-size:12px;
+}
+.preset-chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+
+/* Motion safety / intensity controls */
+[data-motion="none"] *,
+[data-motion="none"] *::before,
+[data-motion="none"] *::after{
+  animation:none !important;
+  transition:none !important;
+  scroll-behavior:auto !important;
+}
+[data-motion="reduced"]{--motion-scale:.7}
+[data-motion="normal"]{--motion-scale:1}
+[data-motion="vivid"]{--motion-scale:1.2}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+
+/* smooth page transition (motion-safe fallback above disables it) */
+body.page-ready{animation:page-fade calc(var(--dur-slow) * var(--motion-scale)) var(--ease-standard)}
+@keyframes page-fade{from{opacity:0}to{opacity:1}}
+
+.customizer-scroll{
+  max-height:min(58vh,520px);
+  overflow:auto;
+  padding-right:4px;
+}
+.customizer-help{
+  margin:0 0 8px;
+  font-size:12px;
+  color:var(--text-2);
+}
+.customizer-preset-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;
+}
+.customizer-row-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.customizer-section-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:6px;
+}
+.customizer-section-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 8px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-xs);
+  background:var(--surface);
+  cursor:grab;
+}
+.customizer-section-item.dragging{opacity:.65}
+.customizer-section-item label{
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  letter-spacing:.02em;
+  text-transform:none;
+  color:var(--text);
+}
+.customizer-drag-handle{
+  color:var(--text-2);
+  font-size:13px;
+  line-height:1;
+}
+.customizer-section-item input[type="checkbox"]{accent-color:var(--accent)}
+
+/* Motion polish: stagger utility + micro interactions */
+.stagger > *{
+  animation:stagger-in calc(var(--dur-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+.stagger > *:nth-child(2){animation-delay:55ms}
+.stagger > *:nth-child(3){animation-delay:110ms}
+.stagger > *:nth-child(4){animation-delay:165ms}
+.stagger > *:nth-child(5){animation-delay:220ms}
+@keyframes stagger-in{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+a,button,.x-card,.pov-card,.hero-stat,.kpi-cell{
+  transition:
+    transform calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard),
+    box-shadow calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard),
+    border-color calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard),
+    opacity calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard);
+}
+
+.skeleton{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.09),rgba(255,255,255,.04));
+  background-size:220% 100%;
+  animation:skeleton-wave 1.25s linear infinite;
+}
+@keyframes skeleton-wave{
+  from{background-position:200% 0}
+  to{background-position:-20% 0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .stagger > *{animation:none}
+  .skeleton{animation:none}
+}
+
+/* ===========================================================================
+   WCAG 1.4.3 CONTRAST — btn-accent in dark mode
+   ---------------------------------------------------------------------------
+   All accent palettes have luminance > 0.18 in their default dark-mode form,
+   meaning white (#fff, L=1) text falls below the 4.5:1 AA minimum for normal
+   text. Using a dark navy text colour achieves 5.4:1–7.2:1 across all six
+   palettes while preserving the intended coloured-button aesthetic.
+   =========================================================================== */
+[data-bs-theme="dark"] .btn-accent{
+  color:#0c1a2e;
+}
+[data-bs-theme="dark"] .btn-accent:hover{
+  color:#0c1a2e;
+}
+
+/* ===========================================================================
+   REDUCED-MOTION CSS FALLBACK — page-fade
+   ---------------------------------------------------------------------------
+   The JS customizer sets data-motion="none" when prefers-reduced-motion fires,
+   which suppresses the animation via [data-motion="none"] * { animation:none }.
+   This CSS rule is a belt-and-suspenders fallback in case the JS has not run.
+   =========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  body.page-ready{animation:none}
+}

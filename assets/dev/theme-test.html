@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Theme Test — Interactive Component Palette</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    body{padding:28px}
+    .panel{border:1px solid var(--border);padding:16px;margin-bottom:12px;border-radius:8px;background:var(--surface)}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .report{white-space:pre-wrap;font-family:monospace;background:#0b1220;color:#e8eef8;padding:12px;border-radius:6px}
+    .theme-toggle-btn{margin-bottom:12px}
+  </style>
+</head>
+<body>
+  <h1>Theme Test</h1>
+  <p>Use this page to toggle light/dark and inspect common interactive components.</p>
+  <div>
+    <button id="toggleTheme" class="theme-toggle-btn btn-accent">Toggle theme</button>
+    <button id="runAudit" class="btn-outline">Run contrast audit</button>
+  </div>
+
+  <section class="panel">
+    <h2>Buttons</h2>
+    <div class="row">
+      <a class="btn-accent btn" href="#">Primary</a>
+      <a class="btn-outline btn" href="#">Secondary</a>
+      <a class="btn-outline btn px-3" aria-label="LinkedIn profile"><i class="bi bi-linkedin"></i></a>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Hero stats</h2>
+    <div class="row">
+      <div class="hero-stat s-blue"><div class="stat-icon"><i class="bi bi-calendar-check-fill"></i></div><div><h4>12+</h4><small>Years</small></div></div>
+      <div class="hero-stat s-amber"><div class="stat-icon"><i class="bi bi-people-fill"></i></div><div><h4>30+</h4><small>Engineers</small></div></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Scorecard / KPI</h2>
+    <div class="kpi-board"><div class="board-head">Demo</div><div class="kpi-cell"><span class="kpi-icon i-blue"><i class="bi bi-currency-rupee"></i></span><div><div class="kpi-val">₹2 Cr+</div><div class="kpi-lbl">Portfolio</div></div></div></div>
+  </section>
+
+  <section class="panel">
+    <h2>Contact & Copilot</h2>
+    <div class="contact-side"><h3>Contact</h3><p>Example contact panel</p></div>
+    <div style="height:12px"></div>
+    <div class="copilot-dock"><button class="copilot-fab">Ask</button></div>
+  </section>
+
+  <section class="panel">
+    <h2>Contrast report (console + below)</h2>
+    <div id="reportArea" class="report">No audit run yet</div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="theme-test.js"></script>
+</body>
+</html>

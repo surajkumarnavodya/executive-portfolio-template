@@ -1,0 +1,224 @@
+/*!
+ * variables.css
+ * Design tokens. Change theme colours, radii and shadows here.
+ * Executive Portfolio Template
+ */
+
+:root{
+  /* channel form of --accent, for rgba() tints that must follow the palette */
+  --accent-rgb:79,140,255;
+
+  --accent:#4f8cff;
+  --accent-2:#22c07a;          /* RAG green kept from v1 identity */
+  --amber:#e0a63c;
+  --violet:#8b6bf2;
+  --magenta:#d060c4;
+  --radius:14px;
+  --font-display:'Instrument Serif',Georgia,serif;   /* single display voice site-wide */
+  --font-serif:var(--font-display);                    /* alias kept for existing rules */
+  --font-body:'Inter',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+
+  /* Typography scale */
+  --text-xs:12px;
+  --text-sm:14px;
+  --text-md:16px;
+  --text-lg:18px;
+  --text-xl:22px;
+  --text-2xl:32px;
+  --lh-tight:1.2;
+  --lh-base:1.6;
+  --lh-relaxed:1.75;
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+  --weight-bold:700;
+  --weight-heavy:800;
+
+  /* Spacing scale */
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-7:32px;
+  --space-8:40px;
+  --space-9:48px;
+  --space-10:64px;
+
+  /* Shape system */
+  --radius-xs:6px;
+  --radius-sm:10px;
+  --radius-md:14px;
+  --radius-lg:18px;
+  --radius-xl:24px;
+  --radius-round:999px;
+  --radius:var(--radius-md);
+
+  /* Shadow system */
+  --shadow-sm:0 6px 16px rgba(2,8,20,.15);
+  --shadow-md:0 12px 30px rgba(2,8,20,.22);
+  --shadow-lg:0 18px 44px rgba(2,8,20,.5);
+  --shadow-xl:0 24px 62px rgba(2,8,20,.6);
+
+  /* Motion system */
+  --ease-standard:cubic-bezier(.2,.8,.2,1);
+  --ease-emphasized:cubic-bezier(.16,1,.3,1);
+  --dur-fast:140ms;
+  --dur-base:220ms;
+  --dur-slow:380ms;
+  --motion-scale:1;
+}
+[data-bs-theme="dark"]{
+  --bg:#0a1220;
+  --bg-2:#0e1830;
+  --surface:rgba(255,255,255,.04);
+  --surface-solid:#111d33;
+  --glass:rgba(20,32,58,.55);
+  --border:rgba(148,178,224,.14);
+  --text:#e8eef8;
+  --text-2:#9db0c9;
+  --heading:#ffffff;
+  --shadow:var(--shadow-lg);
+
+  /* Telemetry bar tokens (dark) */
+  --tele-bg:#23201f;
+  --tele-border:#cbb7ff;
+  --tele-text:#f4f4f4;
+  --tele-accent:#f2b8a8;
+
+  /* Decorative / theming tokens (dark) */
+  --accent-3:#7db2ff;               /* lighter accent tint used in gradients */
+  --copilot-fab-end:#2f6fe0;        /* end color for copilot FAB gradient */
+  --copilot-fab-hover:#3f7ae8;
+  --accent-2-3:#5fe3a6;             /* variant used in progress fills */
+
+  /* Hero stat gradients */
+  --hero-blue-start:#3f7cf5;
+  --hero-blue-end:#1e50c7;
+  --hero-purple-start:#a855f7;
+  --hero-purple-end:#7c22c9;
+  --hero-teal-start:#17b8a4;
+  --hero-teal-end:#0d7d70;
+  --hero-amber-start:#e08a3c;
+  --hero-amber-end:#a8591c;
+
+  /* Stat icon gradients */
+  --stat-icon-blue-start:#57a2ff; --stat-icon-blue-end:#1f6ae0;
+  --stat-icon-purple-start:#bb7cff; --stat-icon-purple-end:#7c2ecb;
+  --stat-icon-teal-start:#2fd6bd; --stat-icon-teal-end:#0d8577;
+  --stat-icon-amber-start:#f2b356; --stat-icon-amber-end:#c0701d;
+
+  /* Contact column */
+  --contact-side-a:#0d1f3d; --contact-side-b:#10294f;
+
+  /* Exec item – violet accent variant */
+  --exec-violet:#a58cff;
+
+  /* Badges */
+  --badge-gold:#e3b341;
+  --badge-silver:#a9b4c2;
+  --badge-bronze:#c07f4a;
+}
+[data-bs-theme="light"]{
+  --bg:#f5f8fc;
+  --bg-2:#eef3fa;
+  --surface:#ffffff;
+  --surface-solid:#ffffff;
+  --glass:rgba(255,255,255,.72);
+  --border:#dbe4f0;
+  --text:#2b3a4f;
+  --text-2:#5d7089;
+  --heading:#0c1a2e;
+  --shadow:0 14px 34px rgba(20,45,90,.10);
+
+  /* Telemetry bar tokens (light) */
+  --tele-bg:#eef3fa;
+  --tele-border:#dbe4f0;
+  --tele-text:#2b3a4f;
+  --tele-accent:#e8873a;
+
+  /* Decorative / theming tokens (light) */
+  --accent-3:#a7d0ff;               /* lighter tint tuned for light theme */
+  --copilot-fab-end:#2f6fe0;
+  --copilot-fab-hover:#3f7ae8;
+  --accent-2-3:#5fe3a6;
+
+  /* Hero stat gradients (light variants) */
+  --hero-blue-start:#7fb8ff; --hero-blue-end:#3e6fd6;
+  --hero-purple-start:#c59bff; --hero-purple-end:#8b4bd6;
+  --hero-teal-start:#6fe6d6; --hero-teal-end:#2aa995;
+  --hero-amber-start:#ffd29a; --hero-amber-end:#c07f4a;
+
+  /* Stat icon gradients (light variants) */
+  --stat-icon-blue-start:#8fcfff; --stat-icon-blue-end:#2f6fe0;
+  --stat-icon-purple-start:#e2c2ff; --stat-icon-purple-end:#9b5be0;
+  --stat-icon-teal-start:#8ff3df; --stat-icon-teal-end:#2fa283;
+  --stat-icon-amber-start:#ffd9a8; --stat-icon-amber-end:#d08b44;
+
+  /* Contact column (light variant) */
+  --contact-side-a:#12365f; --contact-side-b:#1c4a86;
+
+  /* Exec item – violet accent variant */
+  --exec-violet:#a58cff;
+
+  /* Badges */
+  --badge-gold:#e3b341;
+  --badge-silver:#a9b4c2;
+  --badge-bronze:#c07f4a;
+}
+:root{--tele-h:38px}
+:root{
+ --font-body:'Inter',system-ui,sans-serif;
+}
+[data-bs-theme="dark"]{
+  --navy-panel-a:#0d1c36;
+  --navy-panel-b:#0a1729;
+  --navy-cell:#14274a;
+  --navy-cell-hi:#1a3057;
+  --navy-line:rgba(96,146,224,.30);
+  --navy-line-soft:rgba(96,146,224,.24);
+}
+[data-bs-theme="light"]{
+  --navy-panel-a:#ffffff;
+  --navy-panel-b:#ffffff;
+  --navy-cell:#ffffff;
+  --navy-cell-hi:#f6f9ff;
+  --navy-line:#dbe4f0;
+  --navy-line-soft:#e2e9f4;
+}
+/* ===========================================================================
+   ACCENT PALETTES
+   ---------------------------------------------------------------------------
+   Six accent schemes, selected with a data-palette attribute on <html>:
+
+       <html data-palette="emerald">
+
+   The palette picker in the navbar sets this and remembers the choice in
+   localStorage. You can also fix one permanently via config.js:
+
+       theme: { palette: 'corporate' }
+
+   Each palette only redefines --accent and --accent-2, so it layers cleanly
+   over both the light and dark themes. To add your own, copy a block and
+   give it a new attribute value, then add a matching button in index.html.
+   =========================================================================== */
+
+/* Executive navy — the default. Matches the shipped screenshots. */
+[data-palette="navy"]      { --accent:#4f8cff; --accent-2:#22c07a;  --accent-rgb:79,140,255;}
+
+/* Corporate blue — closest to LinkedIn's own palette. */
+[data-palette="corporate"] { --accent:#0a66c2; --accent-2:#00a37a;  --accent-rgb:10,102,194;}
+
+/* Emerald — calmer, reads well for operations and delivery roles. */
+[data-palette="emerald"]   { --accent:#10a37f; --accent-2:#34d399;  --accent-rgb:16,163,127;}
+
+/* Executive gold — the most formal option; pairs with the dark theme. */
+[data-palette="executive"] { --accent:#c9a227; --accent-2:#8fbf6a;  --accent-rgb:201,162,39;}
+
+/* Purple — product and design-leaning. */
+[data-palette="purple"]    { --accent:#7c5cff; --accent-2:#22c07a;  --accent-rgb:124,92,255;}
+
+/* Charcoal — near-monochrome, for a deliberately understated page. */
+[data-palette="charcoal"]  { --accent:#8fa3bf; --accent-2:#6fbf9b;  --accent-rgb:143,163,191;}

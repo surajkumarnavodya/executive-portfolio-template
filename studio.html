@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Studio</title>
+  <meta name="description" content="Create, preview and export a polished portfolio experience without leaving your browser.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/studio.css">
+</head>
+<body class="studio-page">
+  <div class="studio-shell">
+    <header class="studio-topbar">
+      <div class="studio-container">
+        <h1 class="studio-title">Portfolio Studio</h1>
+        <p class="studio-subtitle">Build, preview and export a premium portfolio experience while keeping the existing site architecture intact.</p>
+        <div class="studio-actions">
+          <button class="studio-btn primary" id="exportJson" type="button">Export Portfolio JSON</button>
+          <button class="studio-btn" id="exportZip" type="button">Export Website ZIP</button>
+          <button class="studio-btn" id="importPortfolio" type="button">Import Portfolio JSON</button>
+          <select id="demoPackSelect" class="studio-btn" aria-label="Choose demo profile">
+            <option value="">Demo profile pack</option>
+          </select>
+          <button class="studio-btn" id="importDemoPack" type="button">Import Demo Pack</button>
+          <button class="studio-btn" id="exportLayoutConfig" type="button">Export Layout Config</button>
+          <button class="studio-btn" id="importLayoutConfig" type="button">Import Layout Config</button>
+          <button class="studio-btn" id="downloadValidationReport" type="button">Validation Report</button>
+          <button class="studio-btn" id="undoAction" type="button">Undo</button>
+          <button class="studio-btn" id="redoAction" type="button">Redo</button>
+          <button class="studio-btn" id="restoreSession" type="button">Restore Last Session</button>
+          <button class="studio-btn" id="resetOriginal" type="button">Reset to Original</button>
+          <label class="studio-toggle">
+            <input id="marketplaceToggle" type="checkbox">
+            <span>Marketplace mode</span>
+          </label>
+          <input id="importInput" type="file" accept="application/json" hidden>
+          <input id="layoutImportInput" type="file" accept="application/json" hidden>
+          <input id="assetUploadInput" type="file" accept="image/*" hidden>
+          <input id="assetReplaceInput" type="file" accept="image/*" hidden>
+          <span id="statusMessage" class="studio-hint">Loading your portfolio…</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="studio-container">
+      <div class="studio-layout" id="studioLayout" style="--studio-split: 0.58">
+        <section class="studio-editor-pane" aria-labelledby="studioWizardTitle">
+          <div class="studio-card">
+            <div id="healthDashboard" class="studio-dashboard"></div>
+            <div id="assetManager" class="studio-asset-manager"></div>
+            <h2 id="studioWizardTitle" class="studio-title" style="font-size: 24px;">Multi-step wizard</h2>
+            <div class="studio-stepper" role="tablist" aria-label="Portfolio builder steps">
+              <button class="studio-step active" type="button" data-step="0">1. Personal</button>
+              <button class="studio-step" type="button" data-step="1">2. Hero</button>
+              <button class="studio-step" type="button" data-step="2">3. Experience</button>
+              <button class="studio-step" type="button" data-step="3">4. Projects</button>
+              <button class="studio-step" type="button" data-step="4">5. Testimonials</button>
+              <button class="studio-step" type="button" data-step="5">6. Awards</button>
+              <button class="studio-step" type="button" data-step="6">7. Skills</button>
+              <button class="studio-step" type="button" data-step="7">8. Contact</button>
+              <button class="studio-step" type="button" data-step="8">9. Theme</button>
+              <button class="studio-step" type="button" data-step="9">10. Layout</button>
+            </div>
+            <p class="studio-hint" id="stepLabel">1. Personal Information</p>
+            <p class="studio-hint" id="stepCounter">1/10</p>
+
+            <form id="studioForm" novalidate>
+              <section class="studio-section" data-step="0">
+                <div class="studio-form-row">
+                  <div class="studio-field">
+                    <label for="nameInput">Full name</label>
+                    <input id="nameInput" type="text" data-bind="identity.name">
+                  </div>
+                  <div class="studio-field">
+                    <label for="taglineInput">Tagline</label>
+                    <input id="taglineInput" type="text" data-bind="identity.tagline">
+                  </div>
+                  <div class="studio-field full">
+                    <label for="summaryInput">Short summary</label>
+                    <textarea id="summaryInput" data-bind="identity.summary"></textarea>
+                  </div>
+                  <div class="studio-field">
+                    <label for="photoUrlInput">Profile image URL</label>
+                    <input id="photoUrlInput" type="text" data-bind="identity.photo">
+                  </div>
+                </div>
+              </section>
+
+              <section class="studio-section" data-step="1">
+                <div class="studio-form-row">
+                  <div class="studio-field full">
+                    <label for="heroHeadlineInput">Hero headline</label>
+                    <input id="heroHeadlineInput" type="text" data-bind="hero.headline">
+                  </div>
+                  <div class="studio-field full">
+                    <label for="heroDescriptionInput">Hero description</label>
+                    <textarea id="heroDescriptionInput" data-bind="hero.description"></textarea>
+                  </div>
+                  <div class="studio-field full">
+                    <label for="heroEyebrowInput">Eyebrow</label>
+                    <input id="heroEyebrowInput" type="text" data-bind="hero.eyebrow">
+                  </div>
+                  <div class="studio-field">
+                    <label for="heroImageUrlInput">Hero image URL</label>
+                    <input id="heroImageUrlInput" type="text" data-bind="hero.image">
+                  </div>
+                </div>
+              </section>
+
+              <section class="studio-section" data-step="2">
+                <div id="experienceEditor"></div>
+              </section>
+
+              <section class="studio-section" data-step="3">
+                <div id="projectsEditor"></div>
+              </section>
+
+              <section class="studio-section" data-step="4">
+                <div id="testimonialsEditor"></div>
+              </section>
+
+              <section class="studio-section" data-step="5">
+                <div id="awardsEditor"></div>
+              </section>
+
+              <section class="studio-section" data-step="6">
+                <div id="skillsEditor"></div>
+              </section>
+
+              <section class="studio-section" data-step="7">
+                <div class="studio-form-row">
+                  <div class="studio-field">
+                    <label for="contactEmailInput">Email</label>
+                    <input id="contactEmailInput" type="email" data-bind="contact.email">
+                  </div>
+                  <div class="studio-field">
+                    <label for="contactPhoneInput">Phone</label>
+                    <input id="contactPhoneInput" type="text" data-bind="contact.phone">
+                  </div>
+                  <div class="studio-field">
+                    <label for="contactLocationInput">Location</label>
+                    <input id="contactLocationInput" type="text" data-bind="contact.location">
+                  </div>
+                  <div class="studio-field">
+                    <label for="contactWebsiteInput">Website</label>
+                    <input id="contactWebsiteInput" type="url" data-bind="contact.website">
+                  </div>
+                  <div class="studio-field">
+                    <label for="contactLinkedinInput">LinkedIn</label>
+                    <input id="contactLinkedinInput" type="url" data-bind="contact.linkedin">
+                  </div>
+                  <div class="studio-field">
+                    <label for="contactResumeInput">Resume URL</label>
+                    <input id="contactResumeInput" type="url" data-bind="contact.resume">
+                  </div>
+                </div>
+              </section>
+
+              <section class="studio-section" data-step="8">
+                <div class="studio-form-row">
+                  <div class="studio-field">
+                    <label for="themeAccentInput">Accent color</label>
+                    <input id="themeAccentInput" type="color" data-bind="theme.accent">
+                  </div>
+                  <div class="studio-field">
+                    <label for="themeBackgroundInput">Background</label>
+                    <input id="themeBackgroundInput" type="color" data-bind="theme.background">
+                  </div>
+                  <div class="studio-field">
+                    <label for="themeRadiusInput">Border radius</label>
+                    <input id="themeRadiusInput" type="text" data-bind="theme.borderRadius">
+                  </div>
+                  <div class="studio-field">
+                    <label for="themeShadowInput">Shadow</label>
+                    <input id="themeShadowInput" type="text" data-bind="theme.shadow">
+                  </div>
+                  <div class="studio-field">
+                    <label for="themeScaleInput">Typography scale</label>
+                    <input id="themeScaleInput" type="number" min="0.8" max="1.4" step="0.05" data-bind="theme.typographyScale">
+                  </div>
+                  <div class="studio-field">
+                    <label for="themeFontInput">Font family</label>
+                    <select id="themeFontInput" data-bind="theme.fontFamily">
+                      <option value="Inter">Inter</option>
+                      <option value="Source Sans 3">Source Sans 3</option>
+                      <option value="Manrope">Manrope</option>
+                      <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+                      <option value="Playfair Display">Playfair Display</option>
+                    </select>
+                  </div>
+                  <div class="studio-field">
+                    <label for="themeFontSizeInput">Base font size</label>
+                    <input id="themeFontSizeInput" type="text" data-bind="theme.fontSize" placeholder="16px">
+                  </div>
+                  <div class="studio-field">
+                    <label for="themeModeInput">Theme mode</label>
+                    <select id="themeModeInput" data-bind="theme.defaultMode">
+                      <option value="dark">Dark</option>
+                      <option value="light">Light</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="studio-field full">
+                  <label>Component layouts</label>
+                  <div id="layoutSelectors" class="studio-form-row"></div>
+                </div>
+              </section>
+
+              <section class="studio-section" data-step="9">
+                <div class="studio-dashboard-row">
+                  <strong>Visual layout builder</strong>
+                  <span class="studio-hint">Drag sections to reorder and toggle visibility.</span>
+                </div>
+                <div id="sectionLayoutEditor"></div>
+              </section>
+            </form>
+
+            <div class="studio-controls">
+              <button class="studio-btn" id="prevStep" type="button">Previous</button>
+              <button class="studio-btn primary" id="nextStep" type="button">Next</button>
+            </div>
+            <div id="validationSummary" class="validation-summary"></div>
+          </div>
+        </section>
+
+        <div class="studio-divider" id="studioDivider" role="separator" aria-label="Resize editor and preview panes"></div>
+
+        <aside class="studio-preview-pane">
+          <div class="studio-card">
+            <h3 class="studio-title" style="font-size: 22px;">Live preview</h3>
+            <p class="studio-hint">Instantly preview the portfolio content and theme changes without reloading the page.</p>
+            <div id="previewContent" class="preview-frame"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script type="module" src="assets/js/studio-app.js"></script>
+</body>
+</html>
