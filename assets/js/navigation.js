@@ -97,37 +97,81 @@ $(function () {
     lockUntil = Date.now() + (supportsScrollEnd ? 4000 : 1000);
   });
 
-  /* ---------- Collapse mobile nav on link click ---------- */
-  $('.navbar .nav-link, .navbar .dropdown-item, .navbar .btn').on('click', function () {
+  /* ---------- Collapse mobile nav on link click ----------
+     .dropdown-toggle is excluded: it is also a .nav-link, so including it
+     meant tapping "Expertise"/"Proof" on mobile opened the submenu and
+     immediately collapsed the whole nav, making child menus unusable.
+     Its own links still close the nav via the .dropdown-item selector. */
+  $('.navbar .nav-link:not(.dropdown-toggle), .navbar .dropdown-item, .navbar .btn').on('click', function () {
     var nav = document.getElementById('nav');
     if (nav.classList.contains('show')) bootstrap.Collapse.getInstance(nav).hide();
   });
 
-  /* ---------- Open dropdowns on hover (desktop only) ----------
-     Bootstrap dropdowns are click-only by default. On a fine pointer
-     (mouse), opening "Expertise"/"Proof" on hover instead reads as more
-     natural nav behaviour. Uses the real Dropdown API (not a CSS :hover
-     rule) so aria-expanded and Popper positioning stay correct. A short
-     open/close delay stops accidental flicker when crossing the gap
-     between the toggle and the menu. Below the collapse breakpoint the
-     menu is already expanded inline (see responsive.css), so touch/mobile
-     is untouched — this only runs where hover is meaningful. */
-  var fineHover = false;
-  try { fineHover = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches; } catch (e) {}
-  if (fineHover) {
-    document.querySelectorAll('.navbar .nav-item.dropdown').forEach(function (item) {
-      var toggleEl = item.querySelector('[data-bs-toggle="dropdown"]');
-      if (!toggleEl) { return; }
-      var dropdown = bootstrap.Dropdown.getOrCreateInstance(toggleEl);
-      var openTimer = null, closeTimer = null;
-      item.addEventListener('mouseenter', function () {
-        clearTimeout(closeTimer);
-        openTimer = setTimeout(function () { dropdown.show(); }, 60);
-      });
-      item.addEventListener('mouseleave', function () {
-        clearTimeout(openTimer);
-        closeTimer = setTimeout(function () { dropdown.hide(); }, 200);
-      });
+  /* ---------- Open dropdowns on hover (expanded desktop nav only) ----------
+     Bootstrap dropdowns are click-only by default. On a fine pointer opening
+     "Expertise"/"Proof" on hover reads as more natural. Uses the real Dropdown
+     API (not a CSS :hover rule) so aria-expanded and Popper positioning stay
+     correct, with a short open/close delay to stop flicker when crossing the
+     gap between the toggle and the menu.
+
+     Two conditions gate this, and BOTH matter:
+
+       (hover:hover) and (pointer:fine)  - a real mouse
+       (min-width:1200px)               - the navbar is actually expanded
+
+     The width test is not optional. navbar-expand-xl collapses the nav into
+     the hamburger below 1200px, where the interaction model is click, not
+     hover. Without it, a mouse user at a narrow width (or anyone testing
+     mobile by resizing the window) got: hover silently opens the submenu,
+     then their click hits Bootstrap's toggle and closes what hover had just
+     opened - the menu appeared to flash open and vanish, with no way to
+     reach a child link.
+
+     The query is also re-evaluated inside each handler rather than once at
+     load, so resizing across the breakpoint switches modes immediately
+     instead of stranding whichever mode was true when the page loaded. */
+  var hoverNavQuery = null;
+  try {
+    hoverNavQuery = window.matchMedia &&
+      window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:1200px)');
+  } catch (e) {}
+  function hoverNavEnabled() { return !!(hoverNavQuery && hoverNavQuery.matches); }
+
+  document.querySelectorAll('.navbar .nav-item.dropdown').forEach(function (item) {
+    var toggleEl = item.querySelector('[data-bs-toggle="dropdown"]');
+    if (!toggleEl) { return; }
+    var dropdown = bootstrap.Dropdown.getOrCreateInstance(toggleEl);
+    var openTimer = null, closeTimer = null;
+    item.addEventListener('mouseenter', function () {
+      if (!hoverNavEnabled()) { return; }
+      clearTimeout(closeTimer);
+      openTimer = setTimeout(function () { dropdown.show(); }, 60);
     });
-  }
+    item.addEventListener('mouseleave', function () {
+      // Always cancel a pending open, even in click mode, so a queued timer
+      // from just before a resize can never fire against a collapsed nav.
+      clearTimeout(openTimer);
+      if (!hoverNavEnabled()) { return; }
+      closeTimer = setTimeout(function () { dropdown.hide(); }, 200);
+    });
+
+    /* In hover mode the pointer has already opened the menu by the time it
+       reaches the toggle, so Bootstrap's click handler would read "already
+       open" and close it - the menu flashed open and vanished under the
+       cursor. Swallow that click while the menu is open so hover stays in
+       sole control of it.
+
+       Capture phase is required: Bootstrap listens on document during the
+       bubble phase, so the event has to be stopped before it gets there.
+       In click mode (touch, or a collapsed nav) this does nothing and
+       Bootstrap toggles normally. Keyboard is unaffected - Enter fires a
+       click with the menu closed, which passes straight through. */
+    toggleEl.addEventListener('click', function (ev) {
+      if (!hoverNavEnabled()) { return; }
+      if (item.querySelector('.dropdown-menu.show')) {
+        ev.preventDefault();
+        ev.stopPropagation();
+      }
+    }, true);
+  });
 });

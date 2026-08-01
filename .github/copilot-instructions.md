@@ -207,3 +207,173 @@ Also chased and ruled out two false leads during verification (both were the tes
 
 Verified with Playwright: all 4 phrases render as a clean 2-line layout matching the reference, hero height bit-for-bit identical across all 4 (843.265625px), zero horizontal overflow at 320-1400px once fully settled.
 
+
+---
+
+### 2026-08-01 — Front-end performance pass (assets, critical CSS, dead CSS)
+
+**CSS bundle composition changed — read this before regenerating the bundle.**
+`assets/dist/css/template.min.css` is now `variables.css + style.css +
+responsive.css`. **`studio.css` is no longer bundled.** `studio.html` loads
+`variables.css`/`style.css`/`studio.css` directly, and the only two pages that
+consume the bundle (`home.html`, `component-catalog.html`) reference zero
+`.studio-*` / `.preview-*` classes, so it was ~8.8 KB shipped to every visitor
+for nothing. Bundle went 118,914 → 108,875 b (27.6 KB gzip).
+
+**`home.html` now inlines critical CSS.** The first-viewport rules (telemetry
+bar + fixed navbar + `header.hero`) are inlined in `<style id="critical-css">`
+(35 KB raw / 7.7 KB gzip) and the full bundle loads via
+`<link rel="preload" as="style" onload="this.rel='stylesheet'">` with a
+`<noscript>` fallback.
+
+Two constraints on that block:
+- It **must stay after** the Bootstrap and Bootstrap Icons `<link>`s. The
+  template bundle previously loaded last and won the cascade; moving the inline
+  copy above Bootstrap lets Bootstrap override it until the async bundle lands.
+- It is **generated, not hand-edited**. Regenerate it whenever the bundle
+  changes, otherwise the first paint silently drifts from the real stylesheet.
+
+**Dead CSS removed from `style.css`** after a production audit (12 rules + 1
+orphaned keyframes):
+- `.pulse` / `.pulse::after` — markup uses `.node-pulse`; bare `.pulse` matched nothing.
+- `.stagger > *` + four `nth-child` rules + its reduced-motion override, and the
+  now-orphaned `@keyframes stagger-in`.
+- `.c-form input/textarea` (+ `:focus`) and `.cf-note` — leftovers of a removed contact form.
+- `.executive-ribbon strong` — the ribbon markup uses `<b>`.
+
+`@keyframes pulse` was **kept** — `.copilot-head .dot::after` still animates with it.
+
+Deliberately **not** removed: `.form-control`, `.form-select`, `.form-label`,
+`.invalid-feedback`. No form ships today, but these are the themed surface a
+buyer inherits when they add one and `config.js` still calls the contact section
+a "contact form".
+
+**Audit caveat for anyone re-running a purge here.** A naive PurgeCSS-style pass
+reports ~89 unused rules and is *wrong*: it deletes every
+`[data-bs-theme="light"]` rule (the document ships `data-bs-theme="dark"`, so
+light-theme rules only ever activate via `theme.js`) and, if the token scanner
+parses JS string literals rather than whole files, also `.cmsg` and
+`.customizer-*` (quote pairing desyncs on apostrophes inside comments). Any
+purge must safelist runtime-controlled attributes (`data-bs-theme`,
+`data-motion`, `data-palette`), runtime body classes (`nav-condensed`,
+`tele-hide`), and third-party injected classes (`goog-*`).
+
+**Images.** Nothing meaningful left to convert — the only served raster is the
+navbar avatar, already AVIF/WebP/JPG via `<picture>`. `screenshots/*.png` are
+documentation assets (excluded from the site by
+`portfolio-data-service.js:406`); WebP + AVIF siblings were generated (1965K →
+323K) and the PNGs retained for marketplace listings. `profile.jpg` must stay as
+the `<picture>` fallback and `apple-touch-icon`.
+
+**`loading="lazy"`: nothing eligible.** No iframes anywhere; the single `<img>`
+is the above-the-fold avatar carrying `fetchpriority="high"`, where lazy loading
+would be actively harmful.
+
+**Fonts.** Already optimal — the Google Fonts request carries `&display=swap`
+for all five families and both font hosts are preconnected. Added a preconnect
+for `cdn.jsdelivr.net` (Bootstrap CSS, Bootstrap Icons CSS and the icon webfont
+all originate there, and the font is a third hop only discovered after its
+stylesheet parses). Bootstrap Icons ships `font-display: block` and was left
+alone: `swap` on an icon font flashes fallback letterforms, and overriding it
+requires re-declaring `@font-face` with the exact hashed CDN URL, which breaks
+every icon if that hash moves.
+
+**Open item.** Bootstrap CSS is still render-blocking, and the above-the-fold
+markup depends on 41 Bootstrap classes (grid, navbar, dropdown, flex utilities),
+so first paint still waits on the CDN. Self-hosting a subsetted Bootstrap is the
+next meaningful win and was out of scope for this pass.
+
+---
+
+### 2026-08-01 — Fix: mobile child (dropdown) menus were unusable
+
+`navigation.js` "collapse mobile nav on link click" bound to
+`.navbar .nav-link`, which also matches `.nav-link.dropdown-toggle`
+("Expertise", "Proof"). Below the XL breakpoint, tapping a toggle let
+Bootstrap open the submenu and then immediately collapsed `#nav`, so the
+child menu was never usable on touch.
+
+Selector is now `.navbar .nav-link:not(.dropdown-toggle)`. The child links
+themselves still close the nav via the `.dropdown-item` part of the selector,
+so tap-through behaviour is unchanged. Desktop is unaffected: the hover-open
+path is gated on `(hover:hover) and (pointer:fine)`.
+
+Note the stale comment this corrected — it claimed the mobile menu "is already
+expanded inline (see responsive.css)". It is not: responsive.css only sets
+`position:static` on `.dropdown-menu`, so Bootstrap's `display:none` still
+applies until `.show` is added, and the toggle tap really is required.
+
+Mirrored into `assets/dist/js/template.min.js` (line ~1271) in the same pass,
+per the hand-maintained-bundle rule. No CSS changed, so the inlined critical
+block in `home.html` did not need regenerating.
+
+Latent issue left alone (out of scope): the same handler calls
+`bootstrap.Collapse.getInstance(nav).hide()` with no null guard, which throws
+if no Collapse instance exists yet. `getOrCreateInstance` would be safer.
+
+---
+
+### 2026-08-01 — Fix (2 of 2): dropdown flashed open then closed on click
+
+Follow-up to the collapse fix. The remaining cause was the hover-open block.
+
+`fineHover` was evaluated ONCE at load and tested only pointer type, never
+viewport width. So on any hover-capable device - including a desktop window
+resized narrow, which is how mobile usually gets tested - the sequence was:
+
+  1. pointer enters the .nav-item.dropdown  -> 60ms -> dropdown.show()
+  2. user clicks the toggle -> Bootstrap sees .show -> toggles it CLOSED
+
+The menu appeared to flash open and vanish, with no way to reach a child link.
+
+Two changes:
+
+  - The gate is now `(hover:hover) and (pointer:fine) and (min-width:1200px)`,
+    matching navbar-expand-xl (responsive.css uses max-width:1199.98px). It is
+    evaluated INSIDE each handler, not once at load, so resizing across the
+    breakpoint switches modes immediately instead of stranding whichever mode
+    was true at load.
+  - A capture-phase click listener on the toggle swallows the click while the
+    menu is already open in hover mode, so hover keeps sole control of it.
+    Capture is required because Bootstrap listens on document during bubble.
+    No-op in click mode; keyboard unaffected (Enter fires with the menu
+    closed, so it passes through).
+
+Verified by replaying the real handler logic against a jsdom nav with a
+Bootstrap-like document toggle: desktop/narrow/tablet with a mouse all ended
+CLOSED before and OPEN after; touch was correct throughout.
+
+Mirrored into `assets/dist/js/template.min.js`. No CSS changed.
+
+---
+
+### 2026-08-01 — Nav order pinned to About / Experience / Leadership / Success Stories / Expertise / Proof
+
+Changed in two places, because the markup alone does not decide nav order:
+
+  - `home.html` - the Expertise dropdown `<li>` moved to sit after Success
+    Stories, so the pre-JS paint and crawlers see the intended sequence.
+  - `DEFAULT_NAV_ORDER` in `customizer.js` (mirrored into the dist bundle) -
+    `['about','experience','leadership','success-stories','expertise','recognition']`.
+    This runs on load and re-appends the `<li>`s, so it would have reshuffled
+    the nav back if only the markup had been edited.
+
+Markup order and post-reorder order are now identical, so there is no visible
+jump on load. Dropdowns are matched by their first member id, hence
+'expertise' (Capabilities) and 'recognition' (Proof).
+
+CAVEAT - the one case where the order still differs. When `state.sectionOrder`
+no longer equals `DEFAULT_SECTION_ORDER` (the visitor dragged the layout in
+the Studio customizer, or imported a config), the nav deliberately follows
+`state.sectionOrder` instead of `DEFAULT_NAV_ORDER`, and that array starts
+`['about','leadership','experience',...]` - so Leadership and Experience swap.
+That is existing designed behaviour of the layout builder and was left intact.
+To hard-pin the nav regardless, line ~241 of customizer.js becomes:
+
+    var navOrderSource = DEFAULT_NAV_ORDER;
+
+but that also removes the layout builder's ability to re-sequence the nav.
+
+No CSS changed: the reorder only moves an existing `<li>`, so the same rules
+match. Verified by regenerating the critical CSS - byte-identical, so the
+inlined block in `home.html` did not need updating.

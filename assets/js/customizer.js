@@ -17,7 +17,7 @@
   // dropdown (Expertise, Proof) is represented by one anchor id — its
   // first member — since the nav-reorder logic below moves the whole
   // dropdown <li>, not individual items inside it.
-  var DEFAULT_NAV_ORDER = ['about', 'expertise', 'experience', 'leadership', 'success-stories', 'recognition'];
+  var DEFAULT_NAV_ORDER = ['about', 'experience', 'leadership', 'success-stories', 'expertise', 'recognition'];
 
   var PRESETS = {
     ceo: {

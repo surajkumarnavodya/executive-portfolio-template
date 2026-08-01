@@ -42,6 +42,95 @@ Static executive portfolio site (`surajkumarnavodya/executive-portfolio-template
 
 ## Session Log
 
+### 2026-08-01 — Nav order pinned to About / Experience / Leadership / Success Stories / Expertise / Proof
+
+Changed in two places, because the markup alone does not decide nav order:
+
+  - `home.html` - the Expertise dropdown `<li>` moved to sit after Success
+    Stories, so the pre-JS paint and crawlers see the intended sequence.
+  - `DEFAULT_NAV_ORDER` in `customizer.js` (mirrored into the dist bundle) -
+    `['about','experience','leadership','success-stories','expertise','recognition']`.
+    This runs on load and re-appends the `<li>`s, so it would have reshuffled
+    the nav back if only the markup had been edited.
+
+Markup order and post-reorder order are now identical, so there is no visible
+jump on load. Dropdowns are matched by their first member id, hence
+'expertise' (Capabilities) and 'recognition' (Proof).
+
+CAVEAT - the one case where the order still differs. When `state.sectionOrder`
+no longer equals `DEFAULT_SECTION_ORDER` (the visitor dragged the layout in
+the Studio customizer, or imported a config), the nav deliberately follows
+`state.sectionOrder` instead of `DEFAULT_NAV_ORDER`, and that array starts
+`['about','leadership','experience',...]` - so Leadership and Experience swap.
+That is existing designed behaviour of the layout builder and was left intact.
+To hard-pin the nav regardless, line ~241 of customizer.js becomes:
+
+    var navOrderSource = DEFAULT_NAV_ORDER;
+
+but that also removes the layout builder's ability to re-sequence the nav.
+
+No CSS changed: the reorder only moves an existing `<li>`, so the same rules
+match. Verified by regenerating the critical CSS - byte-identical, so the
+inlined block in `home.html` did not need updating.
+
+### 2026-08-01 — Fix (2 of 2): dropdown flashed open then closed on click
+
+Follow-up to the collapse fix. The remaining cause was the hover-open block.
+
+`fineHover` was evaluated ONCE at load and tested only pointer type, never
+viewport width. So on any hover-capable device - including a desktop window
+resized narrow, which is how mobile usually gets tested - the sequence was:
+
+  1. pointer enters the .nav-item.dropdown  -> 60ms -> dropdown.show()
+  2. user clicks the toggle -> Bootstrap sees .show -> toggles it CLOSED
+
+The menu appeared to flash open and vanish, with no way to reach a child link.
+
+Two changes:
+
+  - The gate is now `(hover:hover) and (pointer:fine) and (min-width:1200px)`,
+    matching navbar-expand-xl (responsive.css uses max-width:1199.98px). It is
+    evaluated INSIDE each handler, not once at load, so resizing across the
+    breakpoint switches modes immediately instead of stranding whichever mode
+    was true at load.
+  - A capture-phase click listener on the toggle swallows the click while the
+    menu is already open in hover mode, so hover keeps sole control of it.
+    Capture is required because Bootstrap listens on document during bubble.
+    No-op in click mode; keyboard unaffected (Enter fires with the menu
+    closed, so it passes through).
+
+Verified by replaying the real handler logic against a jsdom nav with a
+Bootstrap-like document toggle: desktop/narrow/tablet with a mouse all ended
+CLOSED before and OPEN after; touch was correct throughout.
+
+Mirrored into `assets/dist/js/template.min.js`. No CSS changed.
+
+### 2026-08-01 — Fix: mobile child (dropdown) menus were unusable
+
+`navigation.js` "collapse mobile nav on link click" bound to
+`.navbar .nav-link`, which also matches `.nav-link.dropdown-toggle`
+("Expertise", "Proof"). Below the XL breakpoint, tapping a toggle let
+Bootstrap open the submenu and then immediately collapsed `#nav`, so the
+child menu was never usable on touch.
+
+Selector is now `.navbar .nav-link:not(.dropdown-toggle)`. The child links
+themselves still close the nav via the `.dropdown-item` part of the selector,
+so tap-through behaviour is unchanged. Desktop is unaffected: the hover-open
+path is gated on `(hover:hover) and (pointer:fine)`.
+
+Note the stale comment this corrected — it claimed the mobile menu "is already
+expanded inline (see responsive.css)". It is not: responsive.css only sets
+`position:static` on `.dropdown-menu`, so Bootstrap's `display:none` still
+applies until `.show` is added, and the toggle tap really is required.
+
+Mirrored into `assets/dist/js/template.min.js` (line ~1271) in the same pass,
+per the hand-maintained-bundle rule. No CSS changed, so the inlined critical
+block in `home.html` did not need regenerating.
+
+Latent issue left alone (out of scope): the same handler calls
+`bootstrap.Collapse.getInstance(nav).hide()` with no null guard, which throws
+if no Collapse instance exists yet. `getOrCreateInstance` would be safer.
+
 ### 2026-08-01 — Front-end performance pass (assets, critical CSS, dead CSS)
 
 **CSS bundle composition changed — read this before regenerating the bundle.**
