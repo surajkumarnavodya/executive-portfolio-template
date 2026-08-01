@@ -42,6 +42,79 @@ Static executive portfolio site (`surajkumarnavodya/executive-portfolio-template
 
 ## Session Log
 
+### 2026-08-01 — Front-end performance pass (assets, critical CSS, dead CSS)
+
+**CSS bundle composition changed — read this before regenerating the bundle.**
+`assets/dist/css/template.min.css` is now `variables.css + style.css +
+responsive.css`. **`studio.css` is no longer bundled.** `studio.html` loads
+`variables.css`/`style.css`/`studio.css` directly, and the only two pages that
+consume the bundle (`home.html`, `component-catalog.html`) reference zero
+`.studio-*` / `.preview-*` classes, so it was ~8.8 KB shipped to every visitor
+for nothing. Bundle went 118,914 → 108,875 b (27.6 KB gzip).
+
+**`home.html` now inlines critical CSS.** The first-viewport rules (telemetry
+bar + fixed navbar + `header.hero`) are inlined in `<style id="critical-css">`
+(35 KB raw / 7.7 KB gzip) and the full bundle loads via
+`<link rel="preload" as="style" onload="this.rel='stylesheet'">` with a
+`<noscript>` fallback.
+
+Two constraints on that block:
+- It **must stay after** the Bootstrap and Bootstrap Icons `<link>`s. The
+  template bundle previously loaded last and won the cascade; moving the inline
+  copy above Bootstrap lets Bootstrap override it until the async bundle lands.
+- It is **generated, not hand-edited**. Regenerate it whenever the bundle
+  changes, otherwise the first paint silently drifts from the real stylesheet.
+
+**Dead CSS removed from `style.css`** after a production audit (12 rules + 1
+orphaned keyframes):
+- `.pulse` / `.pulse::after` — markup uses `.node-pulse`; bare `.pulse` matched nothing.
+- `.stagger > *` + four `nth-child` rules + its reduced-motion override, and the
+  now-orphaned `@keyframes stagger-in`.
+- `.c-form input/textarea` (+ `:focus`) and `.cf-note` — leftovers of a removed contact form.
+- `.executive-ribbon strong` — the ribbon markup uses `<b>`.
+
+`@keyframes pulse` was **kept** — `.copilot-head .dot::after` still animates with it.
+
+Deliberately **not** removed: `.form-control`, `.form-select`, `.form-label`,
+`.invalid-feedback`. No form ships today, but these are the themed surface a
+buyer inherits when they add one and `config.js` still calls the contact section
+a "contact form".
+
+**Audit caveat for anyone re-running a purge here.** A naive PurgeCSS-style pass
+reports ~89 unused rules and is *wrong*: it deletes every
+`[data-bs-theme="light"]` rule (the document ships `data-bs-theme="dark"`, so
+light-theme rules only ever activate via `theme.js`) and, if the token scanner
+parses JS string literals rather than whole files, also `.cmsg` and
+`.customizer-*` (quote pairing desyncs on apostrophes inside comments). Any
+purge must safelist runtime-controlled attributes (`data-bs-theme`,
+`data-motion`, `data-palette`), runtime body classes (`nav-condensed`,
+`tele-hide`), and third-party injected classes (`goog-*`).
+
+**Images.** Nothing meaningful left to convert — the only served raster is the
+navbar avatar, already AVIF/WebP/JPG via `<picture>`. `screenshots/*.png` are
+documentation assets (excluded from the site by
+`portfolio-data-service.js:406`); WebP + AVIF siblings were generated (1965K →
+323K) and the PNGs retained for marketplace listings. `profile.jpg` must stay as
+the `<picture>` fallback and `apple-touch-icon`.
+
+**`loading="lazy"`: nothing eligible.** No iframes anywhere; the single `<img>`
+is the above-the-fold avatar carrying `fetchpriority="high"`, where lazy loading
+would be actively harmful.
+
+**Fonts.** Already optimal — the Google Fonts request carries `&display=swap`
+for all five families and both font hosts are preconnected. Added a preconnect
+for `cdn.jsdelivr.net` (Bootstrap CSS, Bootstrap Icons CSS and the icon webfont
+all originate there, and the font is a third hop only discovered after its
+stylesheet parses). Bootstrap Icons ships `font-display: block` and was left
+alone: `swap` on an icon font flashes fallback letterforms, and overriding it
+requires re-declaring `@font-face` with the exact hashed CDN URL, which breaks
+every icon if that hash moves.
+
+**Open item.** Bootstrap CSS is still render-blocking, and the above-the-fold
+markup depends on 41 Bootstrap classes (grid, navbar, dropdown, flex utilities),
+so first paint still waits on the CDN. Self-hosting a subsetted Bootstrap is the
+next meaningful win and was out of scope for this pass.
+
 ### TL;DR — 2026-08-01 (high-level summary of the day)
 
 Full narrative detail is in the entries below; this is the condensed version.
