@@ -32,7 +32,6 @@
   .pov-card h3{font-size:21px}
   .pov-label{font-size:10.5px;letter-spacing:.12em}
 }
-@media (max-width:576px){.rotator .ph{white-space:normal}}
 @media (prefers-reduced-motion:reduce){
   .telemetry .lane{flex-wrap:wrap;width:auto}
 }
@@ -77,15 +76,17 @@
 }
 @media (min-width:992px){
   .hero > .container > .row{align-items:stretch}
-  /* The Exec Scorecard and Steering Snapshot now share this column (it was
-     written when the KPI board was the column's only widget and stretched
-     to fill it — flex:1 1 auto + align-content:space-evenly on the board's
-     row spread the KPI cells apart to consume the leftover height). Both
-     panels now sit at their natural size; any leftover height becomes one
-     clean gap between them via justify-content, instead of inflating the
-     KPI board's internal row spacing. */
-  .hero-right{display:flex;flex-direction:column;justify-content:space-between}
-  .hero-right .kpi-board{flex:0 0 auto}
+  /* The Exec Scorecard and Steering Snapshot share this column. Letting
+     justify-content:space-between dump 100% of the leftover height into
+     one gap between the two cards left Steering Snapshot visibly sunk
+     below the scorecard. Instead: a fixed, modest gap between the cards,
+     and the KPI board itself grows to fill the remaining height (so its
+     bottom still lines up with the hero CTA row) — but only the row of
+     cells is centered within that growth, not stretched apart, so the
+     cells keep their natural compact size. */
+  .hero-right{display:flex;flex-direction:column;gap:20px}
+  .hero-right .kpi-board{flex:1 1 auto;display:flex;flex-direction:column}
+  .hero-right .kpi-board>.row{flex:1 1 auto;align-content:center}
   /* Reserve two lines for every label so cell bottoms line up */
   .kpi-lbl{min-height:2.5em}
 }

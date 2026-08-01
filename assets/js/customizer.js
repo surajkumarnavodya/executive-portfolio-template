@@ -10,6 +10,14 @@
   var cfg = window.PORTFOLIO_CONFIG || {};
   var themeCfg = cfg.theme || {};
   var DEFAULT_SECTION_ORDER = ['about', 'leadership', 'experience', 'success-stories', 'expertise', 'ai-leadership', 'recognition', 'insights', 'testimonials', 'contact'];
+  // Default navbar link order — deliberately NOT the same sequence as
+  // DEFAULT_SECTION_ORDER above. That array is the page's actual top-to-
+  // bottom content flow; this one is how the links are grouped/ordered for
+  // scanability in the nav itself, which doesn't have to match. Each
+  // dropdown (Expertise, Proof) is represented by one anchor id — its
+  // first member — since the nav-reorder logic below moves the whole
+  // dropdown <li>, not individual items inside it.
+  var DEFAULT_NAV_ORDER = ['about', 'expertise', 'experience', 'leadership', 'success-stories', 'recognition'];
 
   var PRESETS = {
     ceo: {
@@ -79,7 +87,7 @@
   };
 
   var FONTS = {
-    inter: { label: 'Inter + Instrument Serif', body: '"Inter", system-ui, sans-serif', display: '"Instrument Serif", Georgia, serif' },
+    inter: { label: 'Inter + Fraunces', body: '"Inter", system-ui, sans-serif', display: '"Fraunces", Georgia, serif' },
     source: { label: 'Source Sans 3 + Playfair Display', body: '"Source Sans 3", system-ui, sans-serif', display: '"Playfair Display", Georgia, serif' },
     system: { label: 'System Sans + Georgia', body: 'system-ui, -apple-system, "Segoe UI", sans-serif', display: 'Georgia, serif' }
   };
@@ -136,6 +144,12 @@
   function saveStorage() {
     sanitizeSectionState();
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function arraysEqual(a, b) {
+    if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) { return false; }
+    for (var i = 0; i < a.length; i += 1) { if (a[i] !== b[i]) { return false; } }
+    return true;
   }
 
   function hexToRgb(hex) {
@@ -204,14 +218,37 @@
         navItem.style.display = visible ? '' : 'none';
       }
     });
-    // Only reorder top-level nav items; links inside a dropdown menu stay in
-    // their submenu rather than being promoted into the primary nav row.
+    // Reorder top-level nav items. Links inside a dropdown menu stay in
+    // their submenu rather than being promoted into the primary nav row —
+    // but the dropdown's own top-level <li> still needs to move to the
+    // position of its first member id, or it is simply never touched by
+    // this loop (its href doesn't match any ":scope > li > .nav-link") and
+    // is left stranded wherever it started, ahead of every section that
+    // *did* get moved. Each dropdown is moved at most once, anchored to
+    // whichever of its member ids the order array reaches first.
+    //
+    // The order followed is state.sectionOrder only once the user has
+    // actually customized it via the Visual Layout Builder (dragging,
+    // importing a config, etc.) — i.e. it no longer matches the shipped
+    // DEFAULT_SECTION_ORDER. Until then, the nav follows DEFAULT_NAV_ORDER,
+    // which is intentionally a *different* sequence from the page's own
+    // section flow (see its declaration above). Once the user has taken
+    // the wheel via the layout builder, their dragged order wins for both
+    // the sections and the nav together, as that feature is designed to.
     var navList = document.querySelector('.navbar .navbar-nav');
     if (navList) {
-      state.sectionOrder.forEach(function (id) {
-        var navLink = navList.querySelector(':scope > li > .nav-link[href="#' + id + '"]');
-        var navItem = navLink && (navLink.closest('li') || navLink);
-        if (navItem) { navList.appendChild(navItem); }
+      var sectionOrderIsDefault = arraysEqual(state.sectionOrder, DEFAULT_SECTION_ORDER);
+      var navOrderSource = sectionOrderIsDefault ? DEFAULT_NAV_ORDER : state.sectionOrder;
+      var movedDropdowns = [];
+      navOrderSource.forEach(function (id) {
+        var directLink = navList.querySelector(':scope > li > .nav-link[href="#' + id + '"]');
+        if (directLink) { navList.appendChild(directLink.closest('li')); return; }
+        var dropdownItem = navList.querySelector('.dropdown-item[href="#' + id + '"]');
+        var dropdownLi = dropdownItem && dropdownItem.closest('li.nav-item.dropdown');
+        if (dropdownLi && movedDropdowns.indexOf(dropdownLi) === -1) {
+          movedDropdowns.push(dropdownLi);
+          navList.appendChild(dropdownLi);
+        }
       });
     }
   }

@@ -14,7 +14,9 @@
   --violet:#8b6bf2;
   --magenta:#d060c4;
   --radius:14px;
-  --font-display:'Instrument Serif',Georgia,serif;   /* single display voice site-wide */
+  --font-display:'Fraunces',Georgia,serif;   /* single display voice site-wide — variable serif (wt 300-700), unlike the old single-weight Instrument Serif */
+  --signature:#c9a227;                        /* restrained warm-gold accent for premium/featured details — reused from the "executive" palette, kept independent of the active accent so it stays a deliberate rare highlight, not a competing brand colour */
+  --signature-rgb:201,162,39;
   --font-serif:var(--font-display);                    /* alias kept for existing rules */
   --font-body:'Inter',system-ui,sans-serif;
   --font-mono:'JetBrains Mono',monospace;

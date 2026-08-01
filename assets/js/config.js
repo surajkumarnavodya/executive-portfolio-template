@@ -66,13 +66,24 @@ window.PORTFOLIO_CONFIG = {
   //                      modern        — forward-leaning, plain-spoken
   //                      refined       — understated, quietly confident
   hero: {
-    eyebrow: 'Enterprise Program & Delivery Leadership',
-    headlinePrefix: 'I turn enterprise complexity into ',
+    eyebrow: 'Driving enterprise digital transformation',
+    // Rendered on its own fixed line — see the <br> right after this text
+    // in index.html's #hero-title. Line 2 (the rotator) is a second,
+    // separate fixed line below it; keep rotatorPhrases short enough to
+    // stay on one line each (see the note there on why).
+    headlinePrefix: 'I own enterprise delivery — ',
+    // Deliberately short (~20-24 characters) so every phrase renders on a
+    // single line at every breakpoint (.rotator forces white-space:nowrap
+    // site-wide now — see assets/css/style.css). That's what keeps the
+    // hero's height identical across every rotation: a longer phrase that
+    // wrapped to a second line would grow the hero and shove the KPI panel
+    // and everything below it down, then back up when a shorter phrase
+    // rotated in.
     rotatorPhrases: [
-      'predictable outcomes.',
-      'on-time, on-budget delivery.',
-      'boardroom-ready confidence.',
-      'disciplined execution at scale.'
+      'on time. on budget.',
+      'client confidence up.',
+      'disciplined delivery.',
+      'outcomes. teams. trust.'
     ],
     valueStatement: 'Enterprise program leader trusted with multi-crore portfolios — turning ambitious transformation mandates into outcomes clients can bet on.',
     activeTone: '',
@@ -262,6 +273,45 @@ window.PORTFOLIO_CONFIG = {
     kpiTilt:         true,   // subtle 3D tilt on the snapshot panel
     scrollReveals:   true,   // fade-in-on-scroll for sections
     scrollProgress:  true    // thin progress bar at the top of the viewport
+  },
+
+  /* -------------------------------------------------- i18n --------------- */
+  // Client-side page translation — no backend, no API key. Driven by
+  // Google's free Website Translator widget (assets/js/i18n.js), which
+  // hides Google's own toolbar/banner and exposes only your navbar globe
+  // button and a one-time suggestion banner. The page's source language
+  // is always English; visitors translate away from that, never to it.
+  //
+  //   enabled                     master switch — false removes the globe
+  //                                button, the menu and the banner entirely
+  //   suggestFromBrowserLocale    on first visit, offer to translate into
+  //                                the visitor's browser language if it
+  //                                isn't English. There is no backend on a
+  //                                static site, so this is the closest
+  //                                available proxy for "their region" —
+  //                                true IP geolocation would need a paid
+  //                                third-party service. A visitor who
+  //                                dismisses it, or picks a language from
+  //                                the menu, is never asked again
+  //                                (remembered in localStorage).
+  //   languages                   offered in the navbar menu and matched
+  //                                against for the banner suggestion.
+  //                                code = a Google Translate language code,
+  //                                label = shown to visitors in their own
+  //                                script.
+  i18n: {
+    enabled: true,
+    suggestFromBrowserLocale: true,
+    languages: [
+      { code: 'hi',    label: 'हिन्दी' },
+      { code: 'es',    label: 'Español' },
+      { code: 'fr',    label: 'Français' },
+      { code: 'de',    label: 'Deutsch' },
+      { code: 'pt',    label: 'Português' },
+      { code: 'ar',    label: 'العربية' },
+      { code: 'zh-CN', label: '中文' },
+      { code: 'ja',    label: '日本語' }
+    ]
   },
 
   /* -------------------------------------------------- data ------------- */

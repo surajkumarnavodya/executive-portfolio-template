@@ -78,7 +78,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="assets/images/profile.avif" type="image/avif">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
       integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
@@ -115,8 +115,6 @@
     <div class="collapse navbar-collapse" id="nav">
       <ul class="navbar-nav mx-auto align-items-xl-center">
         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#leadership">Leadership</a></li>
-        <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navExpertise" role="button" data-bs-toggle="dropdown" aria-expanded="false">Expertise</a>
           <ul class="dropdown-menu" aria-labelledby="navExpertise">
@@ -124,10 +122,12 @@
             <li><a class="dropdown-item" href="#ai-leadership">AI Leadership</a></li>
           </ul>
         </li>
+        <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+        <li class="nav-item"><a class="nav-link" href="#leadership">Leadership</a></li>
+        <li class="nav-item"><a class="nav-link" href="#success-stories">Success Stories</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navProof" role="button" data-bs-toggle="dropdown" aria-expanded="false">Proof</a>
           <ul class="dropdown-menu" aria-labelledby="navProof">
-            <li><a class="dropdown-item" href="#success-stories">Success Stories</a></li>
             <li><a class="dropdown-item" href="#recognition">Recognition</a></li>
             <li><a class="dropdown-item" href="#insights">Insights</a></li>
             <li><a class="dropdown-item" href="#testimonials">Testimonials</a></li>
@@ -143,6 +143,10 @@
           <button class="pal-swatch" type="button" data-palette="executive" aria-label="Executive gold accent"><span></span></button>
           <button class="pal-swatch" type="button" data-palette="purple"    aria-label="Purple accent"><span></span></button>
           <button class="pal-swatch" type="button" data-palette="charcoal"  aria-label="Charcoal accent"><span></span></button>
+        </div>
+        <div class="lang-switch">
+          <button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose language"><i class="bi bi-translate"></i></button>
+          <div class="lang-menu" id="langMenu" hidden role="menu" aria-label="Choose a language"></div>
         </div>
         <span class="nav-divider" aria-hidden="true"></span>
         <a class="btn-accent btn text-nowrap ms-1" href="#contact">Start a conversation</a>
@@ -167,8 +171,8 @@
   <div class="container position-relative" style="z-index:1">
     <div class="row g-4 align-items-start">
       <div class="col-lg-7">
-        <p class="eyebrow eyebrow-chip mb-2"><span class="eyebrow-badge" aria-hidden="true"><i class="bi bi-rocket-takeoff-fill"></i></span><span>Enterprise Program & Delivery Leadership</span></p>
-        <h1 id="hero-title">I turn enterprise complexity into <span class="grad rotator" id="heroRotator"><span class="ph on">predictable outcomes.</span><span class="ph">on-time, on-budget delivery.</span><span class="ph">boardroom-ready confidence.</span><span class="ph">disciplined execution at scale.</span></span></h1>
+        <p class="eyebrow eyebrow-chip mb-2"><span class="eyebrow-badge" aria-hidden="true"><i class="bi bi-rocket-takeoff-fill"></i></span><span>Driving enterprise digital transformation</span></p>
+        <h1 id="hero-title">I own enterprise delivery — <br><span class="grad rotator" id="heroRotator"><span class="ph on">on time. on budget.</span><span class="ph">client confidence up.</span><span class="ph">disciplined delivery.</span><span class="ph">outcomes. teams. trust.</span></span></h1>
         <p class="value-statement">Enterprise program leader trusted with multi-crore portfolios — turning ambitious transformation mandates into outcomes clients can bet on.</p>
         <p class="lede">Enterprise <strong>Program &amp; Project Manager</strong> (<strong>PMP®, Scrum Master</strong>) with <strong>12+ years</strong> of experience and <strong>8+ years</strong> on .NET engineering foundation, delivering multi-account programs through strong governance, client partnerships, technical leadership, and measurable business outcomes.</p>
         <div class="domain-strip" aria-label="Business domains delivered">
@@ -334,7 +338,7 @@
       </div>
     </div>
     <p class="text-2 mt-4 mb-0" style="font-size:13.5px">
-      <i class="bi bi-patch-check me-1" style="color:var(--accent)"></i>
+      <i class="bi bi-patch-check me-1 credentials-signature" aria-hidden="true"></i>
       PMP&reg; · Certified Scrum Master · 12+ years in IT · 8+ years hands-on engineering
     </p>
     <p class="text-2 mt-2 mb-0" style="font-size:13.5px" id="about-currently">
@@ -1054,6 +1058,11 @@
     <button type="button" id="copilotSend" aria-label="Send">➤</button>
   </div>
 </div>
+
+<!-- Mount point for Google's Website Translator widget (assets/js/i18n.js
+     drives its hidden <select> directly; the widget itself is never shown —
+     see the #google_translate_element rule in assets/css/style.css). -->
+<div id="google_translate_element" aria-hidden="true"></div>
 
 <!-- jQuery + Bootstrap bundle -->
 <script defer src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"

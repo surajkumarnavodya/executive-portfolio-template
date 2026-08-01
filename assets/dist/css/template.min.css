@@ -17,7 +17,9 @@
   --violet:#8b6bf2;
   --magenta:#d060c4;
   --radius:14px;
-  --font-display:'Instrument Serif',Georgia,serif;   /* single display voice site-wide */
+  --font-display:'Fraunces',Georgia,serif;   /* single display voice site-wide — variable serif (wt 300-700), unlike the old single-weight Instrument Serif */
+  --signature:#c9a227;                        /* restrained warm-gold accent for premium/featured details — reused from the "executive" palette, kept independent of the active accent so it stays a deliberate rare highlight, not a competing brand colour */
+  --signature-rgb:201,162,39;
   --font-serif:var(--font-display);                    /* alias kept for existing rules */
   --font-body:'Inter',system-ui,sans-serif;
   --font-mono:'JetBrains Mono',monospace;
@@ -356,7 +358,14 @@ body.nav-hidden .navbar.fixed-top{transform:translateY(-100%)}
 .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent-2);opacity:.6;animation:pulse 1.8s ease-out infinite}
 @keyframes pulse{to{transform:scale(1.9);opacity:0}}
 .hero h1{font-size:clamp(38px,5.6vw,64px);font-weight:800;line-height:1.08;margin-bottom:22px}
-.hero h1 .grad{
+/* Applied to each .ph individually, not to .grad/.rotator as a whole: a
+   background-clip:text gradient on the shared wrapper clips to the union
+   of ALL descendant text glyphs regardless of each child's own opacity —
+   every rotator phrase (including the ones sitting at opacity:0, waiting
+   their turn) bled through as overlapping ghost text on top of the
+   visible one. Scoping the gradient to each phrase's own span keeps every
+   phrase's clip mask independent of its siblings. */
+.hero h1 .grad .ph{
   background:linear-gradient(92deg,var(--accent),var(--accent-3));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
@@ -597,17 +606,20 @@ a:focus-visible,button:focus-visible,.form-control:focus-visible{outline:3px sol
 .pov-card p{font-size:15px;color:var(--text-2);margin:0}
 /* ============================================================
    TYPE CONSISTENCY — one display voice everywhere
-   Instrument Serif ships regular (400) only, so every heading
-   is normalized to 400 (killing faux-bold) and small headings
-   get a size bump so the serif holds presence at card scale.
+   Fraunces is a variable serif (weight 300-700), unlike the single-weight
+   Instrument Serif this previously forced everything to 400 to work
+   around. Now headings carry a deliberate weight hierarchy instead: 400
+   for the hero H1 (big enough to read as confident without needing bulk),
+   600 for section titles (the level that has to hold authority at a
+   smaller size), 500 as the general in-between default.
    ============================================================ */
-h1,h2,h3,h4{font-weight:400 !important;letter-spacing:-.02em}
-.sec-title{font-weight:400;letter-spacing:-.025em;font-size:clamp(32px,4.2vw,50px);line-height:1.06}
+h1,h2,h3,h4{font-weight:500;letter-spacing:-.02em}
+.sec-title{font-weight:600;letter-spacing:-.025em;font-size:clamp(32px,4.2vw,50px);line-height:1.06}
 .hero h1{font-weight:400;letter-spacing:-.03em}
-.navbar-brand{font-weight:400;letter-spacing:.01em}
+.navbar-brand{font-weight:500;letter-spacing:.01em}
 .kpi-val{font-weight:400;letter-spacing:-.02em}
 .kpi-val small{font-family:var(--font-mono);font-weight:600}
-.t-role{font-weight:400;font-size:21px}
+.t-role{font-weight:500;font-size:21px}
 /* Bootstrap size utilities read too small for a 400-weight serif */
 h3.fs-5{font-size:1.45rem !important;line-height:1.15}
 h3.fs-6{font-size:1.22rem !important;line-height:1.2}
@@ -627,12 +639,22 @@ h3.fs-4{font-size:1.7rem !important;line-height:1.12}
   transition:width .08s linear;pointer-events:none;
 }
 /* --- Hero phrase rotator (grad span cycles value props) --- */
-.rotator{display:inline-block;position:relative}
+/* display:block + a fixed em-based height (rather than letting the box
+   size to whichever phrase currently has position:relative) is what
+   actually stops the hero — and everything below it — from shifting
+   vertically as phrases rotate. Only the "on" phrase is ever in normal
+   flow; every other phrase is position:absolute and so contributes
+   nothing to this height, meaning without an explicit height the box
+   would resize to match each phrase's own rendered size as it takes its
+   turn. Depends on every phrase staying on one line (nowrap, below) —
+   a phrase that wrapped would get clipped rather than shifting things,
+   which is why hero.rotatorPhrases in config.js are kept short. */
+.rotator{display:block;position:relative;height:1.15em}
 .rotator .ph{
-  display:inline-block;opacity:0;position:absolute;left:0;top:0;white-space:nowrap;
+  display:block;opacity:0;position:absolute;left:0;top:0;white-space:nowrap;
   transform:translateY(12px);transition:opacity .5s ease,transform .5s cubic-bezier(.16,1,.3,1);
 }
-.rotator .ph.on{opacity:1;transform:none;position:relative;white-space:normal}
+.rotator .ph.on{opacity:1;transform:none;position:relative;white-space:nowrap}
 /* --- Delivery telemetry ticker --- */
 .telemetry{
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
@@ -669,10 +691,12 @@ h3.fs-4{font-size:1.7rem !important;line-height:1.12}
 }
 .copilot-fab:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(var(--accent-rgb),.55)}
 .copilot-fab .spark{font-size:17px;line-height:1}
-/* --- Persistent CTA: the "next best action" that stays reachable whenever
-   the sticky navbar (and its own "Let's talk" button) is scrolled off
-   screen. Sits bottom-left, opposite the Copilot FAB, and only appears
-   during the navbar's hidden state to avoid duplicate CTAs on screen. --- */
+/* --- Persistent CTA: the "next best action" that stays reachable once
+   you've scrolled past the hero. Sits bottom-left, opposite the Copilot
+   FAB. Previously tied to the navbar's scroll-hide state (a fallback CTA
+   for while the navbar itself was off-screen); now that the navbar always
+   stays visible, it triggers on the same nav-condensed scroll threshold
+   instead, so it still appears as a persistent scroll companion. --- */
 .persistent-cta{
   position:fixed;left:22px;bottom:22px;z-index:1490;
   display:inline-flex;align-items:center;gap:9px;
@@ -682,7 +706,7 @@ h3.fs-4{font-size:1.7rem !important;line-height:1.12}
   opacity:0;transform:translateY(14px);pointer-events:none;
   transition:opacity .22s var(--ease-standard),transform .22s var(--ease-standard),box-shadow .2s ease;
 }
-body.nav-hidden .persistent-cta{opacity:1;transform:none;pointer-events:auto}
+body.nav-condensed .persistent-cta{opacity:1;transform:none;pointer-events:auto}
 .persistent-cta:hover{color:var(--heading);box-shadow:0 18px 42px rgba(var(--accent-rgb),.5);transform:translateY(-2px)}
 .persistent-cta i{font-size:15px}
 @media (prefers-reduced-motion:reduce){
@@ -1883,7 +1907,13 @@ main:focus{outline:none}
   padding:6px 9px;
   font-size:12px;
 }
-.preset-chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+/* Filled instead of colored-text-on-surface: a plain var(--accent) text
+   color on the (near-white in light mode) chip surface measured 3.22:1 for
+   the navy palette — below the 4.5:1 AA minimum for 12px text, and several
+   of the other 5 accent palettes are equally light. #0c1a2e reuses the same
+   dark-navy-on-accent token already proven (5.4:1-7.2:1) for .btn-accent in
+   dark mode, so it holds up across all six palettes regardless of theme. */
+.preset-chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#0c1a2e}
 
 /* Motion safety / intensity controls */
 [data-motion="none"] *,
@@ -2031,11 +2061,120 @@ a,button,.x-card,.pov-card,.hero-stat,.kpi-cell{
    order wins ties), consolidated to one clean block instead of another
    layer of override.
    =========================================================================== */
-.kpi-board{padding:12px 14px}
-.kpi-cell{padding:9px 10px;gap:9px;min-height:60px}
-.kpi-icon{width:34px;height:34px;font-size:15px}
-.kpi-val{font-size:clamp(16px,1.7vw,19px);line-height:1.05}
-.kpi-lbl{font-size:10.8px;line-height:1.22;margin-top:0}
+.kpi-board{padding:16px 18px}
+.kpi-cell{padding:16px 14px;gap:12px;min-height:82px}
+.kpi-icon{width:40px;height:40px;font-size:18px}
+.kpi-val{font-size:clamp(18px,1.9vw,22px);line-height:1.05}
+.kpi-lbl{font-size:11.5px;line-height:1.28;margin-top:0}
+
+/* ===========================================================================
+   LANGUAGE SWITCHER + TRANSLATE SUGGESTION BANNER (assets/js/i18n.js)
+   =========================================================================== */
+.lang-switch{position:relative}
+.lang-menu{
+  position:absolute;top:calc(100% + 10px);right:0;z-index:1200;
+  min-width:190px;max-height:60vh;overflow-y:auto;
+  background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);padding:6px;
+}
+.lang-menu[hidden]{display:none}
+.lang-item{
+  display:block;width:100%;text-align:left;
+  background:none;border:none;color:var(--text-2);font-weight:500;font-size:14px;
+  border-radius:8px;padding:9px 14px;cursor:pointer;
+  transition:background .15s ease,color .15s ease;
+}
+.lang-item:hover,.lang-item:focus-visible{background:rgba(var(--accent-rgb),.12);color:var(--heading)}
+.lang-item[aria-pressed="true"]{color:var(--accent);font-weight:700}
+
+.i18n-banner{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:1800;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  max-width:min(560px,calc(100vw - 32px));
+  background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-xl);padding:16px 20px;
+  animation:i18n-banner-in .28s var(--ease-emphasized);
+}
+.i18n-banner.closing{animation:i18n-banner-out .2s ease forwards}
+@keyframes i18n-banner-in{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes i18n-banner-out{to{opacity:0;transform:translate(-50%,14px)}}
+.i18n-banner-text{margin:0;font-size:14.5px;color:var(--text);flex:1 1 240px}
+.i18n-banner-text strong{color:var(--heading)}
+.i18n-banner-actions{display:flex;gap:10px;flex-shrink:0}
+.i18n-banner-actions .btn{padding:9px 18px;font-size:14px}
+@media (max-width:575px){
+  .i18n-banner{left:12px;right:12px;bottom:14px;transform:none;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .i18n-banner,.i18n-banner.closing{animation:none}
+}
+
+/* Google's Website Translator widget is driven headlessly via its hidden
+   <select> (see i18n.js) — its own banner iframe, toolbar and per-word
+   hover tooltip are suppressed so no visitor ever sees Google's UI. */
+#google_translate_element{display:none!important}
+.goog-te-banner-frame,.skiptranslate>iframe{display:none!important;visibility:hidden!important;height:0!important}
+body{top:0!important;position:static!important}
+.goog-text-highlight{background:none!important;box-shadow:none!important}
+
+/* ===========================================================================
+   MOTION PRINCIPLES
+   ---------------------------------------------------------------------------
+   Written down so future additions stay consistent rather than each hover
+   effect inventing its own timing:
+     1. Two curves only — var(--ease-standard) for anything that moves a
+        short, predictable distance (hovers, toggles); var(--ease-emphasized)
+        for anything that enters/settles (reveals, panels appearing). Never
+        a third curve for a one-off effect.
+     2. Distance implies duration — a 2-4px hover lift reads instantly
+        (var(--dur-fast)); a panel or reveal earns var(--dur-base) or
+        var(--dur-slow). Nothing animates slower than ~400ms; slow motion
+        reads as sluggish, not premium.
+     3. Motion communicates state, not decoration — lifts/shadows signal
+        "interactive", reveals signal "new content arrived". If an
+        animation doesn't carry one of those two meanings, it shouldn't
+        exist (this is why hover states here are subtle lifts, not spins,
+        bounces or color sweeps).
+     4. Everything routes through --motion-scale and [data-motion], so the
+        Template Customizer's motion intensity setting and
+        prefers-reduced-motion both work by construction, not by every
+        new rule remembering to add its own media query.
+   =========================================================================== */
+
+/* ===========================================================================
+   SIGNATURE ACCENT — a second, rare colour
+   ---------------------------------------------------------------------------
+   var(--accent) carries the whole page — buttons, links, borders, icons —
+   so on its own it can't also mean "this one thing is special". var(--accent-2)
+   is spoken for too: it's the RAG-green "on track" signal in the Scorecard
+   and Steering Snapshot and shouldn't be diluted into a second decorative
+   role. var(--signature) is a third colour used nowhere else, kept
+   deliberately rare — a couple of moments, not a repeating pattern — so it
+   still reads as a highlight instead of becoming a third "brand colour"
+   competing with the other two.
+   =========================================================================== */
+.credentials-signature{
+  color:var(--signature);
+}
+
+/* ===========================================================================
+   BUTTON POLISH — one consistent hover gesture
+   ---------------------------------------------------------------------------
+   Padding intentionally still varies by context (a navbar button is
+   correctly more compact than a hero or contact CTA — that's hierarchy,
+   not inconsistency). What was inconsistent was the hover *feel*; this is
+   the one shared gesture every accent/outline button now uses, regardless
+   of where it sits.
+   =========================================================================== */
+.btn-accent,.btn-outline,.hero-cta a,.cta-final a{
+  transition:
+    transform calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard),
+    box-shadow calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard),
+    filter calc(var(--dur-fast) * var(--motion-scale)) var(--ease-standard);
+}
+.btn-accent:hover,.hero-cta a.btn-accent:hover,.cta-final a.cta-primary:hover{
+  filter:brightness(1.04);
+}
 
 /* ===== responsive.css ===== */
 /*!
@@ -2072,7 +2211,6 @@ a,button,.x-card,.pov-card,.hero-stat,.kpi-cell{
   .pov-card h3{font-size:21px}
   .pov-label{font-size:10.5px;letter-spacing:.12em}
 }
-@media (max-width:576px){.rotator .ph{white-space:normal}}
 @media (prefers-reduced-motion:reduce){
   .telemetry .lane{flex-wrap:wrap;width:auto}
 }
@@ -2117,15 +2255,17 @@ a,button,.x-card,.pov-card,.hero-stat,.kpi-cell{
 }
 @media (min-width:992px){
   .hero > .container > .row{align-items:stretch}
-  /* The Exec Scorecard and Steering Snapshot now share this column (it was
-     written when the KPI board was the column's only widget and stretched
-     to fill it — flex:1 1 auto + align-content:space-evenly on the board's
-     row spread the KPI cells apart to consume the leftover height). Both
-     panels now sit at their natural size; any leftover height becomes one
-     clean gap between them via justify-content, instead of inflating the
-     KPI board's internal row spacing. */
-  .hero-right{display:flex;flex-direction:column;justify-content:space-between}
-  .hero-right .kpi-board{flex:0 0 auto}
+  /* The Exec Scorecard and Steering Snapshot share this column. Letting
+     justify-content:space-between dump 100% of the leftover height into
+     one gap between the two cards left Steering Snapshot visibly sunk
+     below the scorecard. Instead: a fixed, modest gap between the cards,
+     and the KPI board itself grows to fill the remaining height (so its
+     bottom still lines up with the hero CTA row) — but only the row of
+     cells is centered within that growth, not stretched apart, so the
+     cells keep their natural compact size. */
+  .hero-right{display:flex;flex-direction:column;gap:20px}
+  .hero-right .kpi-board{flex:1 1 auto;display:flex;flex-direction:column}
+  .hero-right .kpi-board>.row{flex:1 1 auto;align-content:center}
   /* Reserve two lines for every label so cell bottoms line up */
   .kpi-lbl{min-height:2.5em}
 }
@@ -2379,7 +2519,7 @@ body.studio-page a {
 }
 
 .studio-title {
-  font-family: var(--font-display, 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-display, 'Fraunces', Georgia, serif);
   font-size: clamp(26px, 3vw, 36px);
   margin: 0 0 6px;
   letter-spacing: -.02em;
@@ -2730,7 +2870,7 @@ input[type="color"] {
 .preview-section h3,
 .preview-section h4 {
   margin: 0 0 8px;
-  font-family: var(--font-display, 'Instrument Serif', Georgia, serif);
+  font-family: var(--font-display, 'Fraunces', Georgia, serif);
 }
 
 .preview-list {

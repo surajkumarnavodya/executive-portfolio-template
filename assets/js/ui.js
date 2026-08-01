@@ -33,25 +33,14 @@
   function paintTele() {
     document.body.classList.toggle('tele-hide', (window.scrollY || document.documentElement.scrollTop) > 60);
   }
-  /* ---------- Sticky nav: condense + smart-hide -----------------------
+  /* ---------- Sticky nav: condense on scroll -----------------------
      Below ~120px the bar compacts and gains a shadow (it's now "elevated"
-     over content). Past that point it hides on scroll-down and reappears
-     on scroll-up, so it never blocks reading but is always a scroll away.
-     Skipped while the mobile menu is open so a link tap can't vanish. */
-  var lastScrollY = window.scrollY || document.documentElement.scrollTop;
-  var navEl = document.getElementById('nav');
+     over content). The bar itself always stays visible — an earlier
+     scroll-direction "smart-hide" (translating it off-screen on scroll
+     down) read as the menu randomly disappearing, so it was removed. */
   function paintNav() {
     var y = window.scrollY || document.documentElement.scrollTop;
     document.body.classList.toggle('nav-condensed', y > 120);
-    var menuOpen = navEl && navEl.classList.contains('show');
-    if (!menuOpen) {
-      if (y > lastScrollY && y > 220) {
-        document.body.classList.add('nav-hidden');
-      } else {
-        document.body.classList.remove('nav-hidden');
-      }
-    }
-    lastScrollY = y;
   }
   window.addEventListener('scroll', function () { paintBar(); paintTele(); paintNav(); }, { passive: true });
   window.addEventListener('resize', paintBar);
@@ -137,7 +126,7 @@
       a: "<b>He owns outcomes, not just plans.</b> Client-sponsor relationships, commercial discipline (estimation, SLA, margin), team growth — backed by 8 years of building the systems the plans describe. That engineering depth changes every conversation with architecture and the boardroom." },
     { k: ['contact','email','phone','reach','call','hire','connect','talk','touch'],
       a: "<b>Direct channels:</b> surajkumar.navodya@gmail.com · +91 90491 41305 · LinkedIn: linkedin.com/in/surajkumar-navodya. He replies within one business day." },
-    { k: ['location','mumbai','','relocate','relocation','city','based','where','remote','abroad','passport'],
+    { k: ['location','mumbai','relocate','relocation','city','based','where','remote','abroad','passport'],
       a: "<b>Based in Mumbai</b> — open to relocation across India and internationally; passport ready." },
     { k: ['award','recognition','mvp','achievement','won','epic','squad','spot'],
       a: "<b>Epic Squad Award (India & ME)</b>, 2× LTIMindtree Spot Award: Super Crew, and 2× C# Corner MVP — a public record of technical writing and community contribution." },
@@ -262,6 +251,7 @@
       var score = 0;
       words.forEach(function (w) {
         entry.k.forEach(function (k) {
+          if (!k) { return; }   // an empty keyword would match every word via indexOf('')===0
           if (w === k) score += 2;
           else if (w.length > 3 && (k.indexOf(w) === 0 || w.indexOf(k) === 0)) score += 1;
         });

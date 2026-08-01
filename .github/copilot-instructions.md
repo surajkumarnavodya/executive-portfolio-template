@@ -131,3 +131,79 @@ This file acts as persistent memory across sessions. It is updated after every c
 - The `assets/dist/*` bundles remain hand-maintained (no build step in this repo). Any future edit to a source `.js`/`.css` file must be re-mirrored into `assets/dist/js/template.min.js` / `assets/dist/css/template.min.css` in the same pass, and the JS bundle should be spot-checked with `node -c assets/dist/js/template.min.js` before considering the change done — that single command would have caught this entire regression immediately.
 - Consider committing the current working-tree state to git (last real commit is `addfc6a`, over 10 files behind) so future regressions can be diffed against a recent baseline instead of a stale one.
 
+## Current Objective (browser verification + hero-right gap fix)
+
+Actually loaded `index.html` in a browser (Playwright, headless) to verify the regression fix pass above — confirmed clean: no console errors, theme toggle flips `data-bs-theme`, palette swatches flip `data-palette`, Executive Scorecard renders, and the hero-right column's bottom edge lines up exactly with the hero CTA row's bottom edge (`align-items:stretch` on `.hero > .container > .row` plus the column being a flex column guarantees this regardless of content height).
+
+However, the `justify-content:space-between` change from the previous pass (`assets/css/responsive.css`, `@media (min-width:992px)`) dumped 100% of the leftover column height into one gap between Executive Scorecard and Steering Snapshot — measured at 113.6px, which read as the Steering Snapshot card being visibly "sunk" below the scorecard, confirmed against a user screenshot.
+
+- `assets/css/responsive.css` (+ mirrored in `assets/dist/css/template.min.css`) — replaced `justify-content:space-between` / `.kpi-board{flex:0 0 auto}` with a fixed `gap:20px` on `.hero-right` plus `.kpi-board{flex:1 1 auto}` and `.kpi-board>.row{flex:1 1 auto;align-content:center}`. The KPI board still grows to fill the column (bottom stays pinned to the CTA row level — verified 830.66px both sides at 1440px width), but the growth is absorbed by centering the cell grid within the board rather than by an external dead gap, and cells keep their natural size instead of stretching apart (avoiding a repeat of the original "oversized Steering Snapshot" complaint).
+
+**Open:** re-verify at narrower desktop widths (992–1200px) and confirm the 20px gap still reads well once real (non-placeholder) Executive Scorecard content is in place. `assets/js/navigation.js` / `assets/dist/js/template.min.js` also carry an uncommitted hover-to-open dropdown change and `assets/css/style.css` an uncommitted preset-chip contrast fix from a separate session — unrelated to this fix, left as-is.
+
+## Current Objective (dropdown hover, preset-chip contrast, Steering Snapshot cell sizing)
+
+Landed the hover-to-open dropdown and preset-chip contrast fix that were already sitting uncommitted (see CLAUDE.md for full detail — kept in sync there). Summary: `assets/js/navigation.js` opens nav dropdowns on hover via the real `bootstrap.Dropdown` API (gated to fine-pointer/hover devices); an exhaustive Playwright contrast audit found no reproducible dark-mode "text not appearing" bug (one false alarm was my own test racing page load — use `waitUntil:'networkidle'`), but did find and fix a real light-mode AA failure on the active `.preset-chip` in the Template Customizer. Then, per a user screenshot, bumped `.kpi-cell`/`.kpi-icon`/`.kpi-val`/`.kpi-lbl` sizing back up (it read too cramped after the earlier shrink) in the same size-correction block at the bottom of `assets/css/style.css`. Both dist bundles rebuilt from source each time; `node -c` passes.
+
+**Found but not touched (at the time):** `assets/js/i18n.js` (client-side translate widget) existed on disk with matching navbar markup but was entirely unwired. Flagged to the user, who asked for it to be finished — see CLAUDE.md for the full writeup (kept in sync there). Summary: added a `config.js` `i18n` block, an `#google_translate_element` mount div in `index.html`, a full CSS block (menu/banner styling + Google-UI suppression), and included `i18n.js` in the dist bundle. Also fixed a real bug found along the way: the `change` event driving Google's hidden translate `<select>` wasn't set to bubble, so the selection never actually fired a translation. Verified with Playwright: correct locale-based banner suggestion, dismiss persistence, language menu contents, and genuine network engagement with Google's translation engine — could not get a 100%-certain visual confirmation of the on-page text swap inside this headless sandboxed browser (Google's widget is known to behave differently under bot-detection signals); recommend one manual check in a real browser tab.
+
+## Current Objective (removed navbar smart-hide-on-scroll)
+
+User reported the top nav menu disappearing while scrolling down as a bug. This was the intentional "smart-hide" feature from the marketplace-transformation pass (`assets/js/ui.js`'s `paintNav()` added `nav-hidden` on scroll-down past 220px, translating `.navbar.fixed-top` off-screen). Removed the hide/reappear direction-tracking logic entirely, keeping only the `nav-condensed` compact/shadow treatment — the navbar now always stays visible. See CLAUDE.md for full detail, including a note that `.persistent-cta` (a fallback CTA button that only ever appeared while the nav was hidden) is now permanently dormant as a side effect — left in place, not removed, since that wasn't asked for. Verified with Playwright on desktop and mobile: navbar bounding box stays pinned at `y:0` through repeated scroll-down/scroll-up, `nav-hidden` never appears in `body.className`, zero console errors.
+
+## Current Objective (Copilot wrong answers, dead persistent CTA, mis-highlighting nav, scrambled menu order)
+
+Four unrelated bugs reported together — full root-cause writeup in CLAUDE.md (kept in sync there). Summary:
+1. **Copilot KB bug** (`assets/js/ui.js`): a stray empty string in the location entry's keyword array exploited `"anyword".indexOf('')===0` (always true in JS) to silently bias every query toward the location answer — fixed by removing it and guarding the scoring loop against empty keywords.
+2. **`.persistent-cta` dead** (`assets/css/style.css`): was a side effect of the previous "remove navbar hide" fix — the button was gated on `body.nav-hidden`, which no longer fires. Retriggered on `body.nav-condensed` instead.
+3. **Scroll-spy mis-highlighting** (`assets/js/navigation.js`): `paintActive()` picked the last nav target in *menu* order that had been scrolled past, which only works if menu order matches page order — broken since Success Stories moved earlier on the page in an older pass without the nav following. Fixed to compare real page offsets instead. Also hardened the post-click lock to release on `scrollend` (where supported) rather than a fixed timeout that could expire mid-scroll.
+4. **Menu order** (`assets/js/customizer.js` + `index.html`): About was already first in the HTML — the actual bug was `applySectionLayout()` (which runs automatically since the Template Customizer is on by default) only repositioning nav items with a direct top-level link, silently stranding the Expertise/Proof dropdown wrappers at the front. Fixed the reorder loop to also move a dropdown's own `<li>` when none of its items match directly. Also promoted "Success Stories" out of the Proof dropdown to a top-level link in `index.html`, matching its real page position.
+
+Verified together with Playwright after rebuilding both dist bundles — all four confirmed fixed, zero console errors.
+
+## Current Objective (i18n: translate needed two clicks, now works on the first)
+
+User confirmed the exact race condition flagged as unresolved in the earlier i18n session: picking a language did nothing on the first click, only the second. Full root-cause writeup in CLAUDE.md. Summary: `assets/js/i18n.js`'s `translateTo()` only checked `if (combo)` before setting `combo.value = code` — but on a cold load, Google's `<select>` exists before its `<option>` list is populated, so the value assignment silently no-oped on the first attempt. Added `comboHasOption()` and now retry (same mechanism already used for "combo not found") until the target option genuinely exists. Verified with Playwright: fresh page load → open menu → click Hindi once → full page translated within 2.5s, zero console errors.
+
+## Current Objective (decoupled nav order from page section order)
+
+User requested a specific nav sequence (About, Expertise, Experience, Leadership, Success Stories, Proof) that does not match the page's actual section flow — a direct conflict with the previous session's fix that made the nav auto-follow `DEFAULT_SECTION_ORDER` on every load. Full detail in CLAUDE.md. Summary: added a separate `DEFAULT_NAV_ORDER` constant in `assets/js/customizer.js`, used for the nav specifically whenever `state.sectionOrder` is still the shipped default (i.e., the user hasn't actively dragged sections in the Visual Layout Builder) — once they have, nav and sections stay coupled to their custom order as that feature is designed to. `index.html`'s authored nav order updated to match for the no-JS/SEO baseline. `DEFAULT_SECTION_ORDER` itself (which drives the actual page content order) was deliberately left untouched. Verified with Playwright: correct nav order on a fresh load, page section order unaffected, scroll-spy still correct, and the drag-customization coupling still works when actively used.
+
+## Current Objective (85-item overhaul backlog — Phase 1: visual design system)
+
+User handed over an 85-item backlog (numbered 15-99: design system, content, full data-driven architecture, responsive/performance/a11y/SEO, final polish). Asked 3 scoping questions before starting (format, whether to do the big architecture reversal in items 45-50, sequencing) — answers: just implement using judgment; yes do the full JSON rewrite; visual design system first. Tracked as 5 phases via TaskCreate; this pass = Phase 1 only.
+
+Full writeup in CLAUDE.md. Summary of what changed: swapped the display typeface from single-weight Instrument Serif to variable-weight **Fraunces** everywhere it was referenced (`variables.css`, `index.html`'s font link, `customizer.js`'s font preset, `studio.css` fallbacks), which let a real heading-weight hierarchy replace the old `font-weight:400 !important` hack. Added one new rare "signature" gold token (`--signature`) used in exactly one spot (About's credentials line) — deliberately did not touch the accent/RAG-green system, which is semantically load-bearing, not decorative. Documented motion principles and consolidated button hover transitions to one shared gesture. Left section spacing, per-context button padding, and card structure alone where the existing choices were already deliberate.
+
+Note for future verification passes: Python's `python -m http.server` intermittently drops connections under rapid Playwright automation in this environment, producing false-positive failures (fonts/icons "not loading", customizer "not initializing"). Switch to `npx http-server` for reliable local test serving.
+
+**Next:** Phase 2 (full data-driven JSON content architecture, items 45-50) is a separate, much larger pass — not started yet.
+
+## TL;DR — 2026-08-01 (high-level summary of the day)
+
+Condensed version of everything above; see CLAUDE.md for the same summary and full per-topic detail.
+
+**Committed** (`6f0a7e0`): executive content pass + homepage restructure (config-driven hero copy, new About/Insights sections, trust-signal fixes), and a dist-bundle regression fix (a JS syntax error had silently disabled theme toggle/customizer/nav/count-up sitewide) plus restored broken CTA links and the Executive Scorecard panel.
+
+**Uncommitted** (13 modified files + new `assets/js/i18n.js` — still sitting in the working tree):
+- Hero-right layout fix — KPI board/Steering Snapshot gap redistribution.
+- Nav polish — hover-to-open dropdowns, a WCAG contrast fix on the active preset chip, larger Steering Snapshot cell padding.
+- i18n / translate feature wired up end-to-end (Google Website Translator integration) — new file `assets/js/i18n.js`.
+- Removed the navbar's scroll-triggered "smart-hide" (was reading as the menu randomly vanishing).
+- One pass fixing four reported bugs: Copilot mis-answering, a dead persistent CTA, mis-highlighting scroll-spy, dropdown `<li>`s not reordering.
+- i18n "second click" bug fixed (race with Google's `<select>` option population).
+- Decoupled default nav link order from page section order (`DEFAULT_NAV_ORDER`).
+- Phase 1 of the 85-item design-system backlog: typeface swap to Fraunces with a weight hierarchy, one restrained new accent token, consolidated button hover motion.
+
+**Not yet committed** — worth a checkpoint commit before further work; Phase 2 (data-driven JSON content rewrite) is planned next.
+
+## Current Objective (hero headline rewrite + rotator height/rendering fix)
+
+User asked for new hero copy (fixed line "I own enterprise delivery —" + 4 short rotating phrases, matching a reference screenshot), with two explicit constraints: exactly two lines, and no page shift as phrases rotate. Full writeup in CLAUDE.md. Summary: updated `config.js`/`index.html` copy, added a `<br>` to make the two-line split structural rather than incidental wrap, and gave `.rotator` a fixed `height:1.15em` (`assets/css/style.css`) instead of letting it size to whichever phrase currently has `position:relative` — that's what was actually causing the page to shift, since the other phrases (position:absolute) never contributed to the container's height. Removed a mobile media query that re-enabled wrapping, since it would have defeated the fix now that all phrases are short/nowrap by design.
+
+Found and fixed a real pre-existing bug while verifying: the gradient text effect (`background-clip:text`) was applied to the shared rotator wrapper instead of each phrase individually, so *every* phrase's text — including the ones sitting at `opacity:0` — bled through as overlapping ghost text, in the default untouched page state, at every viewport. Moved the gradient rule to target each `.ph` span directly.
+
+Also chased and ruled out two false leads during verification (both were the test script measuring mid-transition, not real bugs) — worth remembering: this rotator needs 800ms+ settle time before a screenshot/measurement is trustworthy, not its own 500ms transition duration.
+
+Verified with Playwright: all 4 phrases render as a clean 2-line layout matching the reference, hero height bit-for-bit identical across all 4 (843.265625px), zero horizontal overflow at 320-1400px once fully settled.
+
