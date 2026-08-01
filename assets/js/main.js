@@ -40,6 +40,32 @@
     each('.brand-avatar', function (el) { el.setAttribute('src', id.photo); });
   }
 
+  /* ---------------- hero content -------------------------------------
+   * Drives the hero headline, value proposition, stats and CTAs entirely
+   * from cfg.hero (assets/js/config.js) via the hero component renderer
+   * in components.js, so the copy can change without touching index.html.
+   * ------------------------------------------------------------------- */
+  if (cfg.hero && window.PortfolioComponents) {
+    window.PortfolioComponents.render('hero', cfg.hero);
+  }
+
+  /* ---------------- about content -------------------------------------
+   * Drives the About executive-summary section (title, positioning
+   * statement, narrative paragraphs, pillars, credentials) entirely from
+   * cfg.about via the about component renderer in components.js.
+   * ------------------------------------------------------------------- */
+  if (cfg.about && window.PortfolioComponents) {
+    window.PortfolioComponents.render('about', cfg.about);
+  }
+
+  /* ---------------- insights content -----------------------------------
+   * Drives the Insights / thought-leadership section title from
+   * cfg.insights via the insights component renderer in components.js.
+   * ------------------------------------------------------------------- */
+  if (cfg.insights && window.PortfolioComponents) {
+    window.PortfolioComponents.render('insights', cfg.insights);
+  }
+
   /* ---------------- contact ----------------------------------------- */
   if (ct.email) {
     var subject = ct.emailSubject ? '?subject=' + encodeURIComponent(ct.emailSubject) : '';
@@ -101,8 +127,10 @@
   /* ---------------- section visibility ------------------------------ */
   // config key -> section id in index.html
   var SECTION_IDS = {
+    about:          'about',
     leadership:     'leadership',
     successStories: 'success-stories',
+    insights:       'insights',
     aiLeadership:   'ai-leadership',
     expertise:      'expertise',
     experience:     'experience',
@@ -117,7 +145,8 @@
       var sec = document.getElementById(domId);
       if (sec) { sec.remove(); }
       // Drop the matching navbar link so nothing points at a missing target.
-      each('.navbar .nav-link[href="#' + domId + '"]', function (a) {
+      // Matches both top-level .nav-link items and links inside dropdown menus.
+      each('.navbar .nav-link[href="#' + domId + '"], .navbar .dropdown-item[href="#' + domId + '"]', function (a) {
         var li = a.closest('li');
         (li || a).remove();
       });

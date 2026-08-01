@@ -37,6 +37,139 @@ window.PORTFOLIO_CONFIG = {
     tagline: 'PROGRAM & DELIVERY MANAGEMENT'
   },
 
+  /* -------------------------------------------------- hero -------------- */
+  // Everything shown in the hero (the first viewport of the page) is driven
+  // from here — no HTML editing required. assets/js/main.js hands this
+  // object to the `hero` component in assets/js/components.js, which
+  // populates the existing markup in index.html.
+  //
+  //   eyebrow          small chip above the headline
+  //   headlinePrefix   the static lead-in text of the <h1>
+  //   rotatorPhrases   phrases that cycle through the gradient span in the
+  //                    headline (must match the number of .ph spans in the
+  //                    markup — currently 4 — extra entries are ignored)
+  //   valueStatement   one-line value proposition directly under the H1
+  //   lede             short credibility paragraph — a small set of safe
+  //                    tags (strong, em, a, span, b) may be used
+  //   stats            the 4 quick-stat tiles (value + label)
+  //   highlights       the "Selected highlights" ribbon items (value + label)
+  //   primaryCta       label/icon markup for the main "above the fold" CTA
+  //   secondaryCtas    labels for the outline buttons that follow it
+  //   activeTone       which entry of toneVariants (below) overrides the
+  //                    eyebrow/headlinePrefix/rotatorPhrases/valueStatement
+  //                    fields above at load time. Set to '' or an unknown key
+  //                    to fall back to the fields defined directly on hero.
+  //   toneVariants     three ready-made premium brand-voice options for the
+  //                    headline + subheadline — swap `activeTone` to try
+  //                    each one without touching any other hero field:
+  //                      authoritative — command-driven, results-first
+  //                      modern        — forward-leaning, plain-spoken
+  //                      refined       — understated, quietly confident
+  hero: {
+    eyebrow: 'Enterprise Program & Delivery Leadership',
+    headlinePrefix: 'I turn enterprise complexity into ',
+    rotatorPhrases: [
+      'predictable outcomes.',
+      'on-time, on-budget delivery.',
+      'boardroom-ready confidence.',
+      'disciplined execution at scale.'
+    ],
+    valueStatement: 'Enterprise program leader trusted with multi-crore portfolios — turning ambitious transformation mandates into outcomes clients can bet on.',
+    activeTone: '',
+    toneVariants: {
+      authoritative: {
+        eyebrow: 'Enterprise Program & Delivery Command',
+        headlinePrefix: 'I take command of enterprise complexity and deliver ',
+        rotatorPhrases: [
+          'predictable outcomes.',
+          'on-time, on-budget delivery.',
+          'boardroom-ready confidence.',
+          'zero-compromise execution.'
+        ],
+        valueStatement: 'The single point of accountability for multi-crore portfolios — decisive under pressure, uncompromising on delivery.'
+      },
+      modern: {
+        eyebrow: 'Program & Delivery Leadership · AI-Augmented',
+        headlinePrefix: 'I build delivery engines that turn complexity into ',
+        rotatorPhrases: [
+          'momentum.',
+          'shipped outcomes.',
+          'teams that scale.',
+          'AI-augmented speed.'
+        ],
+        valueStatement: 'A hands-on delivery leader for multi-crore portfolios — pairing modern engineering instincts with AI-augmented ways of working.'
+      },
+      refined: {
+        eyebrow: 'Enterprise Program & Delivery Leadership',
+        headlinePrefix: 'Enterprise complexity, quietly resolved into ',
+        rotatorPhrases: [
+          'dependable outcomes.',
+          'on-time delivery.',
+          'earned stakeholder trust.',
+          'considered, disciplined execution.'
+        ],
+        valueStatement: 'Trusted with multi-crore portfolios — a measured hand behind ambitious transformation, outcomes clients can quietly rely on.'
+      }
+    },
+    lede: 'Enterprise <strong>Program &amp; Project Manager</strong> (<strong>PMP&reg;, Scrum Master</strong>) with <strong>12+ years</strong> of experience and an <strong>8+ year</strong> engineering foundation — delivering multi-account programs through disciplined governance, client partnership and measurable business outcomes.',
+    stats: [
+      { value: '12+',    label: 'Years Experience' },
+      { value: '₹2Cr+',  label: 'Portfolio Governed' },
+      { value: '40+',    label: 'Projects Delivered' },
+      { value: '30+',    label: 'Engineers Led' }
+    ],
+    highlights: [
+      { value: '98%',  label: 'Delivery Excellence' },
+      { value: 'AI',   label: 'Transformation Programs' },
+      { value: '5+',   label: 'Enterprise Awards' },
+      { value: 'Zero', label: 'Critical Go-Live Escalations' },
+      { value: '+30%', label: 'Business Adoption' }
+    ],
+    primaryCta: '<i class="bi bi-calendar-check me-2"></i>Schedule an Executive Conversation',
+    secondaryCtas: [
+      { label: 'View case studies' }
+    ]
+  },
+
+  /* -------------------------------------------------- about -------------- */
+  // Executive-summary section shown right after the hero. Everything here
+  // is applied to the existing markup in index.html by the `about`
+  // component in assets/js/components.js — no HTML editing required.
+  //
+  //   eyebrow        small chip above the heading
+  //   title          section heading (executive positioning statement)
+  //   summary        one-line positioning statement directly under the title
+  //   paragraphs     2-3 short paragraphs covering leadership style, impact,
+  //                  and career positioning — this is the narrative bio
+  //   pillars        3 short cards (icon key + title + body) summarising
+  //                  leadership / impact / positioning
+  //   credentials    small inline credibility line (e.g. certifications)
+  about: {
+    eyebrow: 'About',
+    title: 'An engineer-turned-executive who leads delivery, not just tracks it.',
+    summary: 'I run enterprise programs the way a P\u0026L owner would — accountable for outcomes, not just RAG statuses.',
+    paragraphs: [
+      'Twelve-plus years in IT, the first eight spent hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency — and I use both to keep delivery plans honest.',
+      'Today I own multi-account portfolios worth \u20B92Cr+, leading 30+ engineers and standing as the single point of accountability for client sponsors when delivery health, risk, or scope get difficult. My leadership style is calm under pressure, direct with stakeholders, and structured enough to scale without me in every room.',
+      'I am now applying that same discipline to AI-augmented delivery — using generative and agentic tooling to compress planning, reporting, and quality-assurance cycles, so the teams I lead ship faster without sacrificing governance.'
+    ],
+    pillars: [
+      { icon: 'bi-compass', title: 'Leadership', body: 'Own the plan, the risk register and the client relationship — with the technical depth to challenge estimates intelligently.' },
+      { icon: 'bi-graph-up-arrow', title: 'Impact', body: '98%+ delivery excellence, 30% adoption lift, zero critical go-live escalations across multi-account portfolios.' },
+      { icon: 'bi-award', title: 'Positioning', body: 'PMP\u00AE and Scrum Master certified, AI-augmented delivery practitioner, and one of the few leaders who can still read the code.' }
+    ],
+    credentials: 'PMP\u00AE \u00B7 Certified Scrum Master \u00B7 12+ years in IT \u00B7 8+ years hands-on engineering'
+  },
+
+  // insights ---------------------------------------------------------------
+  // Thought-leadership / public POV section. Only the section title is
+  // currently data-driven here (the cards live in index.html as SEO-visible
+  // links to published articles/answers); edit `title` to retitle the
+  // section without touching markup.
+  insights: {
+    title: 'What I\u2019m thinking about, in public.'
+  },
+
   /* -------------------------------------------------- contact ----------- */
   contact: {
     email: 'surajkumar.navodya@gmail.com',
@@ -107,8 +240,10 @@ window.PORTFOLIO_CONFIG = {
   // Removing a section deletes it from the DOM rather than hiding it, so the
   // markup stays valid and screen readers do not announce empty landmarks.
   sections: {
+    about:          true,   // executive summary bio, just after the hero
     leadership:     true,   // "Delivery credibility, earned in code"
     successStories: true,   // case studies
+    insights:       true,   // thought-leadership / POV articles
     aiLeadership:   true,   // AI-augmented delivery
     expertise:      true,   // capability matrix
     experience:     true,   // timeline

@@ -113,14 +113,26 @@
       <i class="bi bi-list fs-2" style="color:var(--heading)"></i>
     </button>
     <div class="collapse navbar-collapse" id="nav">
-      <ul class="navbar-nav mx-auto">
+      <ul class="navbar-nav mx-auto align-items-xl-center">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
         <li class="nav-item"><a class="nav-link" href="#leadership">Leadership</a></li>
-        <li class="nav-item"><a class="nav-link" href="#success-stories">Success Stories</a></li>
-        <li class="nav-item"><a class="nav-link" href="#ai-leadership">AI Leadership</a></li>
-        <li class="nav-item"><a class="nav-link" href="#expertise">Expertise</a></li>
         <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-        <li class="nav-item"><a class="nav-link" href="#recognition">Recognition</a></li>
-        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navExpertise" role="button" data-bs-toggle="dropdown" aria-expanded="false">Expertise</a>
+          <ul class="dropdown-menu" aria-labelledby="navExpertise">
+            <li><a class="dropdown-item" href="#expertise">Capabilities</a></li>
+            <li><a class="dropdown-item" href="#ai-leadership">AI Leadership</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navProof" role="button" data-bs-toggle="dropdown" aria-expanded="false">Proof</a>
+          <ul class="dropdown-menu" aria-labelledby="navProof">
+            <li><a class="dropdown-item" href="#success-stories">Success Stories</a></li>
+            <li><a class="dropdown-item" href="#recognition">Recognition</a></li>
+            <li><a class="dropdown-item" href="#insights">Insights</a></li>
+            <li><a class="dropdown-item" href="#testimonials">Testimonials</a></li>
+          </ul>
+        </li>
       </ul>
       <div class="d-flex align-items-center gap-2">
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light theme"><i class="bi bi-sun"></i></button>
@@ -132,11 +144,21 @@
           <button class="pal-swatch" type="button" data-palette="purple"    aria-label="Purple accent"><span></span></button>
           <button class="pal-swatch" type="button" data-palette="charcoal"  aria-label="Charcoal accent"><span></span></button>
         </div>
-        <a class="btn-accent btn text-nowrap ms-1" href="#contact">Let's talk</a>
+        <span class="nav-divider" aria-hidden="true"></span>
+        <a class="btn-accent btn text-nowrap ms-1" href="#contact">Start a conversation</a>
       </div>
     </div>
   </div>
 </nav>
+
+<!-- ================= PERSISTENT CTA =================
+     Mirrors the navbar's "Let's talk" button so a next-best-action is
+     always reachable even while the navbar itself is hidden during
+     scroll-down (see body.nav-hidden in ui.js / style.css). Hidden
+     whenever the navbar is visible, so only one CTA shows at a time. -->
+<a class="persistent-cta" href="#contact" aria-label="Start a conversation — jump to contact section">
+  <i class="bi bi-chat-dots-fill" aria-hidden="true"></i><span>Start a conversation</span>
+</a>
 
 <!-- ================= HERO ================= -->
 <header class="hero" id="top" data-component="hero" aria-labelledby="hero-title">
@@ -145,20 +167,17 @@
   <div class="container position-relative" style="z-index:1">
     <div class="row g-4 align-items-start">
       <div class="col-lg-7">
-        <p class="eyebrow eyebrow-chip mb-2"><span class="eyebrow-badge" aria-hidden="true"><i class="bi bi-rocket-takeoff-fill"></i></span><span>Driving enterprise digital transformation</span></p>
-        <h1 id="hero-title">I own enterprise delivery — <span class="grad rotator" id="heroRotator"><span class="ph on">outcomes. teams. trust.</span><span class="ph">on time. on budget.</span><span class="ph">client confidence up.</span><span class="ph">disciplined delivery.</span></span></h1>
-        <p class="value-statement">Helping enterprises deliver strategic programs with predictable execution, governance, and measurable business outcomes.</p>
+        <p class="eyebrow eyebrow-chip mb-2"><span class="eyebrow-badge" aria-hidden="true"><i class="bi bi-rocket-takeoff-fill"></i></span><span>Enterprise Program & Delivery Leadership</span></p>
+        <h1 id="hero-title">I turn enterprise complexity into <span class="grad rotator" id="heroRotator"><span class="ph on">predictable outcomes.</span><span class="ph">on-time, on-budget delivery.</span><span class="ph">boardroom-ready confidence.</span><span class="ph">disciplined execution at scale.</span></span></h1>
+        <p class="value-statement">Enterprise program leader trusted with multi-crore portfolios — turning ambitious transformation mandates into outcomes clients can bet on.</p>
         <p class="lede">Enterprise <strong>Program &amp; Project Manager</strong> (<strong>PMP®, Scrum Master</strong>) with <strong>12+ years</strong> of experience and <strong>8+ years</strong> on .NET engineering foundation, delivering multi-account programs through strong governance, client partnerships, technical leadership, and measurable business outcomes.</p>
         <div class="domain-strip" aria-label="Business domains delivered">
           <span class="dom-label">Domains</span>
           <span class="dom">HR</span>
           <span class="dom">Healthcare</span>
           <span class="dom">BFSI</span>
-          <span class="dom">EPC</span>
           <span class="dom">Construction</span>
           <span class="dom">MIS</span>
-          <span class="dom">Sales</span>
-          <span class="dom">Marketing</span>
         </div>
         
 <div class="row g-2 hero-stats">
@@ -181,15 +200,14 @@
 </div>
 
 <div class="hero-cta">
-          <a class="btn-accent btn" href="mailto:surajkumar.navodya@gmail.com?subject=Meeting%20request%20—%20Delivery%20leadership%20role&body=Hi%20Suraj%2C%0A%0AI%27d%20like%20to%20schedule%20a%20conversation%20about%20a%20role.%0A%0AProposed%20time%3A%20"><i class="bi bi-calendar-check me-2"></i>Schedule Strategy Call</a>
-          <a class="btn-outline btn" href="Suraj_Kumar_Resume_Technical_PM.pdf" download><i class="bi bi-download me-2"></i>Download Resume</a>
-          <a class="btn-outline btn" href="#success-stories"><i class="bi bi-kanban me-2"></i>Case studies</a>
+          <a class="btn-accent btn" href="mailto:surajkumar.navodya@gmail.com?subject=Delivery%20leadership%20conversation"><i class="bi bi-calendar-check me-2"></i>Schedule an Executive Conversation</a>
+          <a class="btn-outline btn" href="#success-stories"><i class="bi bi-kanban me-2"></i>View case studies</a>
           <a class="btn-outline btn px-3" href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener" aria-label="LinkedIn profile"><i class="bi bi-linkedin"></i></a>
           </div>
       </div>
       <div class="col-lg-5 hero-right" role="region" aria-label="Executive dashboard">
-        <!-- Executive KPI dashboard -->
-        <div class="exec-scorecard reveal" data-component="kpi-cards" aria-label="Executive delivery scorecard">
+        <!-- Executive Scorecard -->
+        <div class="exec-scorecard reveal" aria-label="Executive delivery scorecard">
           <div class="sc-head">
             <i class="bi bi-bar-chart-line-fill" aria-hidden="true"></i>
             <h6>Executive Scorecard</h6>
@@ -203,7 +221,7 @@
           <div class="row-item"><span class="sc-label"><span class="sc-dot" aria-hidden="true"></span>Resource Utilization</span><span class="sc-track"><span class="sc-fill" style="width:96%" aria-hidden="true"></span></span><span class="val">96%</span></div>
           <div class="row-item"><span class="sc-label"><span class="sc-dot" aria-hidden="true"></span>Audit Success</span><span class="sc-track"><span class="sc-fill" style="width:100%" aria-hidden="true"></span></span><span class="val">100%</span></div>
         </div>
-
+        <!-- Executive KPI dashboard -->
         <div class="kpi-board reveal" id="impact" data-component="kpi-cards" aria-label="Portfolio impact dashboard">
           <div class="board-head">
             <i class="bi bi-activity"></i> STEERING SNAPSHOT
@@ -277,6 +295,54 @@
 </header>
 
 <main id="main" tabindex="-1">
+
+<!-- ================= ABOUT ================= -->
+<section id="about" data-component="about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow">About</p>
+      <h2 class="sec-title serif" id="about-title">An engineer-turned-executive who leads delivery, not just tracks it.</h2>
+      <p class="sec-sub mb-4">I run enterprise programs the way a P&amp;L owner would — accountable for outcomes, not just RAG statuses.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-7 reveal d1">
+        <p class="lede mb-3">Twelve-plus years in IT, the first eight spent hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency — and I use both to keep delivery plans honest.</p>
+        <p class="lede mb-3">Today I own multi-account portfolios worth ₹2Cr+, leading 30+ engineers and standing as the single point of accountability for client sponsors when delivery health, risk, or scope get difficult. My leadership style is calm under pressure, direct with stakeholders, and structured enough to scale without me in every room.</p>
+        <p class="lede mb-0">I am now applying that same discipline to AI-augmented delivery — using generative and agentic tooling to compress planning, reporting, and quality-assurance cycles, so the teams I lead ship faster without sacrificing governance.</p>
+      </div>
+      <div class="col-lg-5 reveal d2">
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="x-card">
+              <p class="pov-label"><i class="bi bi-compass me-1"></i>Leadership</p>
+              <p class="text-2 mb-0" style="font-size:14.5px">Own the plan, the risk register and the client relationship — with the technical depth to challenge estimates intelligently.</p>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="x-card">
+              <p class="pov-label"><i class="bi bi-graph-up-arrow me-1"></i>Impact</p>
+              <p class="text-2 mb-0" style="font-size:14.5px">98%+ delivery excellence, 30% adoption lift, zero critical go-live escalations across multi-account portfolios.</p>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="x-card">
+              <p class="pov-label"><i class="bi bi-award me-1"></i>Positioning</p>
+              <p class="text-2 mb-0" style="font-size:14.5px">PMP&reg; and Scrum Master certified, AI-augmented delivery practitioner, and one of the few leaders who can still read the code.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="text-2 mt-4 mb-0" style="font-size:13.5px">
+      <i class="bi bi-patch-check me-1" style="color:var(--accent)"></i>
+      PMP&reg; · Certified Scrum Master · 12+ years in IT · 8+ years hands-on engineering
+    </p>
+    <p class="text-2 mt-2 mb-0" style="font-size:13.5px" id="about-currently">
+      <i class="bi bi-broadcast me-1" style="color:var(--accent-2)"></i>
+      <strong>Currently:</strong> Applying agentic AI workflows to enterprise delivery reporting and risk forecasting.
+    </p>
+  </div>
+</section>
 
 <!-- ================= LEADERSHIP ================= -->
 <section id="leadership" data-component="timeline" aria-labelledby="leadership-title">
@@ -477,6 +543,53 @@
   </div>
 </section>
 
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" data-component="experience" aria-labelledby="experience-title">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow">Experience</p>
+      <h2 class="sec-title" id="experience-title">Twelve years, one trajectory.</h2>
+      <p class="sec-sub mb-5">Engineer → mentor → program leader. Every phase compounds into the next.</p>
+    </div>
+    <div class="row">
+      <div class="col-lg-9">
+        <div id="experience-content" class="timeline">
+          <div class="t-item reveal">
+            <p class="t-when">NEXT PHASE · TARGET → VISION</p>
+            <p class="t-role mb-0">Delivery Manager → Program Director</p>
+            <p class="t-org">The trajectory this record points to</p>
+            <p class="t-body">Near term: Delivery Manager / Senior Program Manager owning multi-account portfolios, client P&amp;L conversations and AI-augmented delivery. The 3–5 year vision: Program Director — building delivery organizations, not just running programs.</p>
+          </div>
+          <div class="t-item reveal">
+            <p class="t-when">JUN 2021 → JUN 2026 · LEADERSHIP PHASE</p>
+            <p class="t-role mb-0">Manager — Program &amp; Project Management</p>
+            <p class="t-org">LTIMindtree · L&amp;T Corporate IT, L&amp;T Realty, L&amp;T Construction · Mumbai</p>
+            <p class="t-body">₹2Cr+ multi-account portfolio, 30+ engineers across .NET, Java, SQL Server and cloud. <strong>95%+ on-time/on-budget delivery, −20% risk exposure, +30% adoption, +15% team productivity.</strong> Own client-sponsor relationships and steering committees across L&amp;T Group accounts; ISO-standard governance; effort estimation and SLA management that protect delivery margin; grew engineers into module owners; HR automation cutting turnaround by 25%.</p>
+          </div>
+          <div class="t-item dev reveal">
+            <p class="t-when">DEC 2017 → JUN 2021 · ENGINEERING PHASE</p>
+            <p class="t-role mb-0">Software Developer</p>
+            <p class="t-org">Innovsource Services · Mumbai</p>
+            <p class="t-body">HR and MIS reporting solutions — <strong>+45% reporting performance</strong>. Mentored junior developers; contributed to enterprise architecture and IT governance forums (+25% team efficiency).</p>
+          </div>
+          <div class="t-item dev reveal">
+            <p class="t-when">MAY 2016 → DEC 2017 · ENGINEERING PHASE</p>
+            <p class="t-role mb-0">Software Engineer</p>
+            <p class="t-org">SA-Techno Consulting Services · Pune</p>
+            <p class="t-body">Regulatory-compliant applications for B. Braun Medical India — <strong>−20% audit preparation time</strong>; improved SLA compliance in service delivery.</p>
+          </div>
+          <div class="t-item dev reveal">
+            <p class="t-when">APR 2014 → MAY 2016 · ENGINEERING PHASE</p>
+            <p class="t-role mb-0">Software Developer</p>
+            <p class="t-org">Intellect Software Solutions · Mumbai</p>
+            <p class="t-body">Enterprise .NET applications for real estate, CRM, sales and marketing — the foundation of everything since.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= SUCCESS STORIES ================= -->
 <section id="success-stories" data-component="success-stories" aria-labelledby="success-title" style="background:var(--bg-2)">
   <div class="container">
@@ -534,64 +647,6 @@
           <div class="d-flex gap-2 mb-3"><span class="tag">Finance Ops</span><span class="chip green"><span class="cd"></span>DELIVERED</span></div>
           <h3 class="fs-6 fw-bold">eClaim — Expense Management</h3>
           <p class="text-2 mb-0" style="font-size:14.3px">Automated claim submission and approval to reduce processing time and manual scrutiny effort across operations.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= AI LEADERSHIP ================= -->
-<section id="ai-leadership" aria-labelledby="ai-title">
-  <div class="container">
-    <div class="row g-5 align-items-center">
-      <div class="col-lg-6 reveal">
-        <p class="eyebrow">AI leadership</p>
-        <h2 class="sec-title" id="ai-title">AI-augmented delivery, built on real foundations.</h2>
-        <p class="sec-sub">A deliberate bet on where enterprise delivery is heading — not AI hype. I'm formally trained, building hands-on, and positioning my delivery org to lead the shift instead of reacting to it.</p>
-        <div class="mt-4">
-          <div class="cred-row"><i class="bi bi-mortarboard-fill"></i><span>AI4ICPS (Hands-on approach to AI for real-world applications) Certificate of Achievement — <strong>IIT Kharagpur</strong></span><span class="chip green"><span class="cd"></span>COMPLETED</span></div>
-          <div class="cred-row"><i class="bi bi-mortarboard"></i><span>Agentic AI Certificate — <strong>Johns Hopkins &amp; Great Learning</strong></span><span class="chip amber"><span class="cd"></span>IN PROGRESS</span></div>
-          <div class="cred-row"><i class="bi bi-robot"></i><span>AI tooling (Copilot) applied in day-to-day delivery workflows</span><span class="chip blue"><span class="cd"></span>PRACTICE</span></div>
-          <div class="mt-3 d-flex gap-2 flex-wrap">
-            <span class="tag">RAG Applications</span><span class="tag">Agentic AI</span><span class="tag">LangGraph</span><span class="tag">Prompt Engineering</span><span class="tag">Computer Vision — learning</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 reveal d1">
-        <div class="x-card">
-          <h3 class="fs-5 fw-bold mb-3">Where AI meets program management</h3>
-          <div class="pipeline" id="agentPipeline" aria-label="Agentic delivery pipeline: signals to retrieve to reason to report to govern">
-            <svg viewBox="0 0 560 92" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agentic delivery pipeline stages: Signals → Retrieve → Reason → Report → Govern">
-              <line class="flow" x1="52" y1="38" x2="508" y2="38" fill="none" stroke-width="2"/>
-              <g class="stage" transform="translate(52,38)">
-                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
-                <text y="34" text-anchor="middle">Signals</text>
-              </g>
-              <g class="stage" transform="translate(166,38)">
-                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
-                <text y="34" text-anchor="middle">Retrieve</text>
-              </g>
-              <g class="stage" transform="translate(280,38)">
-                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
-                <text y="34" text-anchor="middle">Reason</text>
-              </g>
-              <g class="stage" transform="translate(394,38)">
-                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
-                <text y="34" text-anchor="middle">Report</text>
-              </g>
-              <g class="stage" transform="translate(508,38)">
-                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
-                <text y="34" text-anchor="middle">Govern</text>
-              </g>
-            </svg>
-          </div>
-          <p class="text-2" style="font-size:15px">How I'm applying — and preparing to lead — AI in enterprise delivery:</p>
-          <ul class="text-2" style="font-size:15px;padding-left:1.15rem">
-            <li class="mb-2"><strong style="color:var(--heading)">Delivery intelligence</strong> — AI-assisted status reporting, risk summarization and planning support across program artifacts.</li>
-            <li class="mb-2"><strong style="color:var(--heading)">Engineering acceleration</strong> — governing teams that use AI coding tools responsibly: productivity with review discipline.</li>
-            <li class="mb-2"><strong style="color:var(--heading)">Agentic workflows</strong> — studying multi-agent systems and RAG pipelines hands-on, to scope and govern GenAI initiatives credibly rather than from slideware.</li>
-            <li class="mb-0"><strong style="color:var(--heading)">Adoption &amp; change</strong> — the same change-management craft that lifted system adoption 30% now applied to AI rollout, where adoption is the whole battle.</li>
-          </ul>
         </div>
       </div>
     </div>
@@ -692,47 +747,58 @@
   </div>
 </section>
 
-<!-- ================= EXPERIENCE ================= -->
-<section id="experience" data-component="experience" aria-labelledby="experience-title">
+<!-- ================= AI LEADERSHIP ================= -->
+<section id="ai-leadership" aria-labelledby="ai-title">
   <div class="container">
-    <div class="reveal">
-      <p class="eyebrow">Experience</p>
-      <h2 class="sec-title" id="experience-title">Twelve years, one trajectory.</h2>
-      <p class="sec-sub mb-5">Engineer → mentor → program leader. Every phase compounds into the next.</p>
-    </div>
-    <div class="row">
-      <div class="col-lg-9">
-        <div id="experience-content" class="timeline">
-          <div class="t-item reveal">
-            <p class="t-when">NEXT PHASE · TARGET → VISION</p>
-            <p class="t-role mb-0">Delivery Manager → Program Director</p>
-            <p class="t-org">The trajectory this record points to</p>
-            <p class="t-body">Near term: Delivery Manager / Senior Program Manager owning multi-account portfolios, client P&amp;L conversations and AI-augmented delivery. The 3–5 year vision: Program Director — building delivery organizations, not just running programs.</p>
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6 reveal">
+        <p class="eyebrow">AI leadership</p>
+        <h2 class="sec-title" id="ai-title">AI-augmented delivery, built on real foundations.</h2>
+        <p class="sec-sub">A deliberate bet on where enterprise delivery is heading — not AI hype. I'm formally trained, building hands-on, and positioning my delivery org to lead the shift instead of reacting to it.</p>
+        <div class="mt-4">
+          <div class="cred-row"><i class="bi bi-mortarboard-fill"></i><span>AI4ICPS (Hands-on approach to AI for real-world applications) Certificate of Achievement — <strong>IIT Kharagpur</strong></span><span class="chip green"><span class="cd"></span>COMPLETED</span></div>
+          <div class="cred-row"><i class="bi bi-mortarboard"></i><span>Agentic AI Certificate — <strong>Johns Hopkins &amp; Great Learning</strong></span><span class="chip amber"><span class="cd"></span>IN PROGRESS</span></div>
+          <div class="cred-row"><i class="bi bi-robot"></i><span>AI tooling (Copilot) applied in day-to-day delivery workflows</span><span class="chip blue"><span class="cd"></span>PRACTICE</span></div>
+          <div class="mt-3 d-flex gap-2 flex-wrap">
+            <span class="tag">RAG Applications</span><span class="tag">Agentic AI</span><span class="tag">LangGraph</span><span class="tag">Prompt Engineering</span><span class="tag">Computer Vision — learning</span>
           </div>
-          <div class="t-item reveal">
-            <p class="t-when">JUN 2021 → JUN 2026 · LEADERSHIP PHASE</p>
-            <p class="t-role mb-0">Manager — Program &amp; Project Management</p>
-            <p class="t-org">LTIMindtree · L&amp;T Corporate IT, L&amp;T Realty, L&amp;T Construction · Mumbai</p>
-            <p class="t-body">₹2Cr+ multi-account portfolio, 30+ engineers across .NET, Java, SQL Server and cloud. <strong>95%+ on-time/on-budget delivery, −20% risk exposure, +30% adoption, +15% team productivity.</strong> Own client-sponsor relationships and steering committees across L&amp;T Group accounts; ISO-standard governance; effort estimation and SLA management that protect delivery margin; grew engineers into module owners; HR automation cutting turnaround by 25%.</p>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal d1">
+        <div class="x-card">
+          <h3 class="fs-5 fw-bold mb-3">Where AI meets program management</h3>
+          <div class="pipeline" id="agentPipeline" aria-label="Agentic delivery pipeline: signals to retrieve to reason to report to govern">
+            <svg viewBox="0 0 560 92" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agentic delivery pipeline stages: Signals → Retrieve → Reason → Report → Govern">
+              <line class="flow" x1="52" y1="38" x2="508" y2="38" fill="none" stroke-width="2"/>
+              <g class="stage" transform="translate(52,38)">
+                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
+                <text y="34" text-anchor="middle">Signals</text>
+              </g>
+              <g class="stage" transform="translate(166,38)">
+                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
+                <text y="34" text-anchor="middle">Retrieve</text>
+              </g>
+              <g class="stage" transform="translate(280,38)">
+                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
+                <text y="34" text-anchor="middle">Reason</text>
+              </g>
+              <g class="stage" transform="translate(394,38)">
+                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
+                <text y="34" text-anchor="middle">Report</text>
+              </g>
+              <g class="stage" transform="translate(508,38)">
+                <circle class="node-pulse" r="4"/><circle class="node" r="7"/>
+                <text y="34" text-anchor="middle">Govern</text>
+              </g>
+            </svg>
           </div>
-          <div class="t-item dev reveal">
-            <p class="t-when">DEC 2017 → JUN 2021 · ENGINEERING PHASE</p>
-            <p class="t-role mb-0">Software Developer</p>
-            <p class="t-org">Innovsource Services · Mumbai</p>
-            <p class="t-body">HR and MIS reporting solutions — <strong>+45% reporting performance</strong>. Mentored junior developers; contributed to enterprise architecture and IT governance forums (+25% team efficiency).</p>
-          </div>
-          <div class="t-item dev reveal">
-            <p class="t-when">MAY 2016 → DEC 2017 · ENGINEERING PHASE</p>
-            <p class="t-role mb-0">Software Engineer</p>
-            <p class="t-org">SA-Techno Consulting Services · Pune</p>
-            <p class="t-body">Regulatory-compliant applications for B. Braun Medical India — <strong>−20% audit preparation time</strong>; improved SLA compliance in service delivery.</p>
-          </div>
-          <div class="t-item dev reveal">
-            <p class="t-when">APR 2014 → MAY 2016 · ENGINEERING PHASE</p>
-            <p class="t-role mb-0">Software Developer</p>
-            <p class="t-org">Intellect Software Solutions · Mumbai</p>
-            <p class="t-body">Enterprise .NET applications for real estate, CRM, sales and marketing — the foundation of everything since.</p>
-          </div>
+          <p class="text-2" style="font-size:15px">How I'm applying — and preparing to lead — AI in enterprise delivery:</p>
+          <ul class="text-2" style="font-size:15px;padding-left:1.15rem">
+            <li class="mb-2"><strong style="color:var(--heading)">Delivery intelligence</strong> — AI-assisted status reporting, risk summarization and planning support across program artifacts.</li>
+            <li class="mb-2"><strong style="color:var(--heading)">Engineering acceleration</strong> — governing teams that use AI coding tools responsibly: productivity with review discipline.</li>
+            <li class="mb-2"><strong style="color:var(--heading)">Agentic workflows</strong> — studying multi-agent systems and RAG pipelines hands-on, to scope and govern GenAI initiatives credibly rather than from slideware.</li>
+            <li class="mb-0"><strong style="color:var(--heading)">Adoption &amp; change</strong> — the same change-management craft that lifted system adoption 30% now applied to AI rollout, where adoption is the whole battle.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -772,6 +838,10 @@
             <div class="cred-row"><i class="bi bi-award"></i><span>Basic of Project Management — International Business Management Institute (IBMI) · 2020</span><span class="chip green"><span class="cd"></span>CERTIFIED</span></div>
             <div class="cred-row"><i class="bi bi-award"></i><span>Enterprise Design Thinking Practitioner — IBM · 2020</span><span class="chip green"><span class="cd"></span>CERTIFIED</span></div>
           </div>
+          <p class="text-2 mt-3 mb-0" style="font-size:13.5px">
+            <i class="bi bi-linkedin me-1" style="color:var(--accent)"></i>
+            All certifications are independently verifiable on <a href="https://www.linkedin.com/in/surajkumar-navodya/details/certifications/" target="_blank" rel="noopener me">my LinkedIn profile</a>.
+          </p>
         </div>
       </div>
       <div class="col-12 reveal d2">
@@ -786,6 +856,44 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ================= INSIGHTS ================= -->
+<section id="insights" data-component="insights" aria-labelledby="insights-title">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow">Insights</p>
+      <h2 class="sec-title serif" id="insights-title">What I'm thinking about, in public.</h2>
+      <p class="sec-sub mb-5">A working point of view on delivery leadership, engineering depth, and AI-augmented execution — published, not just practiced.</p>
+    </div>
+    <div id="insights-content" class="row g-4">
+      <div class="col-md-4 reveal d1">
+        <a class="x-card insight-card d-block h-100 text-decoration-none" href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener">
+          <p class="tag mb-3">AI-Augmented Delivery</p>
+          <h3 class="fs-6 fw-bold mb-2">Why delivery leaders need to read the stack, not just the status report.</h3>
+          <p class="text-2 mb-0" style="font-size:14px">Technical fluency changes what a program manager can catch before it becomes a client escalation.</p>
+        </a>
+      </div>
+      <div class="col-md-4 reveal d2">
+        <a class="x-card insight-card d-block h-100 text-decoration-none" href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener">
+          <p class="tag mb-3">Delivery Governance</p>
+          <h3 class="fs-6 fw-bold mb-2">The RAID log is a leadership tool, not paperwork.</h3>
+          <p class="text-2 mb-0" style="font-size:14px">How disciplined risk tracking turns reactive firefighting into predictable, boardroom-ready delivery.</p>
+        </a>
+      </div>
+      <div class="col-md-4 reveal d3">
+        <a class="x-card insight-card d-block h-100 text-decoration-none" href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener">
+          <p class="tag mb-3">Engineering</p>
+          <h3 class="fs-6 fw-bold mb-2">Answering SQL Server questions in public keeps a delivery leader honest.</h3>
+          <p class="text-2 mb-0" style="font-size:14px">430+ answers and counting — the reasoning gets peer-reviewed, which keeps estimates and timelines realistic.</p>
+        </a>
+      </div>
+    </div>
+    <p class="text-2 text-center mt-4 mb-0" style="font-size:14px">
+      <i class="bi bi-journal-text me-1" style="color:var(--accent)"></i>
+      More articles on <a href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener" style="color:var(--accent)">C# Corner</a> and answers on <a href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener" style="color:var(--accent)">Stack Overflow</a>.
+    </p>
   </div>
 </section>
 
@@ -881,8 +989,8 @@
             <h3 class="fs-4 fw-bold mb-2">Next step</h3>
             <p class="text-2 mb-4" style="font-size:14.8px">Book a conversation about a delivery leadership role, or take the résumé with you. I reply within one business day.</p>
             <div class="cta-final mb-3">
-              <a class="btn-accent btn cta-primary" href="mailto:surajkumar.navodya@gmail.com?subject=Leadership%20conversation%20—%20delivery%20role&amp;body=Hi%20Suraj%2C%0A%0AI%27d%20like%20to%20schedule%20a%20conversation%20about%20a%20delivery%20leadership%20role.%0A%0AProposed%20time%3A%20"><i class="bi bi-calendar-check me-2"></i>Schedule a leadership conversation</a>
-              <a class="btn-outline btn cta-secondary" href="Suraj_Kumar_Resume_Technical_PM.pdf" download><i class="bi bi-download me-2"></i>Download résumé</a>
+              <a class="btn-accent btn cta-primary" href="mailto:surajkumar.navodya@gmail.com?subject=Delivery%20leadership%20conversation"><i class="bi bi-calendar-check me-2"></i>Schedule an Executive Conversation</a>
+              <a class="btn-outline btn cta-secondary" href="Suraj_Kumar_Resume_Technical_PM.pdf" download><i class="bi bi-download me-2"></i>Download my résumé</a>
             </div>
             <p class="cta-alt mb-4">Prefer LinkedIn? <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener">Connect with me there</a>.</p>
             <ul class="text-2 mb-0" style="font-size:14.5px;padding-left:1.15rem">
@@ -900,12 +1008,12 @@
 
 <footer data-component="footer">
   <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-    <span class="mono">SURAJ KUMAR · PROGRAM &amp; DELIVERY MANAGEMENT · <a class="footer-cta" href="https://surajkumarnavodya.com/">SEE THE WORK →</a> · © 2026 SURAJ KUMAR · ALL RIGHTS RESERVED</span>
+    <a class="footer-cta" href="https://surajkumarnavodya.com/">VIEW THE PORTFOLIO →</a>
     <span>
       <a href="#top" aria-label="Back to top">Top ↑</a>
-      <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener">C# Corner</a>
-      <a href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener">Stack Overflow</a>
+      <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener me">C# Corner</a>
+      <a href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener me">Stack Overflow</a>
       <a href="mailto:surajkumar.navodya@gmail.com">Email</a>
     </span>
   </div>

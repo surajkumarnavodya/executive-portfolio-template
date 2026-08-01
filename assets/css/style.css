@@ -44,11 +44,47 @@ h1,h2,h3,h4{font-family:var(--font-display);color:var(--heading);letter-spacing:
 .navbar{
   background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);padding-top:.45rem;padding-bottom:.45rem;
+  transition:padding .28s var(--ease-emphasized),box-shadow .28s var(--ease-emphasized),transform .32s var(--ease-emphasized);
+}
+/* Sticky pattern: once scrolled past the hero the bar compacts slightly and
+   gains a soft shadow so it reads as "elevated" over content rather than
+   just sitting on top of it. Purely a size/shadow change, no color shift. */
+body.nav-condensed .navbar{padding-top:.3rem;padding-bottom:.3rem;box-shadow:0 8px 24px rgba(2,8,20,.12)}
+/* Smart-hide: slides away on scroll-down, reappears instantly on scroll-up,
+   so it never competes with reading but is always one scroll away. Shares
+   the same scroll listener as the telemetry bar hide/show behaviour. */
+body.nav-hidden .navbar.fixed-top{transform:translateY(-100%)}
+@media (prefers-reduced-motion:reduce){
+  .navbar{transition:box-shadow .01s linear}
+  body.nav-hidden .navbar.fixed-top{transform:none}
 }
 .navbar-brand{font-family:var(--font-display);color:var(--heading)!important}
 .navbar-brand .dot{color:var(--accent)}
-.navbar .nav-link{color:var(--text-2);font-weight:500;font-size:14.5px;margin:0 4px;white-space:nowrap}
+.navbar .nav-link{
+  color:var(--text-2);font-weight:500;font-size:14.5px;margin:0 4px;white-space:nowrap;
+  position:relative;padding-bottom:6px;
+}
 .navbar .nav-link:hover,.navbar .nav-link.active{color:var(--heading)}
+/* Premium minimal active-state: a short underline instead of a heavier pill/background */
+.navbar .nav-link::after{
+  content:"";position:absolute;left:4px;right:4px;bottom:0;height:2px;border-radius:2px;
+  background:var(--accent);transform:scaleX(0);transform-origin:left;
+  transition:transform .22s var(--ease-standard);
+}
+.navbar .nav-link:hover::after,.navbar .nav-link.active::after{transform:scaleX(1)}
+.navbar .nav-item.dropdown.show > .nav-link{color:var(--heading)}
+.navbar .dropdown-toggle::after{margin-left:5px;vertical-align:1px;opacity:.7}
+.navbar .dropdown-menu{
+  background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);padding:6px;margin-top:10px;
+}
+.navbar .dropdown-item{
+  color:var(--text-2);font-weight:500;font-size:14px;border-radius:8px;padding:9px 14px;
+  transition:background .15s ease,color .15s ease;
+}
+.navbar .dropdown-item:hover,.navbar .dropdown-item:focus{background:rgba(var(--accent-rgb),.12);color:var(--heading)}
+/* Divider between the utility controls (theme/palette) and the primary CTA */
+.nav-divider{width:1px;height:22px;background:var(--border);margin:0 2px}
 .theme-toggle{
   border:1px solid var(--border);background:var(--surface);color:var(--text);
   border-radius:50%;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;
@@ -404,6 +440,30 @@ h3.fs-4{font-size:1.7rem !important;line-height:1.12}
 }
 .copilot-fab:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(var(--accent-rgb),.55)}
 .copilot-fab .spark{font-size:17px;line-height:1}
+/* --- Persistent CTA: the "next best action" that stays reachable whenever
+   the sticky navbar (and its own "Let's talk" button) is scrolled off
+   screen. Sits bottom-left, opposite the Copilot FAB, and only appears
+   during the navbar's hidden state to avoid duplicate CTAs on screen. --- */
+.persistent-cta{
+  position:fixed;left:22px;bottom:22px;z-index:1490;
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--accent);color:var(--heading);text-decoration:none;
+  border-radius:999px;padding:13px 20px;font-weight:600;font-size:14.5px;font-family:var(--font-body);
+  box-shadow:0 14px 34px rgba(var(--accent-rgb),.4);
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .22s var(--ease-standard),transform .22s var(--ease-standard),box-shadow .2s ease;
+}
+body.nav-hidden .persistent-cta{opacity:1;transform:none;pointer-events:auto}
+.persistent-cta:hover{color:var(--heading);box-shadow:0 18px 42px rgba(var(--accent-rgb),.5);transform:translateY(-2px)}
+.persistent-cta i{font-size:15px}
+@media (prefers-reduced-motion:reduce){
+  .persistent-cta{transition:opacity .01s linear}
+}
+@media (max-width:575px){
+  .persistent-cta{left:14px;bottom:14px;padding:11px 16px;font-size:13.5px}
+  .persistent-cta span{display:none}
+  .persistent-cta i{font-size:17px}
+}
 .copilot-fab kbd{
   font-family:var(--font-mono);font-size:10px;background:rgba(255,255,255,.18);
   border-radius:5px;padding:2px 6px;border:1px solid rgba(255,255,255,.25);
@@ -1730,3 +1790,20 @@ a,button,.x-card,.pov-card,.hero-stat,.kpi-cell{
 @media (prefers-reduced-motion:reduce){
   body.page-ready{animation:none}
 }
+
+/* ===========================================================================
+   STEERING SNAPSHOT — size correction
+   ---------------------------------------------------------------------------
+   Several earlier override passes each nudged .kpi-cell/.kpi-icon up instead
+   of down (11px -> 17/14px -> 18/16px padding, 34px -> 36px -> 46px -> 48px
+   icon), so the KPI board ended up far taller/airier than a "snapshot"
+   widget should be, especially now that it shares the column with the
+   restored Executive Scorecard above it. This is the final word (source
+   order wins ties), consolidated to one clean block instead of another
+   layer of override.
+   =========================================================================== */
+.kpi-board{padding:12px 14px}
+.kpi-cell{padding:9px 10px;gap:9px;min-height:60px}
+.kpi-icon{width:34px;height:34px;font-size:15px}
+.kpi-val{font-size:clamp(16px,1.7vw,19px);line-height:1.05}
+.kpi-lbl{font-size:10.8px;line-height:1.22;margin-top:0}

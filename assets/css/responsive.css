@@ -77,9 +77,15 @@
 }
 @media (min-width:992px){
   .hero > .container > .row{align-items:stretch}
-  .hero-right{display:flex;flex-direction:column}
-  .hero-right .kpi-board{flex:1 1 auto;display:flex;flex-direction:column}
-  .hero-right .kpi-board > .row{flex:1 1 auto;align-content:space-evenly}
+  /* The Exec Scorecard and Steering Snapshot now share this column (it was
+     written when the KPI board was the column's only widget and stretched
+     to fill it — flex:1 1 auto + align-content:space-evenly on the board's
+     row spread the KPI cells apart to consume the leftover height). Both
+     panels now sit at their natural size; any leftover height becomes one
+     clean gap between them via justify-content, instead of inflating the
+     KPI board's internal row spacing. */
+  .hero-right{display:flex;flex-direction:column;justify-content:space-between}
+  .hero-right .kpi-board{flex:0 0 auto}
   /* Reserve two lines for every label so cell bottoms line up */
   .kpi-lbl{min-height:2.5em}
 }
@@ -263,4 +269,31 @@
   /* Inside the collapsed menu the picker has room for a single row again. */
   .palette-picker{display:inline-flex;grid-template-columns:none;gap:5px;margin-left:0}
   .pal-swatch{width:18px;height:18px}
+}
+
+/* ---- Collapsed mobile/tablet menu: generous tap targets, calmer spacing,
+        underline indicator removed in favour of a left accent bar (reads
+        better stacked vertically than a bottom rule), dropdowns expand
+        inline instead of floating. ---------------------------------------- */
+@media (max-width:1199.98px){
+  .navbar-collapse{
+    margin-top:14px;padding-top:14px;border-top:1px solid var(--border);
+  }
+  .navbar-nav{margin-left:0!important;margin-right:0!important}
+  .navbar .nav-link{
+    font-size:16px;margin:0;padding:13px 6px;min-height:46px;display:flex;align-items:center;
+    border-bottom:1px solid var(--border);
+  }
+  .navbar .nav-link::after{left:0;right:auto;bottom:0;top:0;width:2px;height:auto;border-radius:0}
+  .navbar .nav-item:last-child > .nav-link{border-bottom:none}
+  .navbar .dropdown-menu{
+    position:static!important;transform:none!important;box-shadow:none;border:none;
+    background:transparent;margin:0 0 4px;padding:0 0 0 14px;
+  }
+  .navbar .dropdown-item{padding:11px 10px;font-size:15px;min-height:44px;display:flex;align-items:center}
+  .navbar .nav-divider{display:none}
+  .navbar .d-flex.align-items-center.gap-2{
+    flex-wrap:wrap;gap:14px!important;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);
+  }
+  .navbar .btn-accent{width:100%;text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center}
 }

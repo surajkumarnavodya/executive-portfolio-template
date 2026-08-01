@@ -9,7 +9,7 @@
   var root = document.documentElement;
   var cfg = window.PORTFOLIO_CONFIG || {};
   var themeCfg = cfg.theme || {};
-  var DEFAULT_SECTION_ORDER = ['leadership', 'success-stories', 'ai-leadership', 'expertise', 'experience', 'recognition', 'testimonials', 'contact'];
+  var DEFAULT_SECTION_ORDER = ['about', 'leadership', 'experience', 'success-stories', 'expertise', 'ai-leadership', 'recognition', 'insights', 'testimonials', 'contact'];
 
   var PRESETS = {
     ceo: {
@@ -196,16 +196,20 @@
       var visible = state.sectionVisibility[id] !== false;
       section.hidden = !visible;
       section.setAttribute('aria-hidden', String(!visible));
-      var navLink = document.querySelector('.navbar .nav-link[href="#' + id + '"]');
+      // Matches both top-level .nav-link items and links nested inside the
+      // "Expertise" / "Proof" dropdown menus.
+      var navLink = document.querySelector('.navbar .nav-link[href="#' + id + '"], .navbar .dropdown-item[href="#' + id + '"]');
       if (navLink) {
         var navItem = navLink.closest('li') || navLink;
         navItem.style.display = visible ? '' : 'none';
       }
     });
+    // Only reorder top-level nav items; links inside a dropdown menu stay in
+    // their submenu rather than being promoted into the primary nav row.
     var navList = document.querySelector('.navbar .navbar-nav');
     if (navList) {
       state.sectionOrder.forEach(function (id) {
-        var navLink = navList.querySelector('.nav-link[href="#' + id + '"]');
+        var navLink = navList.querySelector(':scope > li > .nav-link[href="#' + id + '"]');
         var navItem = navLink && (navLink.closest('li') || navLink);
         if (navItem) { navList.appendChild(navItem); }
       });

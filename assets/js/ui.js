@@ -33,10 +33,31 @@
   function paintTele() {
     document.body.classList.toggle('tele-hide', (window.scrollY || document.documentElement.scrollTop) > 60);
   }
-  window.addEventListener('scroll', function () { paintBar(); paintTele(); }, { passive: true });
+  /* ---------- Sticky nav: condense + smart-hide -----------------------
+     Below ~120px the bar compacts and gains a shadow (it's now "elevated"
+     over content). Past that point it hides on scroll-down and reappears
+     on scroll-up, so it never blocks reading but is always a scroll away.
+     Skipped while the mobile menu is open so a link tap can't vanish. */
+  var lastScrollY = window.scrollY || document.documentElement.scrollTop;
+  var navEl = document.getElementById('nav');
+  function paintNav() {
+    var y = window.scrollY || document.documentElement.scrollTop;
+    document.body.classList.toggle('nav-condensed', y > 120);
+    var menuOpen = navEl && navEl.classList.contains('show');
+    if (!menuOpen) {
+      if (y > lastScrollY && y > 220) {
+        document.body.classList.add('nav-hidden');
+      } else {
+        document.body.classList.remove('nav-hidden');
+      }
+    }
+    lastScrollY = y;
+  }
+  window.addEventListener('scroll', function () { paintBar(); paintTele(); paintNav(); }, { passive: true });
   window.addEventListener('resize', paintBar);
   paintBar();
   paintTele();
+  paintNav();
 
   /* ---------- Hero phrase rotator ---------- */
   var rot = document.getElementById('heroRotator');

@@ -12,9 +12,12 @@ $(function () {
     var $target = $(hash);
     if (!$target.length) return;
     ev.preventDefault();
-    if ($(this).hasClass('nav-link')) {
-      $('.navbar .nav-link').removeClass('active');
+    if ($(this).hasClass('nav-link') || $(this).hasClass('dropdown-item')) {
+      $('.navbar .nav-link, .navbar .dropdown-item').removeClass('active');
       $(this).addClass('active');
+      // A dropdown item was chosen: also light up its parent "Expertise"/"Proof" toggle.
+      var $parentToggle = $(this).closest('.dropdown').find('> .nav-link.dropdown-toggle');
+      if ($parentToggle.length) $parentToggle.addClass('active');
     }
     var prefersReduced = false;
     try { prefersReduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) {}
@@ -36,7 +39,7 @@ $(function () {
      target whose top has passed the reading line — no dead zones between
      sections, and no stale "previous" link staying lit. */
   var navTargets = [];
-  $('.navbar .nav-link[href^="#"]').each(function () {
+  $('.navbar .nav-link[href^="#"], .navbar .dropdown-item[href^="#"]').each(function () {
     var id = $(this).attr('href').slice(1);
     var el = document.getElementById(id);
     if (el) navTargets.push({ id: id, el: el });
@@ -55,17 +58,21 @@ $(function () {
     if ($(window).scrollTop() + $(window).height() >= document.documentElement.scrollHeight - 4) {
       current = navTargets[navTargets.length - 1].id;
     }
-    var $links = $('.navbar .nav-link');
+    var $links = $('.navbar .nav-link, .navbar .dropdown-item');
     $links.removeClass('active');
-    if (current) $links.filter('[href="#' + current + '"]').addClass('active');
+    if (current) {
+      var $active = $links.filter('[href="#' + current + '"]').addClass('active');
+      var $parentToggle = $active.closest('.dropdown').find('> .nav-link.dropdown-toggle');
+      if ($parentToggle.length) $parentToggle.addClass('active');
+    }
   }
 
   $(window).on('scroll resize', paintActive);
   paintActive();
-  $('.navbar .nav-link[href^="#"]').on('click', function () { lockUntil = Date.now() + 700; });
+  $('.navbar .nav-link[href^="#"], .navbar .dropdown-item[href^="#"]').on('click', function () { lockUntil = Date.now() + 700; });
 
   /* ---------- Collapse mobile nav on link click ---------- */
-  $('.navbar .nav-link, .navbar .btn').on('click', function () {
+  $('.navbar .nav-link, .navbar .dropdown-item, .navbar .btn').on('click', function () {
     var nav = document.getElementById('nav');
     if (nav.classList.contains('show')) bootstrap.Collapse.getInstance(nav).hide();
   });
