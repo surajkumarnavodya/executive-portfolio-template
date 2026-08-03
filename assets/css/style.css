@@ -1921,3 +1921,15 @@ body{top:0!important;position:static!important}
 .btn-accent:hover,.hero-cta a.btn-accent:hover,.cta-final a.cta-primary:hover{
   filter:brightness(1.04);
 }
+
+/* ===========================================================================
+   EXECUTIVE SCORECARD — restore original panel height after trimming rows
+   ---------------------------------------------------------------------------
+   Two duplicate-meaning rows (Delivery Success, Budget Adherence) were
+   removed, leaving 5 rows instead of 7. Rather than let the panel shrink
+   and look sparse next to the Steering Snapshot panel beside it, the freed
+   vertical space is redistributed as extra breathing room around each
+   remaining row, so the panel's total height is unchanged (measured:
+   ~238.5px at 5 rows before this rule, ~304px at 7 rows previously).
+   =========================================================================== */
+.exec-scorecard .row-item{padding:13.5px 0}

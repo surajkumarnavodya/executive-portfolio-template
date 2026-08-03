@@ -2153,6 +2153,8 @@ body{top:0!important;position:static!important}
   filter:brightness(1.04);
 }
 
+.exec-scorecard .row-item{padding:13.5px 0}
+
 /* ===== responsive.css ===== */
 /*!
  * responsive.css

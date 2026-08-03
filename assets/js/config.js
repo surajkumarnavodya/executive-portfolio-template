@@ -122,12 +122,12 @@ window.PORTFOLIO_CONFIG = {
         valueStatement: 'Trusted with multi-crore portfolios — a measured hand behind ambitious transformation, outcomes clients can quietly rely on.'
       }
     },
-    lede: 'Enterprise <strong>Program &amp; Project Manager</strong> (<strong>PMP&reg;, Scrum Master</strong>) with <strong>12+ years</strong> of experience and an <strong>8+ year</strong> engineering foundation — delivering multi-account programs through disciplined governance, client partnership and measurable business outcomes.',
+    lede: 'Enterprise <strong>Program &amp; Project Manager</strong> with <strong>12+ years</strong> of experience and an <strong>8+ year</strong> engineering foundation — delivering multi-account programs through disciplined governance, client partnership and measurable business outcomes.',
     stats: [
       { value: '12+',    label: 'Years Experience' },
       { value: '₹2Cr+',  label: 'Portfolio Governed' },
       { value: '40+',    label: 'Projects Delivered' },
-      { value: '30+',    label: 'Engineers Led' }
+      { value: '20+',    label: 'Engineers Led' }
     ],
     highlights: [
       { value: '98%',  label: 'Delivery Excellence' },
@@ -137,7 +137,10 @@ window.PORTFOLIO_CONFIG = {
       { value: '+30%', label: 'Business Adoption' }
     ],
     primaryCta: '<i class="bi bi-calendar-check me-2"></i>Schedule an Executive Conversation',
+    // Two .btn-outline slots exist in index.html's .hero-cta — entries here
+    // map onto them by position (see the hero renderer in components.js).
     secondaryCtas: [
+      { label: 'Download Resume' },
       { label: 'View case studies' }
     ]
   },
@@ -161,15 +164,15 @@ window.PORTFOLIO_CONFIG = {
     summary: 'I run enterprise programs the way a P\u0026L owner would — accountable for outcomes, not just RAG statuses.',
     paragraphs: [
       'Twelve-plus years in IT, the first eight spent hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency — and I use both to keep delivery plans honest.',
-      'Today I own multi-account portfolios worth \u20B92Cr+, leading 30+ engineers and standing as the single point of accountability for client sponsors when delivery health, risk, or scope get difficult. My leadership style is calm under pressure, direct with stakeholders, and structured enough to scale without me in every room.',
+      'Today I own multi-account portfolios worth \u20B92Cr+, leading 20+ engineers and standing as the single point of accountability for client sponsors when delivery health, risk, or scope get difficult. My leadership style is calm under pressure, direct with stakeholders, and structured enough to scale without me in every room.',
       'I am now applying that same discipline to AI-augmented delivery — using generative and agentic tooling to compress planning, reporting, and quality-assurance cycles, so the teams I lead ship faster without sacrificing governance.'
     ],
     pillars: [
       { icon: 'bi-compass', title: 'Leadership', body: 'Own the plan, the risk register and the client relationship — with the technical depth to challenge estimates intelligently.' },
       { icon: 'bi-graph-up-arrow', title: 'Impact', body: '98%+ delivery excellence, 30% adoption lift, zero critical go-live escalations across multi-account portfolios.' },
-      { icon: 'bi-award', title: 'Positioning', body: 'PMP\u00AE and Scrum Master certified, AI-augmented delivery practitioner, and one of the few leaders who can still read the code.' }
+      { icon: 'bi-award', title: 'Positioning', body: 'AI-augmented delivery practitioner, LTIMindtree Certified Agile Practitioner, and one of the few leaders who can still read the code.' }
     ],
-    credentials: 'PMP\u00AE \u00B7 Certified Scrum Master \u00B7 12+ years in IT \u00B7 8+ years hands-on engineering'
+    credentials: '12+ Years in IT \u00B7 Technical Project Management \u00B7 Enterprise Delivery \u00B7 Software Engineering Background'
   },
 
   // insights ---------------------------------------------------------------
@@ -179,6 +182,15 @@ window.PORTFOLIO_CONFIG = {
   // section without touching markup.
   insights: {
     title: 'What I\u2019m thinking about, in public.'
+  },
+
+  // delivery-framework -------------------------------------------------
+  // "How I work" nine-step process explainer, sits between Leadership and
+  // Experience. Only the section title is data-driven (same pattern as
+  // insights/testimonials/recognition) \u2014 the 9 step cards live in
+  // index.html as static markup.
+  deliveryFramework: {
+    title: 'One framework, every program.'
   },
 
   /* -------------------------------------------------- contact ----------- */
@@ -251,16 +263,17 @@ window.PORTFOLIO_CONFIG = {
   // Removing a section deletes it from the DOM rather than hiding it, so the
   // markup stays valid and screen readers do not announce empty landmarks.
   sections: {
-    about:          true,   // executive summary bio, just after the hero
-    leadership:     true,   // "Delivery credibility, earned in code"
-    successStories: true,   // case studies
-    insights:       true,   // thought-leadership / POV articles
-    aiLeadership:   true,   // AI-augmented delivery
-    expertise:      true,   // capability matrix
-    experience:     true,   // timeline
-    recognition:    true,   // certifications and awards
-    testimonials:   true,   // recommendations
-    contact:        true    // contact form — think hard before removing this
+    about:              true,   // executive summary bio, just after the hero
+    leadership:         true,   // "Delivery credibility, earned in code"
+    deliveryFramework:  true,   // "How I work" nine-step process
+    successStories:     true,   // case studies
+    insights:           true,   // thought-leadership / POV articles
+    aiLeadership:       true,   // AI-augmented delivery
+    expertise:          true,   // capability matrix
+    experience:         true,   // timeline
+    recognition:        true,   // certifications and awards
+    testimonials:       true,   // recommendations
+    contact:            true    // contact form — think hard before removing this
   },
 
   /* -------------------------------------------------- features ---------- */

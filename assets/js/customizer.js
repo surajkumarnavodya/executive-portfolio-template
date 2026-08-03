@@ -9,7 +9,7 @@
   var root = document.documentElement;
   var cfg = window.PORTFOLIO_CONFIG || {};
   var themeCfg = cfg.theme || {};
-  var DEFAULT_SECTION_ORDER = ['about', 'leadership', 'experience', 'success-stories', 'expertise', 'ai-leadership', 'recognition', 'insights', 'testimonials', 'contact'];
+  var DEFAULT_SECTION_ORDER = ['about', 'leadership', 'delivery-framework', 'experience', 'success-stories', 'expertise', 'ai-leadership', 'recognition', 'insights', 'testimonials', 'contact'];
   // Default navbar link order — deliberately NOT the same sequence as
   // DEFAULT_SECTION_ORDER above. That array is the page's actual top-to-
   // bottom content flow; this one is how the links are grouped/ordered for
@@ -57,7 +57,7 @@
       label: 'Delivery Manager',
       heroPhrases: ['outcomes. teams. trust.', 'on time. on budget.', 'client confidence up.', 'disciplined delivery.'],
       valueStatement: 'I lead enterprise delivery with governance rigor, strong client partnership, and measurable execution quality.',
-      lede: 'Enterprise <strong>Program &amp; Project Manager</strong> (<strong>PMP®, Scrum Master</strong>) with <strong>12+ years</strong> of experience and <strong>8+ years</strong> on .NET engineering foundation, delivering multi-account programs through strong governance, client partnerships, technical leadership, and measurable business outcomes.',
+      lede: 'Enterprise <strong>Program &amp; Project Manager</strong> with <strong>12+ years</strong> of experience and <strong>8+ years</strong> on .NET engineering foundation, delivering multi-account programs through strong governance, client partnerships, technical leadership, and measurable business outcomes.',
       primaryCta: '<i class="bi bi-calendar-check me-2"></i>Schedule Delivery Discussion'
     },
     engineeringManager: {

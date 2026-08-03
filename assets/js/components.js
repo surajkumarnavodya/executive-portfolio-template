@@ -231,6 +231,9 @@
   create('experience', '#experience', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });
+  create('delivery-framework', '#delivery-framework', function (root, payload) {
+    if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
+  });
   create('success-stories', '#success-stories', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });

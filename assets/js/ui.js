@@ -117,11 +117,11 @@
     { k: ['program','biggest','portfolio','narada','cdp','skills','project','case','delivered','sebi','compliance','platform'],
       a: "<b>Flagship: Narada — SEBI compliance platform</b> for a listed conglomerate, removing regulatory-penalty exposure with one auditable system of record. Also: CDP (end-to-end digitization of road-construction ops) and Easy Skills (workforce capability platform). Portfolio: ₹2Cr+ multi-account, 95%+ on-time/on-budget." },
     { k: ['metric','number','result','kpi','impact','stats','achievement','track','record'],
-      a: "<b>The steering snapshot:</b> ₹2Cr+ portfolio under management · 95%+ on-time/on-budget delivery · −20% risk exposure via governance · 30+ engineers led · +30% adoption via change management · +15% team productivity." },
+      a: "<b>The steering snapshot:</b> ₹2Cr+ portfolio under management · 95%+ on-time/on-budget delivery · −20% risk exposure via governance · 20+ engineers led · +30% adoption via change management · +15% team productivity." },
     { k: ['team','leadership','people','lead','manage','coach','mentor','grow','engineers'],
-      a: "<b>15+ engineers led across accounts</b> — coached in Scrum and Kanban (+15% productivity), grown into module ownership, structured to reduce key-person risk. His principle: capability should outlast the manager." },
+      a: "<b>20+ engineers led across accounts</b> — coached in Scrum and Kanban (+15% productivity), grown into module ownership, structured to reduce key-person risk. His principle: capability should outlast the manager." },
     { k: ['certification','certified','pmp','csm','scrum','agile','lcap','credential','qualification','education','degree'],
-      a: "<b>PMP® · Certified Scrum Master · LTIMindtree Certified Agile Practitioner.</b> Plus AI4ICPS (IIT Kharagpur), Agentic AI (Johns Hopkins, in progress), PMI GenAI for PMs, IBM Enterprise Design Thinking. Education: M.Sc. IT (Sikkim Manipal) and BCA." },
+      a: "<b>LTIMindtree Certified Agile Practitioner.</b> Plus AI4ICPS (IIT Kharagpur), Agentic AI (Johns Hopkins, in progress), PMI GenAI for PMs, IBM Enterprise Design Thinking. Education: M.Sc. IT (Sikkim Manipal) and BCA." },
     { k: ['why','delivery','director','manager','fit','hire','role','value','different','unique','stand'],
       a: "<b>He owns outcomes, not just plans.</b> Client-sponsor relationships, commercial discipline (estimation, SLA, margin), team growth — backed by 8 years of building the systems the plans describe. That engineering depth changes every conversation with architecture and the boardroom." },
     { k: ['contact','email','phone','reach','call','hire','connect','talk','touch'],
@@ -276,5 +276,30 @@
   chips.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-q]');
     if (b) submit(b.getAttribute('data-q'));
+  });
+})();
+
+/* ============================================================
+   SUCCESS STORIES — category filter
+   Categories are authored per-card via data-filter in index.html rather
+   than parsed from the visible .tag text, so relabeling a tag's wording
+   can't silently break the filter.
+   ============================================================ */
+(function () {
+  'use strict';
+  var bar = document.querySelector('.ss-filter-bar');
+  if (!bar) { return; }
+  var cards = document.querySelectorAll('#success-stories [data-filter]');
+  bar.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-filter-chip]');
+    if (!btn) { return; }
+    var value = btn.getAttribute('data-filter-chip');
+    Array.prototype.forEach.call(bar.querySelectorAll('[data-filter-chip]'), function (b) {
+      b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+    });
+    Array.prototype.forEach.call(cards, function (card) {
+      var match = value === 'all' || (' ' + card.getAttribute('data-filter') + ' ').indexOf(' ' + value + ' ') > -1;
+      card.classList.toggle('d-none', !match);
+    });
   });
 })();

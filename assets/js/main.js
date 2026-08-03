@@ -66,6 +66,14 @@
     window.PortfolioComponents.render('insights', cfg.insights);
   }
 
+  /* ---------------- delivery framework content -------------------------
+   * Drives the "How I work" section title from cfg.deliveryFramework via
+   * the delivery-framework component renderer in components.js.
+   * ------------------------------------------------------------------- */
+  if (cfg.deliveryFramework && window.PortfolioComponents) {
+    window.PortfolioComponents.render('delivery-framework', cfg.deliveryFramework);
+  }
+
   /* ---------------- contact ----------------------------------------- */
   if (ct.email) {
     var subject = ct.emailSubject ? '?subject=' + encodeURIComponent(ct.emailSubject) : '';
@@ -127,16 +135,17 @@
   /* ---------------- section visibility ------------------------------ */
   // config key -> section id in index.html
   var SECTION_IDS = {
-    about:          'about',
-    leadership:     'leadership',
-    successStories: 'success-stories',
-    insights:       'insights',
-    aiLeadership:   'ai-leadership',
-    expertise:      'expertise',
-    experience:     'experience',
-    recognition:    'recognition',
-    testimonials:   'testimonials',
-    contact:        'contact'
+    about:              'about',
+    leadership:         'leadership',
+    deliveryFramework:  'delivery-framework',
+    successStories:     'success-stories',
+    insights:           'insights',
+    aiLeadership:       'ai-leadership',
+    expertise:          'expertise',
+    experience:         'experience',
+    recognition:        'recognition',
+    testimonials:       'testimonials',
+    contact:            'contact'
   };
   var sections = cfg.sections || {};
   Object.keys(SECTION_IDS).forEach(function (key) {
