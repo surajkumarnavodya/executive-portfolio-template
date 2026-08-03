@@ -127,7 +127,7 @@ window.PORTFOLIO_CONFIG = {
       { value: '12+',    label: 'Years Experience' },
       { value: '₹2Cr+',  label: 'Portfolio Governed' },
       { value: '40+',    label: 'Projects Delivered' },
-      { value: '30+',    label: 'Engineers Led' }
+      { value: '20+',    label: 'Engineers Led' }
     ],
     highlights: [
       { value: '98%',  label: 'Delivery Excellence' },
@@ -161,15 +161,15 @@ window.PORTFOLIO_CONFIG = {
     summary: 'I run enterprise programs the way a P\u0026L owner would — accountable for outcomes, not just RAG statuses.',
     paragraphs: [
       'Twelve-plus years in IT, the first eight spent hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency — and I use both to keep delivery plans honest.',
-      'Today I own multi-account portfolios worth \u20B92Cr+, leading 30+ engineers and standing as the single point of accountability for client sponsors when delivery health, risk, or scope get difficult. My leadership style is calm under pressure, direct with stakeholders, and structured enough to scale without me in every room.',
+      'Today I own multi-account portfolios worth \u20B92Cr+, leading 20+ engineers and standing as the single point of accountability for client sponsors when delivery health, risk, or scope get difficult. My leadership style is calm under pressure, direct with stakeholders, and structured enough to scale without me in every room.',
       'I am now applying that same discipline to AI-augmented delivery — using generative and agentic tooling to compress planning, reporting, and quality-assurance cycles, so the teams I lead ship faster without sacrificing governance.'
     ],
     pillars: [
       { icon: 'bi-compass', title: 'Leadership', body: 'Own the plan, the risk register and the client relationship — with the technical depth to challenge estimates intelligently.' },
       { icon: 'bi-graph-up-arrow', title: 'Impact', body: '98%+ delivery excellence, 30% adoption lift, zero critical go-live escalations across multi-account portfolios.' },
-      { icon: 'bi-award', title: 'Positioning', body: 'PMP\u00AE and Scrum Master certified, AI-augmented delivery practitioner, and one of the few leaders who can still read the code.' }
+      { icon: 'bi-award', title: 'Positioning', body: 'PMP\u00AE and Scrum Master, AI-augmented delivery practitioner, and one of the few leaders who can still read the code.' }
     ],
-    credentials: 'PMP\u00AE \u00B7 Certified Scrum Master \u00B7 12+ years in IT \u00B7 8+ years hands-on engineering'
+    credentials: 'PMP\u00AE \u00B7 Scrum Master \u00B7 12+ years in IT \u00B7 8+ years hands-on engineering'
   },
 
   // insights ---------------------------------------------------------------
