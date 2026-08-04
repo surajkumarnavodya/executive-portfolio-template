@@ -48,13 +48,15 @@ window.PORTFOLIO_CONFIG = {
   //   rotatorPhrases   phrases that cycle through the gradient span in the
   //                    headline (must match the number of .ph spans in the
   //                    markup — currently 4 — extra entries are ignored)
-  //   valueStatement   one-line value proposition directly under the H1
-  //   lede             short credibility paragraph — a small set of safe
-  //                    tags (strong, em, a, span, b) may be used
+  //   valueStatement   one-line value proposition directly under the H1 — a
+  //                    small set of safe tags (strong, em, a, span, b) may be
+  //                    used. Carries the full pitch (role, years, portfolio
+  //                    scope) on its own; there is no separate lede paragraph.
   //   stats            the 4 quick-stat tiles (value + label)
   //   highlights       the "Selected highlights" ribbon items (value + label)
-  //   primaryCta       label/icon markup for the main "above the fold" CTA
-  //   secondaryCtas    labels for the outline buttons that follow it
+  //                    — 3 entries; anything already shown in the Steering
+  //                    Snapshot dashboard or the domain strip doesn't belong
+  //                    here too
   //   activeTone       which entry of toneVariants (below) overrides the
   //                    eyebrow/headlinePrefix/rotatorPhrases/valueStatement
   //                    fields above at load time. Set to '' or an unknown key
@@ -85,7 +87,7 @@ window.PORTFOLIO_CONFIG = {
       'disciplined delivery.',
       'outcomes. teams. trust.'
     ],
-    valueStatement: 'Enterprise program leader trusted with multi-crore portfolios — turning ambitious transformation mandates into outcomes clients can bet on.',
+    valueStatement: 'Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 8+ years as a hands-on .NET engineer.',
     activeTone: '',
     toneVariants: {
       authoritative: {
@@ -122,26 +124,19 @@ window.PORTFOLIO_CONFIG = {
         valueStatement: 'Trusted with multi-crore portfolios — a measured hand behind ambitious transformation, outcomes clients can quietly rely on.'
       }
     },
-    lede: 'Enterprise <strong>Program &amp; Project Manager</strong> with <strong>12+ years</strong> of experience and an <strong>8+ year</strong> engineering foundation — delivering multi-account programs through disciplined governance, client partnership and measurable business outcomes.',
     stats: [
       { value: '12+',    label: 'Years Experience' },
       { value: '₹2Cr+',  label: 'Portfolio Governed' },
       { value: '40+',    label: 'Projects Delivered' },
       { value: '20+',    label: 'Engineers Led' }
     ],
+    // Trimmed to 3 — the other 3 items this ribbon used to carry (98%
+    // delivery, +30% adoption, domain count) already appear in the Steering
+    // Snapshot dashboard and the domain strip directly above this ribbon.
     highlights: [
-      { value: '98%',  label: 'Delivery Excellence' },
       { value: 'AI',   label: 'Transformation Programs' },
       { value: '5+',   label: 'Enterprise Awards' },
-      { value: 'Zero', label: 'Critical Go-Live Escalations' },
-      { value: '+30%', label: 'Business Adoption' }
-    ],
-    primaryCta: '<i class="bi bi-calendar-check me-2"></i>Schedule an Executive Conversation',
-    // Two .btn-outline slots exist in index.html's .hero-cta — entries here
-    // map onto them by position (see the hero renderer in components.js).
-    secondaryCtas: [
-      { label: 'Download Resume' },
-      { label: 'View case studies' }
+      { value: 'Zero', label: 'Critical Go-Live Escalations' }
     ]
   },
 
@@ -153,23 +148,25 @@ window.PORTFOLIO_CONFIG = {
   //   eyebrow        small chip above the heading
   //   title          section heading (executive positioning statement)
   //   summary        one-line positioning statement directly under the title
-  //   paragraphs     2-3 short paragraphs covering leadership style, impact,
-  //                  and career positioning — this is the narrative bio
-  //   pillars        3 short cards (icon key + title + body) summarising
-  //                  leadership / impact / positioning
+  //   paragraphs     2 short paragraphs covering leadership style and career
+  //                  positioning — this is the narrative bio. (Impact numbers
+  //                  live in the Steering Snapshot dashboard and the hero
+  //                  stats, not here — see the pillars note below.)
+  //   pillars        2 short cards (icon key + title + body) summarising
+  //                  leadership / positioning. A 3rd "Impact" pillar restating
+  //                  98%/30%/zero-escalations was cut — those numbers are
+  //                  already the hero's Steering Snapshot two screens up.
   //   credentials    small inline credibility line (e.g. certifications)
   about: {
     eyebrow: 'About',
     title: 'An engineer-turned-executive who leads delivery, not just tracks it.',
     summary: 'I run enterprise programs the way a P\u0026L owner would — accountable for outcomes, not just RAG statuses.',
     paragraphs: [
-      'Twelve-plus years in IT, the first eight spent hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency — and I use both to keep delivery plans honest.',
-      'Today I own multi-account portfolios worth \u20B92Cr+, leading 20+ engineers and standing as the single point of accountability for client sponsors when delivery health, risk, or scope get difficult. My leadership style is calm under pressure, direct with stakeholders, and structured enough to scale without me in every room.',
-      'I am now applying that same discipline to AI-augmented delivery — using generative and agentic tooling to compress planning, reporting, and quality-assurance cycles, so the teams I lead ship faster without sacrificing governance.'
+      'Twelve-plus years in IT — the first eight hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency, and use both to keep delivery plans honest.',
+      'Today I own multi-account portfolios worth ₹2Cr+, leading 20+ engineers as the single point of accountability for client sponsors on delivery health, risk and scope. I’m now applying that same discipline to AI-augmented delivery, using agentic tooling to compress planning, reporting and QA cycles without sacrificing governance.',
     ],
     pillars: [
       { icon: 'bi-compass', title: 'Leadership', body: 'Own the plan, the risk register and the client relationship — with the technical depth to challenge estimates intelligently.' },
-      { icon: 'bi-graph-up-arrow', title: 'Impact', body: '98%+ delivery excellence, 30% adoption lift, zero critical go-live escalations across multi-account portfolios.' },
       { icon: 'bi-award', title: 'Positioning', body: 'AI-augmented delivery practitioner, LTIMindtree Certified Agile Practitioner, and one of the few leaders who can still read the code.' }
     ],
     credentials: '12+ Years in IT \u00B7 Technical Project Management \u00B7 Enterprise Delivery \u00B7 Software Engineering Background'

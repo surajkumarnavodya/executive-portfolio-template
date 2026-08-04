@@ -448,7 +448,7 @@
             font-size: clamp(38px,5.6vw,64px);
             font-weight: 800;
             line-height: 1.08;
-            margin-bottom: 22px
+            margin-bottom: 34px
         }
 
             .hero h1 .grad .ph {
@@ -1079,7 +1079,11 @@
                 height: 44px;
                 font-size: 21px;
                 border-radius: 50%;
-                background: rgba(255,255,255,.26)
+                background: rgba(255,255,255,.26);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0
             }
 
         [data-bs-theme="dark"] .hero-stat h4 {
@@ -1343,15 +1347,6 @@
                 background: var(--navy-line-soft)
             }
 
-            .exec-item:nth-child(-n+3)::after {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 20px;
-                right: 20px;
-                height: 1px;
-                background: var(--navy-line-soft)
-            }
 
             .exec-item i {
                 margin-top: 0;
@@ -1518,7 +1513,7 @@
         }
 
         .executive-ribbon {
-            margin-top: 0;
+            margin-top: 2px;
             margin-bottom: 12px
         }
 
@@ -1586,10 +1581,6 @@
                 height: 1.35em
             }
 
-            .exec-item:nth-child(-n+3)::after {
-                left: 9px;
-                right: 9px
-            }
 
         .kpi-icon {
             width: 48px;
@@ -1705,7 +1696,7 @@
             letter-spacing: .16em;
             text-transform: uppercase;
             color: var(--text-2);
-            margin: 0 0 7px 2px
+            margin: 17px 0 7px 2px
         }
 
         .hero-stats {
@@ -1714,7 +1705,7 @@
         }
 
         .executive-ribbon {
-            margin-bottom: 18px
+            margin-bottom: 0
         }
 
         .hero h1 {
@@ -1722,7 +1713,7 @@
         }
 
         .hero .value-statement {
-            font-weight: 600
+            font-weight: normal
         }
 
         .hero .lede {
@@ -2083,15 +2074,6 @@
                 background: var(--navy-line-soft)
             }
 
-            .exec-item:not(:nth-last-child(-n+2))::after {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 20px;
-                right: 20px;
-                height: 1px;
-                background: var(--navy-line-soft)
-            }
         }
 
         @media (max-width:768px) {
@@ -2100,20 +2082,6 @@
             }
 
             .exec-item:nth-child(even)::before {
-                content: none
-            }
-
-            .exec-item:not(:last-child)::after {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 8px;
-                right: 8px;
-                height: 1px;
-                background: var(--navy-line-soft)
-            }
-
-            .exec-item:last-child::after {
                 content: none
             }
         }
@@ -2552,8 +2520,7 @@
                 <div class="col-lg-7">
                     <p class="eyebrow eyebrow-chip mb-2"><span class="eyebrow-badge" aria-hidden="true"><i class="bi bi-rocket-takeoff-fill"></i></span><span>Driving enterprise digital transformation</span></p>
                     <h1 id="hero-title">I own enterprise delivery — <br><span class="grad rotator" id="heroRotator"><span class="ph on">on time. on budget.</span><span class="ph">client confidence up.</span><span class="ph">disciplined delivery.</span><span class="ph">outcomes. teams. trust.</span></span></h1>
-                    <p class="value-statement">Enterprise program leader trusted with multi-crore portfolios — turning ambitious transformation mandates into outcomes clients can bet on.</p>
-                    <p class="lede">Enterprise <strong>Program &amp; Project Manager</strong> with <strong>12+ years</strong> of experience and <strong>8+ years</strong> on .NET engineering foundation, delivering multi-account programs through strong governance, client partnerships, technical leadership, and measurable business outcomes.</p>
+                    <p class="value-statement">Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 8+ years as a hands-on .NET engineer.</p>
                     <div class="domain-strip" aria-label="Business domains delivered">
                         <span class="dom-label">Domains</span>
                         <span class="dom">HR</span>
@@ -2573,19 +2540,10 @@
                     <p class="highlights-label">Selected highlights</p>
                     <div class="executive-ribbon">
                         <div class="executive-grid">
-                            <div class="exec-item i-green"><i class="bi bi-check-lg" aria-hidden="true"></i><span><b>98%</b> Delivery Excellence</span></div>
                             <div class="exec-item i-violet"><i class="bi bi-cpu" aria-hidden="true"></i><span><b>AI</b> Transformation Programs</span></div>
                             <div class="exec-item i-amber"><i class="bi bi-trophy-fill" aria-hidden="true"></i><span><b>5+</b> Enterprise Awards</span></div>
                             <div class="exec-item i-green"><i class="bi bi-patch-check-fill" aria-hidden="true"></i><span><b>Zero</b> Critical Go‑Live Escalations</span></div>
-                            <div class="exec-item i-violet"><i class="bi bi-robot" aria-hidden="true"></i><span><b>+30%</b> Business Adoption</span></div>
-                            <div class="exec-item i-amber"><i class="bi bi-building" aria-hidden="true"></i><span><b>5</b> Enterprise Business Domains</span></div>
                         </div>
-                    </div>
-
-                    <div class="hero-cta">
-                        <a class="btn-accent btn" href="mailto:surajkumar.navodya@gmail.com?subject=Delivery%20leadership%20conversation"><i class="bi bi-calendar-check me-2"></i>Schedule an Executive Conversation</a>
-                        <a class="btn-outline btn" href="Suraj_Kumar_Resume_Technical_PM.pdf" download><i class="bi bi-download me-2"></i>Download Resume</a>
-                        <a class="btn-outline btn" href="#success-stories"><i class="bi bi-kanban me-2"></i>View case studies</a>
                     </div>
                 </div>
                 <div class="col-lg-5 hero-right" role="region" aria-label="Executive dashboard">
@@ -2616,15 +2574,6 @@
                         <div class="row row-cols-2 g-2">
                             <div class="col">
                                 <div class="kpi-cell">
-                                    <span class="kpi-icon i-blue" aria-hidden="true"><i class="bi bi-currency-rupee"></i></span>
-                                    <div>
-                                        <div class="kpi-val">₹<span class="count" data-count="2">2</span><small>Cr+</small></div>
-                                        <div class="kpi-lbl">Portfolio under management</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="kpi-cell">
                                     <span class="kpi-icon i-violet" aria-hidden="true"><i class="bi bi-bullseye"></i></span>
                                     <div>
                                         <div class="kpi-val"><span class="count" data-count="95">95</span><small>%+</small></div>
@@ -2638,15 +2587,6 @@
                                     <div>
                                         <div class="kpi-val">−<span class="count" data-count="20">20</span><small>%</small></div>
                                         <div class="kpi-lbl">Risk exposure, via governance</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="kpi-cell">
-                                    <span class="kpi-icon i-blue" aria-hidden="true"><i class="bi bi-people-fill"></i></span>
-                                    <div>
-                                        <div class="kpi-val"><span class="count" data-count="20">20</span><small>+</small></div>
-                                        <div class="kpi-lbl">Engineers led across accounts</div>
                                     </div>
                                 </div>
                             </div>
@@ -2687,9 +2627,8 @@
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-7 reveal d1">
-                        <p class="lede mb-3">Twelve-plus years in IT, the first eight spent hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency — and I use both to keep delivery plans honest.</p>
-                        <p class="lede mb-3">Today I own multi-account portfolios worth ₹2Cr+, leading 20+ engineers and standing as the single point of accountability for client sponsors when delivery health, risk, or scope get difficult. My leadership style is calm under pressure, direct with stakeholders, and structured enough to scale without me in every room.</p>
-                        <p class="lede mb-0">I am now applying that same discipline to AI-augmented delivery — using generative and agentic tooling to compress planning, reporting, and quality-assurance cycles, so the teams I lead ship faster without sacrificing governance.</p>
+                        <p class="lede mb-3">Twelve-plus years in IT — the first eight hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency, and use both to keep delivery plans honest.</p>
+                        <p class="lede mb-0">Today I own multi-account portfolios worth ₹2Cr+, leading 20+ engineers as the single point of accountability for client sponsors on delivery health, risk and scope. I'm now applying that same discipline to AI-augmented delivery — using agentic tooling to compress planning, reporting and QA cycles without sacrificing governance.</p>
                     </div>
                     <div class="col-lg-5 reveal d2">
                         <div class="row g-3">
@@ -2697,12 +2636,6 @@
                                 <div class="x-card">
                                     <p class="pov-label"><i class="bi bi-compass me-1"></i>Leadership</p>
                                     <p class="text-2 mb-0" style="font-size:14.5px">Own the plan, the risk register and the client relationship — with the technical depth to challenge estimates intelligently.</p>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="x-card">
-                                    <p class="pov-label"><i class="bi bi-graph-up-arrow me-1"></i>Impact</p>
-                                    <p class="text-2 mb-0" style="font-size:14.5px">98%+ delivery excellence, 30% adoption lift, zero critical go-live escalations across multi-account portfolios.</p>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -2722,6 +2655,53 @@
                     <i class="bi bi-broadcast me-1" style="color:var(--accent-2)"></i>
                     <strong>Currently:</strong> Applying agentic AI workflows to enterprise delivery reporting and risk forecasting.
                 </p>
+            </div>
+        </section>
+
+        <!-- ================= EXPERIENCE ================= -->
+        <section id="experience" data-component="experience" aria-labelledby="experience-title">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">Experience</p>
+                    <h2 class="sec-title" id="experience-title">Twelve years, one trajectory.</h2>
+                    <p class="sec-sub mb-5">Engineer → mentor → program leader. Every phase compounds into the next.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div id="experience-content" class="timeline">
+                            <div class="t-item reveal">
+                                <p class="t-when">NEXT PHASE · TARGET → VISION</p>
+                                <p class="t-role mb-0">Delivery Manager → Program Director</p>
+                                <p class="t-org">The trajectory this record points to</p>
+                                <p class="t-body">Near term: Delivery Manager / Senior Program Manager owning multi-account portfolios, client P&amp;L conversations and AI-augmented delivery. The 3–5 year vision: Program Director — building delivery organizations, not just running programs.</p>
+                            </div>
+                            <div class="t-item reveal">
+                                <p class="t-when">JUN 2021 → JUN 2026 · LEADERSHIP PHASE</p>
+                                <p class="t-role mb-0">Manager — Program &amp; Project Management</p>
+                                <p class="t-org">LTIMindtree · L&amp;T Corporate IT, L&amp;T Realty, L&amp;T Construction · Mumbai</p>
+                                <p class="t-body">₹2Cr+ multi-account portfolio, 20+ engineers across .NET, Java, SQL Server and cloud (full delivery metrics under Steering Snapshot, above). Own client-sponsor relationships and steering committees across L&amp;T Group accounts; ISO-standard governance; effort estimation and SLA management that protect delivery margin; grew engineers into module owners; HR automation cutting turnaround by 25%.</p>
+                            </div>
+                            <div class="t-item dev reveal">
+                                <p class="t-when">DEC 2017 → JUN 2021 · ENGINEERING PHASE</p>
+                                <p class="t-role mb-0">Software Developer</p>
+                                <p class="t-org">Innovsource Services · Mumbai</p>
+                                <p class="t-body">HR and MIS reporting solutions — <strong>+45% reporting performance</strong>. Mentored junior developers; contributed to enterprise architecture and IT governance forums (+25% team efficiency).</p>
+                            </div>
+                            <div class="t-item dev reveal">
+                                <p class="t-when">MAY 2016 → DEC 2017 · ENGINEERING PHASE</p>
+                                <p class="t-role mb-0">Software Engineer</p>
+                                <p class="t-org">SA-Techno Consulting Services · Pune</p>
+                                <p class="t-body">Regulatory-compliant applications for B. Braun Medical India — <strong>−20% audit preparation time</strong>; improved SLA compliance in service delivery.</p>
+                            </div>
+                            <div class="t-item dev reveal">
+                                <p class="t-when">APR 2014 → MAY 2016 · ENGINEERING PHASE</p>
+                                <p class="t-role mb-0">Software Developer</p>
+                                <p class="t-org">Intellect Software Solutions · Mumbai</p>
+                                <p class="t-body">Enterprise .NET applications for real estate, CRM, sales and marketing — the foundation of everything since.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -2752,7 +2732,7 @@
                         <div class="pov-card">
                             <p class="pov-label">People leadership</p>
                             <h3>Build &amp; grow the team.</h3>
-                            <p>20+ engineers led across accounts — coached in Scrum and Kanban (+15% productivity), grown into module ownership, and structured to reduce key-person risk. Change-management that lifted adoption 30%.</p>
+                            <p>Coached engineers in Scrum and Kanban (+15% productivity), grew individual contributors into module owners, and structured teams to reduce key-person risk.</p>
                         </div>
                     </div>
                     <div class="col-lg-6 reveal d2">
@@ -2773,7 +2753,7 @@
                         <div class="pov-card">
                             <p class="pov-label">Transformation</p>
                             <h3>Adopt what's next.</h3>
-                            <p>Formally upskilling in AI (IIT Kharagpur, Johns Hopkins) and applying AI tooling to delivery practice — reporting, planning and engineering workflows.</p>
+                            <p>Formally upskilling in AI and applying it hands-on to delivery practice — reporting, planning and engineering workflows. Full credentials under AI Leadership.</p>
                         </div>
                     </div>
                 </div>
@@ -2822,7 +2802,7 @@
                         <i class="bi bi-award-fill fs-2" style="color:var(--accent)"></i>
                         <div>
                             <h3 class="fs-6 fw-bold mb-1">I don't just hold opinions — I publish them.</h3>
-                            <p class="text-2 mb-0" style="font-size:14.3px">2× C# Corner MVP for technical writing and community contribution. A public track record of thinking in the open — the same instinct I bring to delivery leadership.</p>
+                            <p class="text-2 mb-0" style="font-size:14.3px">A public record of technical writing and community contribution — see Recognition for the award tally. The same instinct I bring to delivery leadership: think in the open, get the reasoning peer-reviewed.</p>
                         </div>
                     </div>
                     <a class="btn-outline btn text-nowrap" href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener"><i class="bi bi-journal-text me-2"></i>Read my articles</a>
@@ -2896,6 +2876,8 @@
                         </div>
                     </div>
 
+                    <details class="so-details">
+                        <summary>View full contribution breakdown</summary>
                     <div class="so-meta">
                         <div class="so-tags">
                             <p class="so-meta-label">Top answer tags</p>
@@ -2920,6 +2902,7 @@
                     </div>
 
                     <p class="so-foot">Why it matters for delivery: engineers escalate database problems to me because I've debugged them, not because the org chart says to. That shortens the distance between a red status and a real fix.</p>
+                    </details>
                 </div>
             </div>
         </section>
@@ -2991,53 +2974,6 @@
             </div>
         </section>
 
-        <!-- ================= EXPERIENCE ================= -->
-        <section id="experience" data-component="experience" aria-labelledby="experience-title">
-            <div class="container">
-                <div class="reveal">
-                    <p class="eyebrow">Experience</p>
-                    <h2 class="sec-title" id="experience-title">Twelve years, one trajectory.</h2>
-                    <p class="sec-sub mb-5">Engineer → mentor → program leader. Every phase compounds into the next.</p>
-                </div>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div id="experience-content" class="timeline">
-                            <div class="t-item reveal">
-                                <p class="t-when">NEXT PHASE · TARGET → VISION</p>
-                                <p class="t-role mb-0">Delivery Manager → Program Director</p>
-                                <p class="t-org">The trajectory this record points to</p>
-                                <p class="t-body">Near term: Delivery Manager / Senior Program Manager owning multi-account portfolios, client P&amp;L conversations and AI-augmented delivery. The 3–5 year vision: Program Director — building delivery organizations, not just running programs.</p>
-                            </div>
-                            <div class="t-item reveal">
-                                <p class="t-when">JUN 2021 → JUN 2026 · LEADERSHIP PHASE</p>
-                                <p class="t-role mb-0">Manager — Program &amp; Project Management</p>
-                                <p class="t-org">LTIMindtree · L&amp;T Corporate IT, L&amp;T Realty, L&amp;T Construction · Mumbai</p>
-                                <p class="t-body">₹2Cr+ multi-account portfolio, 20+ engineers across .NET, Java, SQL Server and cloud. <strong>95%+ on-time/on-budget delivery, −20% risk exposure, +30% adoption, +15% team productivity.</strong> Own client-sponsor relationships and steering committees across L&amp;T Group accounts; ISO-standard governance; effort estimation and SLA management that protect delivery margin; grew engineers into module owners; HR automation cutting turnaround by 25%.</p>
-                            </div>
-                            <div class="t-item dev reveal">
-                                <p class="t-when">DEC 2017 → JUN 2021 · ENGINEERING PHASE</p>
-                                <p class="t-role mb-0">Software Developer</p>
-                                <p class="t-org">Innovsource Services · Mumbai</p>
-                                <p class="t-body">HR and MIS reporting solutions — <strong>+45% reporting performance</strong>. Mentored junior developers; contributed to enterprise architecture and IT governance forums (+25% team efficiency).</p>
-                            </div>
-                            <div class="t-item dev reveal">
-                                <p class="t-when">MAY 2016 → DEC 2017 · ENGINEERING PHASE</p>
-                                <p class="t-role mb-0">Software Engineer</p>
-                                <p class="t-org">SA-Techno Consulting Services · Pune</p>
-                                <p class="t-body">Regulatory-compliant applications for B. Braun Medical India — <strong>−20% audit preparation time</strong>; improved SLA compliance in service delivery.</p>
-                            </div>
-                            <div class="t-item dev reveal">
-                                <p class="t-when">APR 2014 → MAY 2016 · ENGINEERING PHASE</p>
-                                <p class="t-role mb-0">Software Developer</p>
-                                <p class="t-org">Intellect Software Solutions · Mumbai</p>
-                                <p class="t-body">Enterprise .NET applications for real estate, CRM, sales and marketing — the foundation of everything since.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- ================= SUCCESS STORIES ================= -->
         <section id="success-stories" data-component="success-stories" aria-labelledby="success-title" style="background:var(--bg-2)">
             <div class="container">
@@ -3061,7 +2997,11 @@
                             <h3 class="fs-4 fw-bold">Narada — SEBI Compliance Reporting Platform</h3>
                             <p class="pov-label mb-1">Business challenge</p>
                             <p class="text-2">Group companies needed an auditable process for SEBI regulatory disclosures — a regime where misses carry real consequences — and filings were fragmented across manual, ad hoc processes with no single system of record.</p>
-                            <p class="pov-label mb-1">Business context</p>
+                            <div class="result-line mt-3"><i class="bi bi-check-circle-fill me-2"></i><strong>Business outcome</strong> · Lower regulatory-risk exposure and greater trust from corporate-secretarial teams, via one auditable submission and review workflow.</div>
+                            <p class="case-stack mt-3"><b>Technologies</b> · .NET Core · SQL Server · Azure</p>
+                            <details class="case-details">
+                                <summary>Read full case study</summary>
+                            <p class="pov-label mb-1 mt-3">Business context</p>
                             <p class="text-2">SEBI compliance sits above any single business unit — a missed or late disclosure exposes the whole group to regulatory scrutiny, not just the filing team, which is what elevated this from an IT ticket to a governance priority.</p>
                             <p class="pov-label mb-1">My role</p>
                             <p class="text-2">Sat as the single point of accountability between engineering, the client sponsor and compliance stakeholders — validating scope trade-offs before they became rework, and running steering-committee reporting on schedule and audit readiness.</p>
@@ -3069,14 +3009,13 @@
                             <p class="text-2">A cross-functional team of developers, QA and a dedicated compliance/corporate-secretarial stakeholder group — no external vendor, so accountability for delivery and correctness sat entirely with this team.</p>
                             <p class="pov-label mb-1">Strategy</p>
                             <p class="text-2">Defined requirements directly with the corporate-secretarial team and built the platform incrementally against ISO-aligned governance checkpoints, rather than a single big-bang release.</p>
-                            <p class="case-stack"><b>Technologies</b> · .NET Core · SQL Server · Azure</p>
                             <p class="pov-label mb-1 mt-3">Risks managed</p>
                             <p class="text-2">The core risk was a submission slipping past a regulatory deadline — mitigated with a RAID log reviewed at every steering committee, not just at milestones, so a slipping date surfaced while there was still time to act.</p>
                             <p class="pov-label mb-1">Key decisions</p>
                             <p class="text-2">Chose to build the audit trail into the platform from day one rather than add it later — cost more up front, but avoided a much costlier retrofit once the platform was live and in regulatory use.</p>
-                            <div class="result-line mt-3"><i class="bi bi-check-circle-fill me-2"></i><strong>Business outcome</strong> · Lower regulatory-risk exposure and greater trust from corporate-secretarial teams, via one auditable submission and review workflow.</div>
                             <p class="pov-label mb-1 mt-3">Lessons learned</p>
                             <p class="text-2 mb-0">Regulatory platforms live or die on auditability, not features — building the submission trail in from day one avoided a costly retrofit later.</p>
+                            </details>
                         </div>
                     </div>
                     <div class="col-lg-6 reveal d1" data-filter="construction">
@@ -3085,7 +3024,11 @@
                             <h3 class="fs-4 fw-bold">CDP — Common Digital Platform, L&amp;T Construction</h3>
                             <p class="pov-label mb-1">Business challenge</p>
                             <p class="text-2">Road-construction operations sat across disconnected processes and reporting silos, limiting visibility across sites and slowing decisions that depended on site-level data.</p>
-                            <p class="pov-label mb-1">Business context</p>
+                            <div class="result-line mt-3"><i class="bi bi-check-circle-fill me-2"></i><strong>Business outcome</strong> · Cross-site process visibility that enabled faster, better-evidenced decisions across construction programs.</div>
+                            <p class="case-stack mt-3"><b>Technologies</b> · .NET · Angular · SQL Server · Azure DevOps</p>
+                            <details class="case-details">
+                                <summary>Read full case study</summary>
+                            <p class="pov-label mb-1 mt-3">Business context</p>
                             <p class="text-2">Construction programs run on site-level realities changing week to week — without shared visibility, decisions at the program level were being made on stale or incomplete data, turning a reporting gap into a real delivery risk.</p>
                             <p class="pov-label mb-1">My role</p>
                             <p class="text-2">Owned the delivery plan and stakeholder relationship across construction operations and the technical team, translating field realities into a build the engineers could actually deliver.</p>
@@ -3093,14 +3036,13 @@
                             <p class="text-2">Coordinated between construction operations leads at each site, the internal engineering team, and Azure DevOps-based delivery tooling — no single site owner had visibility into the others before this platform existed.</p>
                             <p class="pov-label mb-1">Strategy</p>
                             <p class="text-2">Led end-to-end delivery of the digitization platform, sequencing rollout site-by-site so operational teams could adopt without disrupting live construction schedules.</p>
-                            <p class="case-stack"><b>Technologies</b> · .NET · Angular · SQL Server · Azure DevOps</p>
                             <p class="pov-label mb-1 mt-3">Risks managed</p>
                             <p class="text-2">The main risk was adoption resistance from site teams used to their own processes — managed by rolling out one site at a time and treating early-site feedback as input to later rollouts, not just a rollout order.</p>
                             <p class="pov-label mb-1">Key decisions</p>
                             <p class="text-2">Chose phased, site-by-site rollout over a single group-wide launch — slower on paper, but it meant a failure at one site never became a group-wide failure.</p>
-                            <div class="result-line mt-3"><i class="bi bi-check-circle-fill me-2"></i><strong>Business outcome</strong> · Cross-site process visibility that enabled faster, better-evidenced decisions across construction programs.</div>
                             <p class="pov-label mb-1 mt-3">Lessons learned</p>
                             <p class="text-2 mb-0">Adoption in field operations depends more on rollout sequencing than on feature completeness — phased site onboarding avoided the resistance a big-bang launch would have triggered.</p>
+                            </details>
                         </div>
                     </div>
                     <div class="col-lg-6 reveal d2" data-filter="hr-tech">
@@ -3109,7 +3051,11 @@
                             <h3 class="fs-4 fw-bold">Easy Skills — Competency Management System</h3>
                             <p class="pov-label mb-1">Business challenge</p>
                             <p class="text-2">L&amp;T Construction needed a better way to track workforce capability and deploy people against the right project needs, with capability data scattered across spreadsheets and manual records.</p>
-                            <p class="pov-label mb-1">Business context</p>
+                            <div class="result-line mt-3"><i class="bi bi-check-circle-fill me-2"></i><strong>Business outcome</strong> · Workforce visibility that enabled capability-based staffing and deployment decisions.</div>
+                            <p class="case-stack mt-3"><b>Technologies</b> · .NET MVC · SQL Server · Power BI</p>
+                            <details class="case-details">
+                                <summary>Read full case study</summary>
+                            <p class="pov-label mb-1 mt-3">Business context</p>
                             <p class="text-2">Staffing decisions were being made from out-of-date spreadsheets maintained by individual managers — a capability gap could stay invisible at the program level until a project was already short-staffed.</p>
                             <p class="pov-label mb-1">My role</p>
                             <p class="text-2">Bridged HR and engineering priorities directly, keeping the delivery plan realistic against a competing set of HR reporting deadlines.</p>
@@ -3117,14 +3063,13 @@
                             <p class="text-2">A small engineering team paired directly with the HR stakeholders who owned the underlying staffing process — deliberately kept lean, since the harder problem was data-model alignment, not build capacity.</p>
                             <p class="pov-label mb-1">Strategy</p>
                             <p class="text-2">Led delivery across technical and HR stakeholders, aligning the data model to how HR actually made staffing decisions rather than how the system happened to store records.</p>
-                            <p class="case-stack"><b>Technologies</b> · .NET MVC · SQL Server · Power BI</p>
                             <p class="pov-label mb-1 mt-3">Risks managed</p>
                             <p class="text-2">The risk that mattered most was HR not trusting the new system enough to retire their spreadsheets — addressed by validating the data model against real staffing decisions before rollout, not after.</p>
                             <p class="pov-label mb-1">Key decisions</p>
                             <p class="text-2">Prioritized matching HR's existing decision process over a technically cleaner data model — the less elegant choice, but the one that got the system actually adopted instead of running in parallel with the old spreadsheets.</p>
-                            <div class="result-line mt-3"><i class="bi bi-check-circle-fill me-2"></i><strong>Business outcome</strong> · Workforce visibility that enabled capability-based staffing and deployment decisions.</div>
                             <p class="pov-label mb-1 mt-3">Lessons learned</p>
                             <p class="text-2 mb-0">A system HR stakeholders trust for staffing decisions needs to match their existing decision process, not just digitize the old spreadsheet.</p>
+                            </details>
                         </div>
                     </div>
                 </div>
@@ -3213,39 +3158,6 @@
                     </div>
                 </div>
             </div>
-            <div class="container sub-block">
-                <div class="reveal">
-                    <p class="eyebrow dim-eyebrow">Capability pillars</p>
-                    <h3 class="sub-sec-title">The delivery leadership I bring to the table.</h3>
-                    <p class="sec-sub mb-5">Four pillars behind how I run enterprise programs — leadership discipline first, engineering depth underneath.</p>
-                </div>
-                <div class="row g-4">
-                    <div class="col-lg-6 reveal d1">
-                        <div class="x-card">
-                            <p class="pov-label"><i class="bi bi-compass me-1"></i>Delivery leadership</p>
-                            <p class="text-2 mb-0" style="font-size:15px">PMO and governance, stakeholder management, RAID and risk control, effort estimation, vendor and SLA management, steering-committee reporting.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 reveal d2">
-                        <div class="x-card">
-                            <p class="pov-label"><i class="bi bi-stars me-1"></i>AI and GenAI</p>
-                            <p class="text-2 mb-0" style="font-size:15px">RAG pipelines, LangGraph, agentic workflows, prompt engineering, OpenAI APIs, with computer vision as a current learning track.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 reveal d1">
-                        <div class="x-card">
-                            <p class="pov-label"><i class="bi bi-cloud me-1"></i>Cloud and DevOps</p>
-                            <p class="text-2 mb-0" style="font-size:15px">Azure, Azure DevOps, CI/CD pipelines, Jira, Git and TFS — the delivery plumbing behind predictable releases.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 reveal d2">
-                        <div class="x-card">
-                            <p class="pov-label"><i class="bi bi-code-slash me-1"></i>Engineering</p>
-                            <p class="text-2 mb-0" style="font-size:15px">C#, .NET Core, SQL Server, Angular, React, Python and Power BI — eight years of building before leading.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- ================= AI LEADERSHIP ================= -->
@@ -3303,7 +3215,7 @@
                                 <li class="mb-2"><strong style="color:var(--heading)">Delivery intelligence</strong> — AI-assisted status reporting, risk summarization and planning support across program artifacts.</li>
                                 <li class="mb-2"><strong style="color:var(--heading)">Engineering acceleration</strong> — governing teams that use AI coding tools responsibly: productivity with review discipline.</li>
                                 <li class="mb-2"><strong style="color:var(--heading)">Agentic workflows</strong> — studying multi-agent systems and RAG pipelines hands-on, to scope and govern GenAI initiatives credibly rather than from slideware.</li>
-                                <li class="mb-0"><strong style="color:var(--heading)">Adoption &amp; change</strong> — the same change-management craft that lifted system adoption 30% now applied to AI rollout, where adoption is the whole battle.</li>
+                                <li class="mb-0"><strong style="color:var(--heading)">Adoption &amp; change</strong> — the same change-management discipline that drove delivery adoption (see Steering Snapshot) now applied to AI rollout, where adoption is the whole battle.</li>
                             </ul>
                         </div>
                     </div>
@@ -3408,7 +3320,7 @@
             <div class="container">
                 <div class="reveal">
                     <p class="eyebrow">Recommendations</p>
-                    <h2 class="sec-title" id="testimonials-title">What people I've worked with say.</h2>
+                    <h2 class="sec-title" id="testimonials-title">Trusted by the teams and clients I've delivered for.</h2>
                     <p class="sec-sub mb-5">From the leaders I report to, the teams I lead, and the clients I deliver for.</p>
                 </div>
                 <!-- TODO: Replace the sample quotes below with your real LinkedIn recommendations

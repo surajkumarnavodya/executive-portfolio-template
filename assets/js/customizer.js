@@ -9,14 +9,18 @@
   var root = document.documentElement;
   var cfg = window.PORTFOLIO_CONFIG || {};
   var themeCfg = cfg.theme || {};
-  var DEFAULT_SECTION_ORDER = ['about', 'leadership', 'delivery-framework', 'experience', 'success-stories', 'expertise', 'ai-leadership', 'recognition', 'insights', 'testimonials', 'contact'];
-  // Default navbar link order — deliberately NOT the same sequence as
-  // DEFAULT_SECTION_ORDER above. That array is the page's actual top-to-
-  // bottom content flow; this one is how the links are grouped/ordered for
-  // scanability in the nav itself, which doesn't have to match. Each
-  // dropdown (Expertise, Proof) is represented by one anchor id — its
-  // first member — since the nav-reorder logic below moves the whole
-  // dropdown <li>, not individual items inside it.
+  var DEFAULT_SECTION_ORDER = ['about', 'experience', 'leadership', 'delivery-framework', 'success-stories', 'expertise', 'ai-leadership', 'recognition', 'insights', 'testimonials', 'contact'];
+  // Default navbar link order. Kept as its own array (rather than derived
+  // from DEFAULT_SECTION_ORDER) because the two lists aren't quite the same
+  // shape: 'delivery-framework' has no standalone nav link (it isn't
+  // significant enough for its own top-level item), and 'ai-leadership' /
+  // 'insights' / 'testimonials' are reached via the Expertise/Proof dropdowns
+  // rather than as top-level links. Each dropdown is represented here by one
+  // anchor id — its first member — since the nav-reorder logic below moves
+  // the whole dropdown <li>, not individual items inside it. Even so, the
+  // *relative* order of every id both lists share is deliberately identical
+  // to DEFAULT_SECTION_ORDER, so scrolling the page and reading the nav
+  // left-to-right land on sections in the same sequence.
   var DEFAULT_NAV_ORDER = ['about', 'experience', 'leadership', 'success-stories', 'expertise', 'recognition'];
 
   var PRESETS = {

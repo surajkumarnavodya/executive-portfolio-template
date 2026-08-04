@@ -137,8 +137,7 @@
         phrases[0].classList.add('on');
       }
     }
-    text(root.querySelector('.value-statement'), payload.valueStatement);
-    setSafeHTML(root.querySelector('.lede'), payload.lede);
+    setSafeHTML(root.querySelector('.value-statement'), payload.valueStatement);
 
     if (Array.isArray(payload.stats)) {
       var statEls = root.querySelectorAll('.hero-stat');

@@ -124,7 +124,7 @@ body.nav-hidden .navbar.fixed-top{transform:translateY(-100%)}
   color:var(--text-2);margin-bottom:26px;
 }
 @keyframes pulse{to{transform:scale(1.9);opacity:0}}
-.hero h1{font-size:clamp(38px,5.6vw,64px);font-weight:800;line-height:1.08;margin-bottom:22px}
+.hero h1{font-size:clamp(38px,5.6vw,64px);font-weight:800;line-height:1.08;margin-bottom:34px}
 /* Applied to each .ph individually, not to .grad/.rotator as a whole: a
    background-clip:text gradient on the shared wrapper clips to the union
    of ALL descendant text glyphs regardless of each child's own opacity —
@@ -583,6 +583,20 @@ body.tele-hide{scroll-padding-top:84px}
   color:var(--text-2);margin:10px 0 0;
 }
 .case-stack b{color:var(--accent);font-weight:600}
+/* --- Case study deep-dive (native <details>, no JS) --- */
+.case-details{margin-top:16px;padding-top:14px;border-top:1px dashed var(--border)}
+.case-details summary{
+  cursor:pointer;list-style:none;user-select:none;
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-mono);font-size:11.5px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+}
+.case-details summary::-webkit-details-marker{display:none}
+.case-details summary::after{
+  content:'\25BE';font-size:12px;line-height:1;
+  transition:transform .2s var(--ease-standard,ease);
+}
+.case-details[open] summary::after{transform:rotate(180deg)}
 /* --- Skills matrix --- */
 .skill-cat .skill-pill{margin:0 6px 8px 0;display:inline-block}
 .skill-cat .learn{font-style:normal;color:var(--accent-3,#e0a63c);font-size:.85em}
@@ -809,6 +823,13 @@ p{line-height:1.6}
 .hero-stat .stat-icon{
   width:44px;height:44px;font-size:21px;border-radius:50%;
   background:rgba(255,255,255,.26);
+  /* Centering only ever lived in the [data-bs-theme="dark"] scoped rule
+     above, so light theme (which only overrides background/color, not
+     layout) never got display:flex — the icon glyph fell back to normal
+     block flow and sat top-left instead of centered in the circle. Layout
+     is theme-agnostic, so it belongs on this shared rule, not duplicated
+     per theme. */
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 [data-bs-theme="dark"] .hero-stat h4{font-size:clamp(17px,1.7vw,21.5px);margin:0 0 1px;color:var(--heading)}
 [data-bs-theme="light"] .hero-stat h4{ color:var(--heading) !important; }
@@ -1014,10 +1035,24 @@ p{line-height:1.6}
   content:'';display:inline-block;width:6px;height:6px;border-radius:50%;
   background:var(--accent-2);margin-right:9px;vertical-align:2px;
 }
+/* --- expandable tags + badges + closing note (native <details>, no JS) --- */
+.so-details{margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
+.so-details summary{
+  cursor:pointer;list-style:none;user-select:none;
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-mono);font-size:11.5px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+}
+.so-details summary::-webkit-details-marker{display:none}
+.so-details summary::after{
+  content:'\25BE';font-size:12px;line-height:1;
+  transition:transform .2s var(--ease-standard,ease);
+}
+.so-details[open] summary::after{transform:rotate(180deg)}
 /* --- tags + badges footer grid --- */
 .so-meta{
   display:grid;grid-template-columns:1fr 1fr;gap:20px 32px;
-  margin-top:20px;padding-top:18px;border-top:1px solid var(--border);
+  margin-top:16px;
 }
 .so-meta-label{
   font-family:var(--font-mono);font-size:10.5px;font-weight:600;
@@ -1130,7 +1165,7 @@ p{line-height:1.6}
   background:linear-gradient(180deg,var(--navy-panel-a) 0%,var(--navy-panel-b) 100%);
   border:1px solid var(--navy-line);
   border-radius:14px;
-  padding:8px 16px;
+  padding:5px 16px;
 }
 .executive-grid{
   display:grid;
@@ -1153,11 +1188,10 @@ p{line-height:1.6}
   content:"";position:absolute;left:0;top:14%;bottom:14%;
   width:1px;background:var(--navy-line-soft);
 }
-/* horizontal rule — inset left and right for the same reason */
-.exec-item:nth-child(-n+3)::after{
-  content:"";position:absolute;bottom:0;left:20px;right:20px;
-  height:1px;background:var(--navy-line-soft);
-}
+/* Horizontal row-separator rule removed — it separated ribbon row 1 from
+   row 2 when this ribbon held 6 items across 2 rows. It now holds 3 items
+   in a single row, so nth-child(-n+3) matched every item and drew a stray
+   line under each one instead. */
 /* Bigger, brighter icon badges */
 .exec-item i{
   margin-top:0;
@@ -1280,7 +1314,7 @@ p{line-height:1.6}
 /* ---- Tighter hero rhythm: less air between the stat row, the
         ribbon and the CTA row, and less gutter between cards ---- */
 .hero-stats{--bs-gutter-x:.5rem;margin-top:14px;margin-bottom:10px}
-.executive-ribbon{margin-top:0;margin-bottom:12px}
+.executive-ribbon{margin-top:2px;margin-bottom:12px}
 .hero-cta{margin-top:0!important;row-gap:8px}
 .hero-stat{padding:14px 11px;min-height:78px;gap:10px}
 /* ---- Buttons sit closer together with less internal padding ---- */
@@ -1302,9 +1336,8 @@ p{line-height:1.6}
    over-wide hero made the page look misaligned. The ribbon is fitted
    to that width below instead of the container being stretched. */
 /* Ribbon fits the narrower left column: less padding, tighter gap */
-.exec-item{padding:13px 9px;gap:7px;font-size:12px}
+.exec-item{padding:8px 9px;gap:7px;font-size:12px}
 .exec-item i{width:1.35em;height:1.35em}
-.exec-item:nth-child(-n+3)::after{left:9px;right:9px}
 /* ---- Cramped column widths (lg where the right panel is only ~400px,
         and phones) need a smaller label so two lines still hold the whole
         string rather than the clamp truncating it. ---- */
@@ -1456,22 +1489,24 @@ section{padding-top:24px}
   font-size:10.5px;font-weight:600;
   letter-spacing:.16em;text-transform:uppercase;
   color:var(--text-2);
-  margin:0 0 7px 2px;
+  margin:17px 0 7px 2px;
 }
 /* ---- 3. MORE VISUAL SPACING ---------------------------------------------
-   NOTE: this partly reverses the earlier "halve all section top padding"
-   change — 24px was too tight to give sections their own air. Landed at 44px
-   as a middle ground rather than the original 48px. */
-section{padding-top:44px}
-#leadership{padding-top:56px!important}
+   Was 44px (with Leadership at +12px extra) — trimmed back down since it
+   read as excess empty space at the top of every section (About, Experience,
+   Leadership, Success Stories, etc.), especially now that the hero itself
+   is shorter. Leadership keeps a little extra over the general value so it
+   still reads as a clear break coming right after the hero. */
+section{padding-top:28px}
+#leadership{padding-top:40px!important}
 .hero-stats{margin-top:18px;margin-bottom:14px}
-.executive-ribbon{margin-bottom:18px}
+.executive-ribbon{margin-bottom:0}
 .sec-sub{margin-bottom:26px}
 /* ---- 4. CLEANER VISUAL HIERARCHY ---------------------------------------
    Widen the gap between heading, lead statement and body copy so the eye
    ranks them instead of reading one grey block. */
 .hero h1{letter-spacing:-.022em}
-.hero .value-statement{font-weight:600}
+.hero .value-statement{font-weight:normal}
 .hero .lede{color:var(--text-2)}
 .sec-title{letter-spacing:-.018em}
 .eyebrow,.highlights-label{opacity:.9}
@@ -1808,7 +1843,8 @@ a,button,.x-card,.pov-card,.hero-stat,.kpi-cell{
    layer of override.
    =========================================================================== */
 .kpi-board{padding:16px 18px}
-.kpi-cell{padding:16px 14px;gap:12px;min-height:82px}
+.kpi-board .row-cols-2{--bs-gutter-x:12px;--bs-gutter-y:12px}
+.kpi-cell{padding:11px 14px;gap:12px;min-height:74px}
 .kpi-icon{width:40px;height:40px;font-size:18px}
 .kpi-val{font-size:clamp(18px,1.9vw,22px);line-height:1.05}
 .kpi-lbl{font-size:11.5px;line-height:1.28;margin-top:0}
@@ -1920,16 +1956,25 @@ body{top:0!important;position:static!important}
 }
 .btn-accent:hover,.hero-cta a.btn-accent:hover,.cta-final a.cta-primary:hover{
   filter:brightness(1.04);
+  /* Bootstrap 5.3's own .btn:hover sets background-color:var(--bs-btn-hover-bg),
+     which is unset (transparent) for a custom variant like .btn-accent that
+     isn't one of Bootstrap's own .btn-* colour classes. Same specificity as
+     our rule (single class + :hover), so without restating the background
+     here, Bootstrap's hover background silently wins and the dark navy
+     button text (WCAG contrast fix, dark mode) goes invisible against the
+     page behind it. */
+  background-color:var(--accent);
 }
 
 /* ===========================================================================
-   EXECUTIVE SCORECARD — restore original panel height after trimming rows
+   EXECUTIVE SCORECARD — row padding
    ---------------------------------------------------------------------------
-   Two duplicate-meaning rows (Delivery Success, Budget Adherence) were
-   removed, leaving 5 rows instead of 7. Rather than let the panel shrink
-   and look sparse next to the Steering Snapshot panel beside it, the freed
-   vertical space is redistributed as extra breathing room around each
-   remaining row, so the panel's total height is unchanged (measured:
-   ~238.5px at 5 rows before this rule, ~304px at 7 rows previously).
+   Was padded up to ~304px total to avoid looking sparse next to a taller
+   Steering Snapshot (see git history). The hero has since been shortened
+   (CTA row removed, highlights ribbon trimmed to one row), so the left
+   column — and with it, the target height both hero-right panels stretch
+   to match — is now much shorter. Padding is back down near its original
+   value so the Scorecard + Steering Snapshot combined height fits under
+   that shorter target instead of forcing hero-right to overflow it.
    =========================================================================== */
-.exec-scorecard .row-item{padding:13.5px 0}
+.exec-scorecard .row-item{padding:7px 0}

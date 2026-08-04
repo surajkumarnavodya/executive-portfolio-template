@@ -147,14 +147,11 @@
   .exec-item:not(:nth-child(3n+1))::before{content:none}
   .exec-item:nth-child(-n+3)::after{content:none}
   .exec-item:nth-child(even)::before{content:"";position:absolute;left:0;top:14%;bottom:14%;width:1px;background:var(--navy-line-soft)}
-  .exec-item:not(:nth-last-child(-n+2))::after{content:"";position:absolute;bottom:0;left:20px;right:20px;height:1px;background:var(--navy-line-soft)}
 }
 @media (max-width:768px){
   .executive-grid{grid-template-columns:1fr}
   
   .exec-item:nth-child(even)::before{content:none}
-  .exec-item:not(:last-child)::after{content:"";position:absolute;bottom:0;left:8px;right:8px;height:1px;background:var(--navy-line-soft)}
-  .exec-item:last-child::after{content:none}
 }
 @media (max-width:576px){
   .eyebrow.eyebrow-chip{font-size:9.4px;padding:3px 11px 3px 3px;letter-spacing:.09em}
