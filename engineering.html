@@ -98,6 +98,7 @@
           ],
           "sameAs": [
             "https://www.linkedin.com/in/surajkumar-navodya",
+            "https://github.com/PLACEHOLDER_GITHUB_USERNAME",
             "https://www.c-sharpcorner.com/members/suraj-kumar23/articles",
             "https://stackoverflow.com/users/10532500/suraj-kumar"
           ]
@@ -280,8 +281,11 @@
                     <p class="sec-sub mb-5">Not a skills list — working systems, with the stack and the reasoning behind them.</p>
                 </div>
                 <!-- REMINDER for Suraj: replace the PLACEHOLDER hrefs below with real
-                     repo or write-up links for DualLens Analytics and the Autonomous
-                     Financial Analyst capstone. -->
+                     repo or write-up links for DualLens Analytics, the Autonomous
+                     Financial Analyst capstone, and this site's own repo. Each "View
+                     source" button is hidden automatically (see ui.js) if its href
+                     still contains "PLACEHOLDER_" at render time, so an unfilled one
+                     never shows as a dead link. -->
                 <div class="row g-4">
                     <div class="col-lg-4 reveal d1">
                         <div class="x-card case-study h-100">
@@ -307,7 +311,10 @@
                             <h3 class="fs-5 fw-bold">This portfolio site</h3>
                             <p class="text-2">The site you're on right now — a single-file HTML/CSS/jQuery build with no framework or build step, JSON-LD structured data for search visibility, and hand-tuned performance work: critical-CSS inlining, AVIF/WebP images, subsetted font loading.</p>
                             <p class="case-stack mt-3"><b>Stack</b> &middot; HTML &middot; CSS &middot; jQuery &middot; Bootstrap 5 &middot; JSON-LD</p>
-                            <a class="btn-outline btn btn-sm text-nowrap mt-3" href="https://surajkumarnavodya.com/" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-2"></i>View live</a>
+                            <div class="d-flex gap-2 flex-wrap mt-3">
+                                <a class="btn-outline btn btn-sm text-nowrap" href="https://surajkumarnavodya.com/" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-2"></i>View live</a>
+                                <a class="btn-outline btn btn-sm text-nowrap" href="PLACEHOLDER_PORTFOLIO_REPO_URL" target="_blank" rel="noopener"><i class="bi bi-github me-2"></i>View source</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -512,9 +519,44 @@
                         <div class="col-lg-7">
                             <div class="p-4 p-lg-5">
                                 <h3 class="fs-4 fw-bold mb-2">Next step</h3>
-                                <p class="text-2 mb-4" style="font-size:14.8px">Book a conversation about a hands-on engineering or technical-lead role, or take the résumé with you. I reply within one business day.</p>
+                                <p class="text-2 mb-4" style="font-size:14.8px">Send a message about a hands-on engineering or technical-lead role, or take the résumé with you. I reply within one business day.</p>
+
+                                <!-- PLACEHOLDER_FORMSPREE_ENDPOINT: this page loads no config.js, so the
+                                     endpoint has to be set directly here (see assets/js/config.js's
+                                     contact.formEndpoint for the full explanation on index.html). Create
+                                     a form at https://formspree.io first — the free tier is enough. -->
+                                <form id="contactForm" class="mb-2" data-endpoint="PLACEHOLDER_FORMSPREE_ENDPOINT" novalidate>
+                                    <!-- Honeypot: invisible to real visitors (off-screen, unlabelled to
+                                         anything but a screen reader, not in tab order). A bot that
+                                         auto-fills every field will fill this one in too; a human never
+                                         will. contact-form.js silently drops the submission if it's set. -->
+                                    <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+                                        <label for="cfCompany">Leave this field empty</label>
+                                        <input type="text" id="cfCompany" name="_gotcha" tabindex="-1" autocomplete="off">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="cfName">Name</label>
+                                        <input type="text" class="form-control" id="cfName" name="name" autocomplete="name" required>
+                                        <div class="invalid-feedback">Enter your name.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="cfEmail">Email</label>
+                                        <input type="email" class="form-control" id="cfEmail" name="email" autocomplete="email" required>
+                                        <div class="invalid-feedback">Enter a valid email address.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="cfMessage">Message</label>
+                                        <textarea class="form-control" id="cfMessage" name="message" rows="4" required></textarea>
+                                        <div class="invalid-feedback">Enter a message.</div>
+                                    </div>
+                                    <div id="cfStatus" class="mb-3" role="status" aria-live="polite"></div>
+                                    <div class="cta-final mb-3">
+                                        <button type="submit" class="btn-accent btn cta-primary"><i class="bi bi-send me-2"></i>Send message</button>
+                                    </div>
+                                </form>
+                                <p class="cta-alt mb-4">Prefer email? Write directly to <a href="mailto:surajkumar.navodya@gmail.com">surajkumar.navodya@gmail.com</a>.</p>
+
                                 <div class="cta-final mb-3">
-                                    <a class="btn-accent btn cta-primary" href="mailto:surajkumar.navodya@gmail.com?subject=Engineering%20conversation"><i class="bi bi-calendar-check me-2"></i>Schedule a Conversation</a>
                                     <a class="btn-outline btn cta-secondary" href="assets/aff991fc366a/40257fcfd3621de6d7ff.pdf" download><i class="bi bi-download me-2"></i>Download my résumé</a>
                                 </div>
                                 <p class="cta-alt mb-4">Prefer LinkedIn? <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener">Connect with me there</a>.</p>
@@ -537,6 +579,11 @@
             <span>
                 <a href="#top" aria-label="Back to top">Top ↑</a>
                 <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener me">LinkedIn</a>
+                <!-- PLACEHOLDER_GITHUB_USERNAME: fill in the real GitHub profile URL. This page
+                     loads no config.js, so it must be edited directly (main.js's config-driven
+                     rewrite doesn't run here). ui.js hides this link entirely if the placeholder
+                     is still unfilled at render time, so it never shows as a dead link. -->
+                <a href="https://github.com/PLACEHOLDER_GITHUB_USERNAME" target="_blank" rel="noopener me">GitHub</a>
                 <a href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener me">C# Corner</a>
                 <a href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener me">Stack Overflow</a>
                 <a href="mailto:surajkumar.navodya@gmail.com">Email</a>

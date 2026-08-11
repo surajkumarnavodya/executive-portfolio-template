@@ -319,3 +319,17 @@
     });
   });
 })();
+
+/* ============================================================
+   UNFILLED PLACEHOLDER LINKS — hide instead of shipping a dead link
+   Repo/article/profile links across both pages carry literal
+   PLACEHOLDER_* hrefs until filled in (see the REMINDER comments next to
+   each one). Anyone who forgets to fill one in gets a missing button, not
+   a link that goes nowhere — a dead link in front of a hiring manager is
+   worse than the section just being one button shorter.
+   ============================================================ */
+(function () {
+  'use strict';
+  var links = document.querySelectorAll('a[href*="PLACEHOLDER_"]');
+  Array.prototype.forEach.call(links, function (a) { a.remove(); });
+})();

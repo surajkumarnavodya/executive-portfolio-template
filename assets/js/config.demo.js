@@ -37,7 +37,13 @@ window.PORTFOLIO_CONFIG = {
     phone: '+1 555 0100',
     location: 'Austin, TX',
     resume: 'assets/downloads/john-anderson-resume.pdf',
-    emailSubject: 'Engineering leadership conversation'
+    emailSubject: 'Engineering leadership conversation',
+    // Left empty on purpose: this template doesn't ship a real Formspree
+    // account. Create one at https://formspree.io and paste your own
+    // endpoint here — see assets/js/config.js's contact.formEndpoint for
+    // the full explanation. With this empty, the contact form falls back
+    // to a plain mailto: link automatically.
+    formEndpoint: ''
   },
 
   links: {

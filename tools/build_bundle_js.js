@@ -10,7 +10,8 @@
  * instead of manual copy-paste.
  *
  * Composition: components, counters, customizer, main, navigation, palette,
- * renderer, theme, i18n, fontsize, ui — in that order. Deliberately excludes
+ * renderer, theme, i18n, fontsize, ui, contact-form — in that order.
+ * Deliberately excludes
  * the Studio-only ES modules (studio-app.js, content-service.js,
  * asset-store.js, portfolio-data-service.js) — they use `export class`,
  * which is invalid in a non-module <script> and is exactly what caused the
@@ -35,7 +36,8 @@ const DEFAULT_OUT = path.join(ROOT, 'assets/dist/js/template.min.js');
 
 const PARTS = [
   'components.js', 'counters.js', 'customizer.js', 'main.js', 'navigation.js',
-  'palette.js', 'renderer.js', 'theme.js', 'i18n.js', 'fontsize.js', 'ui.js'
+  'palette.js', 'renderer.js', 'theme.js', 'i18n.js', 'fontsize.js', 'ui.js',
+  'contact-form.js'
 ];
 
 function parseArgs(argv) {

@@ -86,6 +86,14 @@
   if (ct.resume) {
     each('a[download]', function (el) { el.setAttribute('href', ct.resume); });
   }
+  if (ct.formEndpoint) {
+    // Config value wins over whatever the <form data-endpoint> attribute
+    // was authored with, so config.js stays the single source of truth on
+    // pages that load it. contact-form.js reads data-endpoint directly, so
+    // it doesn't need to know about cfg at all — engineering.html (no
+    // config.js) just keeps whatever it was authored with.
+    each('form[data-endpoint]', function (el) { el.setAttribute('data-endpoint', ct.formEndpoint); });
+  }
 
   /* ---------------- external links ---------------------------------- */
   // Matched on the existing href so re-ordering the markup can't break it.

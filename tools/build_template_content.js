@@ -91,9 +91,11 @@ apply('{ "@type": "CollegeOrUniversity", "name": "Magadh University" }', '{ "@ty
 apply('{ "@type": "EducationalOccupationalCredential", "name": "LTIMindtree Certified Agile Practitioner" },',
       '{ "@type": "EducationalOccupationalCredential", "name": "[Your Certification]" },');
 apply(`"https://www.linkedin.com/in/surajkumar-navodya",
+            "https://github.com/PLACEHOLDER_GITHUB_USERNAME",
             "https://www.c-sharpcorner.com/members/suraj-kumar23/articles",
             "https://stackoverflow.com/users/10532500/suraj-kumar"`,
       `"https://www.linkedin.com/in/yourprofile",
+            "https://github.com/yourusername",
             "https://example.com/your-articles",
             "https://stackoverflow.com/users/0000000/yourname"`);
 
@@ -104,9 +106,8 @@ apply('https://www.linkedin.com/in/surajkumar-navodya', 'https://www.linkedin.co
 apply('linkedin.com/in/surajkumar-navodya', 'linkedin.com/in/yourprofile');
 apply('https://www.c-sharpcorner.com/members/suraj-kumar23/articles', 'https://example.com/your-articles', 3);
 apply('https://stackoverflow.com/users/10532500/suraj-kumar', 'https://stackoverflow.com/users/0000000/yourname', 4);
-apply('mailto:surajkumar.navodya@gmail.com?subject=Delivery%20leadership%20conversation', 'mailto:you@example.com?subject=Delivery%20leadership%20conversation');
-apply('mailto:surajkumar.navodya@gmail.com', 'mailto:you@example.com', 2);
-apply('surajkumar.navodya@gmail.com', 'you@example.com');
+apply('mailto:surajkumar.navodya@gmail.com', 'mailto:you@example.com', 3);
+apply('surajkumar.navodya@gmail.com', 'you@example.com', 2);
 apply('tel:+919049141305', 'tel:+10000000000');
 apply('+91 90491 41305', '[Your Phone]');
 apply('assets/aff991fc366a/40257fcfd3621de6d7ff.pdf', 'assets/downloads/your-resume.pdf');
@@ -258,11 +259,12 @@ apply('"He combines strong program and project management expertise with enough 
       '"[Paste a real testimonial quote here — one that speaks to your program/project management expertise and how you lead under pressure.]"');
 apply('"He brings clarity, structure, and steady ownership to difficult situations, keeps teams aligned without micromanagement, and creates trust through proactive leadership."',
       '"[Paste a real testimonial quote here — one that speaks to your leadership style and how you build trust with your team.]"');
-apply(`<!-- REMINDER for Suraj: get each person's explicit permission before publishing
-                     their real name/title/photo here. Replace the NAME / TITLE / COMPANY
+apply(`<!-- REMINDER for Suraj: get each person's WRITTEN permission (an email or
+                     message saying it's OK, not just a verbal yes) before publishing their
+                     real name/title/company/photo here. Replace the NAME / TITLE / COMPANY
                      placeholders below with the details they approve — the quote text itself
                      is unchanged from what they originally gave you. -->`,
-      `<!-- Get each person's explicit permission before publishing their real name/title/photo
+      `<!-- Get each person's WRITTEN permission before publishing their real name/title/photo
                      here. Replace the NAME / TITLE / COMPANY placeholders, and the sample quote
                      text, with a real testimonial and the details they approve. -->`);
 

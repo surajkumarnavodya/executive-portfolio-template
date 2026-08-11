@@ -74,6 +74,7 @@ executive-portfolio-template/
 │   │   ├── navigation.js       scrolling, active links, mobile nav
 │   │   ├── counters.js         scroll reveals, KPI count-up
 │   │   ├── ui.js               progress bar, ticker, rotator, tilt, Copilot
+│   │   ├── contact-form.js     Formspree submission, validation, honeypot
 │   │   └── main.js             applies config.js to the page
 │   │
 │   ├── images/                 profile photo

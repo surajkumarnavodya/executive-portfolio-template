@@ -199,7 +199,16 @@ window.PORTFOLIO_CONFIG = {
     // in docs/ReleaseQA.md before renaming this back to something obvious.
     resume: 'assets/aff991fc366a/40257fcfd3621de6d7ff.pdf',
     // Prefilled subject line for the "email me" links.
-    emailSubject: 'Delivery leadership conversation'
+    emailSubject: 'Delivery leadership conversation',
+    // Create a form at https://formspree.io (free tier is fine), then paste
+    // its endpoint here — looks like 'https://formspree.io/f/xxxxxxxx'.
+    // assets/js/contact-form.js posts to this URL and falls back to a plain
+    // mailto: link (using the email above) if it's still the placeholder
+    // below or the request fails. Synced onto the <form data-endpoint>
+    // attribute at load time by main.js, so engineering.html's own contact
+    // form (which loads no config.js) needs this same value set directly
+    // on its <form> tag instead — see the REMINDER comment next to it.
+    formEndpoint: 'PLACEHOLDER_FORMSPREE_ENDPOINT'
   },
 
   /* -------------------------------------------------- links ------------- */
