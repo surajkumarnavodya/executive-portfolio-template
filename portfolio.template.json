@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "meta": {
-    "title": "Suraj Kumar | Portfolio Builder",
+    "title": "John Anderson | Portfolio Builder",
     "description": "A premium portfolio experience built with the Portfolio Studio.",
-    "canonical": "https://surajkumarnavodya.com/"
+    "canonical": "https://example.com/"
   },
   "identity": {
-    "name": "Suraj Kumar",
+    "name": "John Anderson",
     "tagline": "Program & Delivery Management",
     "summary": "Delivery leader focused on enterprise transformation, AI-enabled delivery, and high-trust execution.",
     "photo": "assets/images/profile.jpg"
@@ -18,12 +18,12 @@
     "image": "assets/images/profile.jpg"
   },
   "contact": {
-    "email": "surajkumar.navodya@gmail.com",
-    "phone": "+91 90491 41305",
-    "location": "Mumbai, India",
-    "website": "https://surajkumarnavodya.com/",
-    "linkedin": "https://www.linkedin.com/in/surajkumar-navodya",
-    "resume": "assets/aff991fc366a/40257fcfd3621de6d7ff.pdf"
+    "email": "john@example.com",
+    "phone": "+1 555 0100",
+    "location": "Austin, TX",
+    "website": "https://example.com/",
+    "linkedin": "https://www.linkedin.com/in/example",
+    "resume": "assets/downloads/john-anderson-resume.pdf"
   },
   "navigation": [
     { "id": "leadership", "label": "Leadership" },
@@ -33,8 +33,8 @@
   "experience": [
     {
       "title": "Delivery Manager",
-      "company": "LTIMindtree",
-      "start": "2021",
+      "company": "[Your Employer]",
+      "start": "[Year]",
       "end": "Present",
       "blurb": "Leading multi-account portfolios with strong governance and measurable delivery health.",
       "bullets": ["Governance", "Client management", "AI-enabled delivery"]
@@ -42,18 +42,25 @@
   ],
   "projects": [
     {
-      "title": "Narada Compliance Platform",
+      "title": "[Project Name] Compliance Platform",
       "subtitle": "RegTech",
-      "summary": "Delivered an auditable compliance workflow for SEBI reporting and operational resilience.",
-      "link": "https://surajkumarnavodya.com/"
+      "summary": "Delivered an auditable compliance workflow for regulatory reporting and operational resilience.",
+      "link": "https://example.com/"
     }
   ],
-  "testimonials": [],
+  "testimonials": [
+    {
+      "name": "[Name]",
+      "role": "[Title]",
+      "org": "[Company]",
+      "quote": "[Paste a real testimonial quote here, with the person's permission to use their name/role.]"
+    }
+  ],
   "awards": [
     {
-      "title": "Epic Squad Award",
-      "issuer": "LTIMindtree",
-      "year": "2024",
+      "title": "[Your Award]",
+      "issuer": "[Your Employer]",
+      "year": "[Year]",
       "note": "Recognized for high-impact delivery leadership across enterprise accounts."
     }
   ],
@@ -82,6 +89,6 @@
   },
   "assets": [
     { "id": "profile-photo", "src": "assets/images/profile.jpg", "type": "image", "name": "profile.jpg" },
-    { "id": "resume-doc", "src": "assets/aff991fc366a/40257fcfd3621de6d7ff.pdf", "type": "document", "name": "resume.pdf" }
+    { "id": "resume-doc", "src": "assets/downloads/john-anderson-resume.pdf", "type": "document", "name": "resume.pdf" }
   ]
 }

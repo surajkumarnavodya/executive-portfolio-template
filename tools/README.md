@@ -1,3 +1,25 @@
+## Regenerating index.template.html
+
+```bash
+node tools/build_template_content.js
+```
+
+`index.template.html` is the genericized fork of `index.html` shipped to
+template buyers (via `tools/package-template.ps1`/`.sh`) — it must never
+contain the live site's real name, contact details, employer history,
+metrics, testimonials or résumé. Rather than hand-maintaining a second
+3,600-line file that silently drifts from `index.html`, this script re-derives
+it via an explicit find/replace map every time it runs: structural changes to
+`index.html` (new sections, class renames, a new `data-component`) flow
+through automatically since the script re-reads the current file.
+
+Run it after any content change to `index.html` that touches real
+name/contact/metric/employer/testimonial text. Each replacement checks its
+match count against an expected value and the script **exits non-zero and
+prints every mismatch** if `index.html` has changed in a way the map doesn't
+account for — add or update the relevant `apply(...)` call, don't silently
+ignore the failure, or real content can leak into the template output.
+
 ## Packaging: two profiles, two audiences
 
 This repo ships two different products from one working tree — see

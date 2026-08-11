@@ -79,12 +79,13 @@ window.PORTFOLIO_CONFIG = {
   },
 
   /* -------------------------------------------------- data ------------- */
-  // Enable JSON-driven demo content, sourced from the fictional sample packs
-  // in assets/demo-data/ (see assets/demo-data/README.md). renderer.js only
-  // renders a "demo" path on studio.html — loading this config file on any
-  // other page renders nothing and logs a console error instead.
+  // Left off deliberately: this config is meant to be loaded by index.html
+  // itself (see the docblock above), not by studio.html — and renderer.js
+  // only ever renders a "demo" path on studio.html. Turning this on here
+  // would only produce a console error on every page that actually loads
+  // this file, for a feature that could never render anyway.
   data: {
-    useData: true,
+    useData: false,
     path: 'assets/demo-data/'
   }
 

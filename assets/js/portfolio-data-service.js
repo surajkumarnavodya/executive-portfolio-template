@@ -64,12 +64,12 @@ export class PortfolioDataService {
     }
 
     const zip = new window.JSZip();
-    const files = this.buildExportManifest(portfolio, options);
-    const queue = files.map(async (filePath) => {
+    const entries = this.buildExportManifest(portfolio, options);
+    const queue = entries.map(async ({ src, dest }) => {
       try {
-        if (String(filePath).startsWith('asset://')) {
+        if (String(src).startsWith('asset://')) {
           // pull asset from the in-browser AssetStore when available
-          const id = String(filePath).replace(/^asset:\/\//, '');
+          const id = String(src).replace(/^asset:\/\//, '');
           if (window.AssetStore && typeof window.AssetStore.getBlob === 'function') {
             const blob = await window.AssetStore.getBlob(id);
             const entry = await (window.AssetStore.getEntry ? window.AssetStore.getEntry(id) : null);
@@ -88,12 +88,12 @@ export class PortfolioDataService {
           return;
         }
 
-        const response = await fetch(filePath, { cache: 'no-cache' });
+        const response = await fetch(src, { cache: 'no-cache' });
         if (!response.ok) {
           return;
         }
         const blob = await response.blob();
-        zip.file(filePath.replace(/^\.\//, ''), blob);
+        zip.file(dest.replace(/^\.\//, ''), blob);
       } catch (e) {
         // ignore individual file errors to allow best-effort packaging
       }
@@ -355,12 +355,31 @@ export class PortfolioDataService {
 
   /**
    * Build the file manifest for ZIP exports.
+   *
+   * Entries are { src, dest }: src is fetched from the server, dest is the
+   * path it lands at inside the zip. These differ for index.html and
+   * assets/js/config.js — src points at the template-safe fork
+   * (index.template.html, config.demo.js) so a buyer's exported site can
+   * never end up containing this deployment's real personal content
+   * (real name/contact/résumé), regardless of where studio.html happens to
+   * be hosted. See tools/package-live.sh's header comment for the incident
+   * this closes: this same fetch-and-zip mechanism, pointed at real files,
+   * is what made Studio's Export button able to exfiltrate the live site's
+   * real index.html/config.js if the two products were ever co-deployed.
    * @param {object} portfolio
    * @param {{marketplaceMode?: boolean}} options
-   * @returns {string[]}
+   * @returns {{src: string, dest: string}[]}
    */
   buildExportManifest(portfolio, options = {}) {
     const isMarketplace = Boolean(options.marketplaceMode || portfolio.meta?.marketplaceMode);
+    const REMAP = {
+      'index.html': 'index.template.html',
+      'portfolio.json': 'portfolio.template.json',
+      'assets/js/config.js': 'assets/js/config.demo.js',
+      'assets/images/profile.jpg': 'assets/images/profile-placeholder.jpg'
+    };
+    const toEntry = (filePath) => ({ src: REMAP[filePath] || filePath, dest: filePath });
+
     const files = [
       'index.html',
       'portfolio.json',
@@ -394,7 +413,9 @@ export class PortfolioDataService {
     if (isMarketplace) {
       // Fictional sample content (assets/demo-data/) is a Studio-only preview aid
       // and must never ship in a buyer's exported site alongside their real config.
-      return files.filter((filePath) => !filePath.startsWith('studio.html') && !filePath.includes('studio-app') && !filePath.includes('portfolio-data-service') && !filePath.startsWith('assets/demo-data/'));
+      return files
+        .filter((filePath) => !filePath.startsWith('studio.html') && !filePath.includes('studio-app') && !filePath.includes('portfolio-data-service') && !filePath.startsWith('assets/demo-data/'))
+        .map(toEntry);
     }
 
     files.unshift('studio.html');
@@ -405,7 +426,9 @@ export class PortfolioDataService {
       }
     });
 
-    return files.filter((filePath) => !filePath.startsWith('assets/dev/') && !filePath.startsWith('screenshots/'));
+    return files
+      .filter((filePath) => !filePath.startsWith('assets/dev/') && !filePath.startsWith('screenshots/'))
+      .map(toEntry);
   }
 
   /**
