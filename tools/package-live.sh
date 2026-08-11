@@ -52,6 +52,9 @@ rm -f "$OUT"
 #   assets/js/portfolio-data-service.js - Studio's JSON import/export + zip-export
 #   assets/js/config.demo.js           - the template's fictional identity config
 #   assets/demo-data/                  - fictional sample content for Studio previews
+#   index.template.html, portfolio.template.json, assets/images/profile-placeholder.* -
+#                                         template-only source files (package-template's
+#                                         raw material), never referenced by index.html
 #   CLAUDE.md, AGENTS.md, .github/copilot-instructions.md - AI-assistant session
 #                                         logs; internal development narrative
 #                                         (including security-decision reasoning
@@ -80,6 +83,11 @@ git archive --format=zip --output="$OUT" "$REF" -- . \
   ':!assets/js/asset-store.js' \
   ':!assets/js/portfolio-data-service.js' \
   ':!assets/js/config.demo.js' \
-  ':!assets/demo-data'
+  ':!assets/demo-data' \
+  ':!index.template.html' \
+  ':!portfolio.template.json' \
+  ':!assets/images/profile-placeholder.jpg' \
+  ':!assets/images/profile-placeholder.webp' \
+  ':!assets/images/profile-placeholder.avif'
 
 echo "Wrote $OUT ($(du -h "$OUT" | cut -f1)) from $REF"
