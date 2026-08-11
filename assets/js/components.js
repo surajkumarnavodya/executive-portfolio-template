@@ -108,7 +108,7 @@
     return instance;
   }
 
-  create('hero', '#top', function (root, payload) {
+  create('hero', '[data-component="hero"]', function (root, payload) {
     // Apply a named tone variant (authoritative | modern | refined) over the
     // base eyebrow/headlinePrefix/rotatorPhrases/valueStatement, if selected
     // via payload.activeTone in assets/js/config.js. Falls back silently to
@@ -180,7 +180,7 @@
     }
   });
 
-  create('about', '#about', function (root, payload) {
+  create('about', '[data-component="about"]', function (root, payload) {
     text(root.querySelector('.eyebrow'), payload.eyebrow);
     text(root.querySelector('#about-title'), payload.title);
     text(root.querySelector('.sec-sub'), payload.summary);
@@ -216,7 +216,7 @@
     }
   });
 
-  create('kpi-cards', '#impact', function (root, payload) {
+  create('kpi-cards', '[data-component="kpi-cards"]', function (root, payload) {
     if (!Array.isArray(payload.kpis)) { return; }
     var labels = root.querySelectorAll('.kpi-lbl');
     for (var i = 0; i < labels.length; i += 1) {
@@ -227,28 +227,28 @@
   create('timeline', '#experience-content', function (root, payload) {
     if (typeof payload.html === 'string') { setSafeHTML(root, payload.html); }
   });
-  create('experience', '#experience', function (root, payload) {
+  create('experience', '[data-component="experience"]', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });
-  create('delivery-framework', '#delivery-framework', function (root, payload) {
+  create('delivery-framework', '[data-component="delivery-framework"]', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });
-  create('success-stories', '#success-stories', function (root, payload) {
+  create('success-stories', '[data-component="success-stories"]', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });
-  create('insights', '#insights', function (root, payload) {
+  create('insights', '[data-component="insights"]', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });
-  create('testimonials', '#testimonials', function (root, payload) {
+  create('testimonials', '[data-component="testimonials"]', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });
-  create('recognition', '#recognition', function (root, payload) {
+  create('recognition', '[data-component="recognition"]', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });
-  create('contact', '#contact', function (root, payload) {
+  create('contact', '[data-component="contact"]', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });
-  create('footer', 'footer', function (root, payload) {
+  create('footer', '[data-component="footer"]', function (root, payload) {
     if (typeof payload.footerLine === 'string') {
       var line = root.querySelector('.mono');
       if (line) { setSafeHTML(line, payload.footerLine); }
