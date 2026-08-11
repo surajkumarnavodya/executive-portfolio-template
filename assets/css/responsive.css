@@ -130,12 +130,12 @@
   .audience-toggle a i{display:inline}
   /* Icon-only audience toggle alone still left index.html short of fitting
      at the low end of this band (1200px, right where the collapsed
-     hamburger switches to the expanded nav) — the palette picker's 6
-     swatches and the utility cluster's own gap were the next-cheapest
-     places to reclaim width without touching anything a visitor actually
-     reads. */
-  .palette-picker{gap:3px;margin-left:4px}
-  .pal-swatch{width:15px;height:15px}
+     hamburger switches to the expanded nav) — the utility cluster's own gap
+     was the next-cheapest place to reclaim width without touching anything
+     a visitor actually reads. (The palette picker itself used to be 6
+     always-visible swatches competing for the same width; it's now a
+     single toggle button — same footprint as the theme/language/font-size
+     toggles next to it — so it no longer needs its own shrink rule here.) */
   .navbar .d-flex.align-items-center.gap-2{gap:3px!important}
   /* The font-size switcher is the newest addition competing for width in
      this same band — shrunk on the same terms as the palette picker above;

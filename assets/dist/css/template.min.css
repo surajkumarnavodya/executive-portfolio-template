@@ -316,6 +316,13 @@ body.nav-hidden .navbar.fixed-top{transform:translateY(-100%)}
 .navbar .dropdown-item:hover,.navbar .dropdown-item:focus{background:rgba(var(--accent-rgb),.12);color:var(--heading)}
 /* Divider between the utility controls (theme/palette) and the primary CTA */
 .nav-divider{width:1px;height:22px;background:var(--border);margin:0 2px}
+/* Base (wide-viewport) spacing between the utility controls themselves —
+   audience toggle / theme / palette / language / font-size each read as a
+   distinct feature instead of a cramped strip of icons. Collapsing the
+   palette picker to a single toggle (below) freed up the width for this;
+   the narrow-viewport compacting bands in responsive.css intentionally
+   override this back down. */
+.navbar .d-flex.align-items-center.gap-2{gap:14px}
 .theme-toggle{
   border:1px solid var(--border);background:var(--surface);color:var(--text);
   border-radius:50%;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;
@@ -1054,6 +1061,12 @@ p{line-height:1.6}
 .hero-stat .stat-icon{
   width:44px;height:44px;font-size:21px;border-radius:50%;
   background:rgba(255,255,255,.26);
+  /* Centering only ever lived in the [data-bs-theme="dark"] scoped rule
+     above, so light theme (which only overrides background/color, not
+     layout) never got display:flex — the icon glyph fell back to normal
+     block flow and sat top-left instead of centered in the circle. Layout
+     is theme-agnostic, so it belongs on this shared rule, not duplicated
+     per theme. */
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 [data-bs-theme="dark"] .hero-stat h4{font-size:clamp(17px,1.7vw,21.5px);margin:0 0 1px;color:var(--heading)}
@@ -1717,9 +1730,11 @@ section{padding-top:24px}
   margin:17px 0 7px 2px;
 }
 /* ---- 3. MORE VISUAL SPACING ---------------------------------------------
-   NOTE: this partly reverses the earlier "halve all section top padding"
-   change — 24px was too tight to give sections their own air. Landed at 44px
-   as a middle ground rather than the original 48px. */
+   Was 44px (with Leadership at +12px extra) — trimmed back down since it
+   read as excess empty space at the top of every section (About, Experience,
+   Leadership, Success Stories, etc.), especially now that the hero itself
+   is shorter. Leadership keeps a little extra over the general value so it
+   still reads as a clear break coming right after the hero. */
 section{padding-top:28px}
 #leadership{padding-top:40px!important}
 .hero-stats{margin-top:18px;margin-bottom:14px}
@@ -1827,13 +1842,24 @@ main:focus{outline:none}
 
 /* ===========================================================================
    PALETTE PICKER
+   ---------------------------------------------------------------------------
+   Collapsed into a toggle + dropdown (assets/js/palette.js), matching
+   .lang-switch/.fontsize-switch, so the navbar utility row has room to space
+   each feature apart instead of showing all 6 swatches inline.
    =========================================================================== */
-.palette-picker{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  margin-left:8px;
+.palette-switch{position:relative}
+.palette-toggle{padding:0}
+.palette-toggle-dot{
+  display:block;width:18px;height:18px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);
 }
+.palette-menu{
+  position:absolute;top:calc(100% + 10px);right:0;z-index:1200;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);padding:12px;
+}
+.palette-menu[hidden]{display:none}
 .pal-swatch{
   width:18px;height:18px;
   padding:0;
@@ -1855,13 +1881,15 @@ main:focus{outline:none}
   box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 /* Swatch colours are literals on purpose: each must show its own palette,
-   not the one currently active. */
-.pal-swatch[data-palette="navy"]      > span{background:linear-gradient(135deg,#4f8cff,#22c07a)}
-.pal-swatch[data-palette="corporate"] > span{background:linear-gradient(135deg,#0a66c2,#00a37a)}
-.pal-swatch[data-palette="emerald"]   > span{background:linear-gradient(135deg,#10a37f,#34d399)}
-.pal-swatch[data-palette="executive"] > span{background:linear-gradient(135deg,#c9a227,#8fbf6a)}
-.pal-swatch[data-palette="purple"]    > span{background:linear-gradient(135deg,#7c5cff,#22c07a)}
-.pal-swatch[data-palette="charcoal"]  > span{background:linear-gradient(135deg,#8fa3bf,#6fbf9b)}
+   not the one currently active. The toggle's own dot mirrors whichever
+   palette is active via the matching data-palette attribute (kept in sync
+   by palette.js / customizer.js). */
+.pal-swatch[data-palette="navy"]      > span, .palette-toggle[data-palette="navy"]      .palette-toggle-dot{background:linear-gradient(135deg,#4f8cff,#22c07a)}
+.pal-swatch[data-palette="corporate"] > span, .palette-toggle[data-palette="corporate"] .palette-toggle-dot{background:linear-gradient(135deg,#0a66c2,#00a37a)}
+.pal-swatch[data-palette="emerald"]   > span, .palette-toggle[data-palette="emerald"]   .palette-toggle-dot{background:linear-gradient(135deg,#10a37f,#34d399)}
+.pal-swatch[data-palette="executive"] > span, .palette-toggle[data-palette="executive"] .palette-toggle-dot{background:linear-gradient(135deg,#c9a227,#8fbf6a)}
+.pal-swatch[data-palette="purple"]    > span, .palette-toggle[data-palette="purple"]    .palette-toggle-dot{background:linear-gradient(135deg,#7c5cff,#22c07a)}
+.pal-swatch[data-palette="charcoal"]  > span, .palette-toggle[data-palette="charcoal"]  .palette-toggle-dot{background:linear-gradient(135deg,#8fa3bf,#6fbf9b)}
 
 /* ===========================================================================
    THEME CUSTOMIZER
@@ -2179,11 +2207,38 @@ body{top:0!important;position:static!important}
 }
 .btn-accent:hover,.hero-cta a.btn-accent:hover,.cta-final a.cta-primary:hover{
   filter:brightness(1.04);
+  /* Bootstrap 5.3's own .btn:hover sets background-color:var(--bs-btn-hover-bg),
+     which is unset (transparent) for a custom variant like .btn-accent that
+     isn't one of Bootstrap's own .btn-* colour classes. Same specificity as
+     our rule (single class + :hover), so without restating the background
+     here, Bootstrap's hover background silently wins and the dark navy
+     button text (WCAG contrast fix, dark mode) goes invisible against the
+     page behind it. */
   background-color:var(--accent);
 }
 
+/* ===========================================================================
+   EXECUTIVE SCORECARD — row padding
+   ---------------------------------------------------------------------------
+   Was padded up to ~304px total to avoid looking sparse next to a taller
+   Steering Snapshot (see git history). The hero has since been shortened
+   (CTA row removed, highlights ribbon trimmed to one row), so the left
+   column — and with it, the target height both hero-right panels stretch
+   to match — is now much shorter. Padding is back down near its original
+   value so the Scorecard + Steering Snapshot combined height fits under
+   that shorter target instead of forcing hero-right to overflow it.
+   =========================================================================== */
 .exec-scorecard .row-item{padding:7px 0}
 
+/* ===========================================================================
+   AUDIENCE TOGGLE — "Delivery leadership" / "Engineering"
+   ---------------------------------------------------------------------------
+   Two views of one career (index.html vs engineering.html), not two people,
+   so it lives in the primary nav controls next to the theme/palette pickers
+   rather than being hidden in a footer link. Reuses --accent/--border/--glass
+   and the same dark-navy-on-accent active-state pattern already proven for
+   .preset-chip[aria-pressed="true"] — no new colour tokens.
+   =========================================================================== */
 .audience-toggle{display:inline-flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--border);border-radius:999px;background:var(--glass)}
 .audience-toggle a{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--text-2);text-decoration:none;white-space:nowrap;transition:color .15s ease,background-color .15s ease}
 .audience-toggle a:hover{color:var(--heading)}
@@ -2193,6 +2248,17 @@ body{top:0!important;position:static!important}
   .audience-toggle a{padding:6px 9px;font-size:11.5px}
 }
 
+/* ===========================================================================
+   FONT SIZE SWITCHER (assets/js/fontsize.js)
+   ---------------------------------------------------------------------------
+   Three-level site-wide text size (A / A+ / A++), persisted like the theme
+   and accent-colour pickers. Scales via CSS zoom on the root element rather
+   than a root font-size/rem conversion — this template's type is authored
+   in px/clamp() throughout, so a rem-relative change wouldn't reach most of
+   it, while zoom scales the whole rendered page the way a visitor already
+   expects "bigger text" to behave. "A" (data-fontsize="md") is the default
+   and has no override rule below — normal zoom is the browser default.
+   =========================================================================== */
 :root[data-fontsize="lg"]{zoom:1.12}
 :root[data-fontsize="xl"]{zoom:1.25}
 .fontsize-switch{position:relative}
@@ -2323,13 +2389,40 @@ body{top:0!important;position:static!important}
   .navbar .btn-accent{padding:7.45px 13px;font-size:12.5px}
 }
 @media (min-width:992px) and (max-width:1599px){
+  /* The audience toggle is the newest thing competing for navbar width in
+     this already-tight band (see the .navbar .nav-link / .btn-accent rules
+     above it). Text labels alone — even shortened, even at a smaller
+     font — still pushed the theme toggle, palette picker and CTA button
+     past the container's right edge on index.html's 6-item nav. Measured
+     the real cutoff directly rather than assuming it matched the existing
+     992-1399px band used elsewhere on this page: the full-label toggle
+     stayed too wide through ~1460px, not just up to 1399px, so this band
+     is deliberately its own wider range rather than reusing that one.
+     Icon-only closes the gap through the whole band; the full word labels
+     only come back at >=1600px and inside the mobile menu, where width
+     isn't the constraint. aria-label on each link carries the full text at
+     every width regardless of what's visually shown.
+     Upper bound raised 1499 -> 1599 when the font-size switcher (below) was
+     added: at exactly 1500px the switcher returning to full size alone
+     pushed the CTA ~30px past the container edge, measured directly with
+     Playwright rather than assumed. */
   .audience-toggle{padding:2px;gap:1px}
   .audience-toggle a{padding:6px 6px}
   .audience-toggle a .aud-label{display:none}
   .audience-toggle a i{display:inline}
-  .palette-picker{gap:3px;margin-left:4px}
-  .pal-swatch{width:15px;height:15px}
+  /* Icon-only audience toggle alone still left index.html short of fitting
+     at the low end of this band (1200px, right where the collapsed
+     hamburger switches to the expanded nav) — the utility cluster's own gap
+     was the next-cheapest place to reclaim width without touching anything
+     a visitor actually reads. (The palette picker itself used to be 6
+     always-visible swatches competing for the same width; it's now a
+     single toggle button — same footprint as the theme/language/font-size
+     toggles next to it — so it no longer needs its own shrink rule here.) */
   .navbar .d-flex.align-items-center.gap-2{gap:3px!important}
+  /* The font-size switcher is the newest addition competing for width in
+     this same band — shrunk on the same terms as the palette picker above;
+     also the reason the gap above was tightened from 6px to 3px and this
+     band's own upper bound was raised (see comment at the top of this rule). */
   .fontsize-toggle{min-width:24px;padding:0 3px;font-size:10px}
 }
 @media (max-width:991.98px){

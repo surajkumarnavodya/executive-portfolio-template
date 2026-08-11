@@ -2600,13 +2600,16 @@
                         <a href="engineering.html" title="Engineering view" aria-label="Engineering view"><i class="bi bi-code-slash" aria-hidden="true"></i><span class="aud-label">Engineering</span></a>
                     </div>
                     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light theme"><i class="bi bi-sun"></i></button>
-                    <div class="palette-picker" role="group" aria-label="Accent colour">
-                        <button class="pal-swatch" type="button" data-palette="navy" aria-label="Executive navy accent"><span></span></button>
-                        <button class="pal-swatch" type="button" data-palette="corporate" aria-label="Corporate blue accent"><span></span></button>
-                        <button class="pal-swatch" type="button" data-palette="emerald" aria-label="Emerald accent"><span></span></button>
-                        <button class="pal-swatch" type="button" data-palette="executive" aria-label="Executive gold accent"><span></span></button>
-                        <button class="pal-swatch" type="button" data-palette="purple" aria-label="Purple accent"><span></span></button>
-                        <button class="pal-swatch" type="button" data-palette="charcoal" aria-label="Charcoal accent"><span></span></button>
+                    <div class="palette-switch">
+                        <button class="theme-toggle palette-toggle" id="paletteToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose accent colour"><span class="palette-toggle-dot" aria-hidden="true"></span></button>
+                        <div class="palette-menu" id="paletteMenu" hidden role="group" aria-label="Accent colour">
+                            <button class="pal-swatch" type="button" data-palette="navy" aria-label="Executive navy accent"><span></span></button>
+                            <button class="pal-swatch" type="button" data-palette="corporate" aria-label="Corporate blue accent"><span></span></button>
+                            <button class="pal-swatch" type="button" data-palette="emerald" aria-label="Emerald accent"><span></span></button>
+                            <button class="pal-swatch" type="button" data-palette="executive" aria-label="Executive gold accent"><span></span></button>
+                            <button class="pal-swatch" type="button" data-palette="purple" aria-label="Purple accent"><span></span></button>
+                            <button class="pal-swatch" type="button" data-palette="charcoal" aria-label="Charcoal accent"><span></span></button>
+                        </div>
                     </div>
                     <div class="lang-switch">
                         <button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose language"><i class="bi bi-translate"></i></button>

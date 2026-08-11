@@ -11,6 +11,38 @@
  */
 (function () {
   'use strict';
+
+  // Dropdown open/close chrome runs unconditionally — it's just UI, not
+  // palette-applying logic — so the toggle still opens/closes the swatch
+  // menu even when customizer.js (not this file) is the one applying the
+  // chosen palette (see the early return below).
+  function buildMenu() {
+    var wrap = document.querySelector('.palette-switch');
+    var menu = document.getElementById('paletteMenu');
+    var toggle = document.getElementById('paletteToggle');
+    if (!wrap || !menu || !toggle) { return; }
+
+    function setOpen(open) {
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+    }
+    toggle.addEventListener('click', function () { setOpen(menu.hidden); });
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) { setOpen(false); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) { setOpen(false); toggle.focus(); }
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('.pal-swatch')) { setOpen(false); }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildMenu);
+  } else {
+    buildMenu();
+  }
+
   if (window.__portfolioCustomizerEnabled) { return; }
 
   var KEY = 'th-palette';
@@ -31,6 +63,8 @@
 
   function paint(name) {
     root.setAttribute('data-palette', name);
+    var toggle = document.getElementById('paletteToggle');
+    if (toggle) { toggle.setAttribute('data-palette', name); }
     var swatches = document.querySelectorAll('.pal-swatch');
     Array.prototype.forEach.call(swatches, function (b) {
       b.setAttribute('aria-pressed', String(b.getAttribute('data-palette') === name));

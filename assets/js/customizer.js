@@ -186,6 +186,8 @@
   function applyTheme() {
     root.setAttribute('data-bs-theme', state.mode === 'light' ? 'light' : 'dark');
     root.setAttribute('data-palette', state.palette || 'navy');
+    var paletteToggle = document.getElementById('paletteToggle');
+    if (paletteToggle) { paletteToggle.setAttribute('data-palette', state.palette || 'navy'); }
     root.setAttribute('data-motion', state.motion || 'normal');
     root.style.setProperty('--radius', parseInt(state.radius, 10) + 'px');
     if (state.accent) {

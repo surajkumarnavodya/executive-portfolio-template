@@ -85,6 +85,13 @@ body.nav-hidden .navbar.fixed-top{transform:translateY(-100%)}
 .navbar .dropdown-item:hover,.navbar .dropdown-item:focus{background:rgba(var(--accent-rgb),.12);color:var(--heading)}
 /* Divider between the utility controls (theme/palette) and the primary CTA */
 .nav-divider{width:1px;height:22px;background:var(--border);margin:0 2px}
+/* Base (wide-viewport) spacing between the utility controls themselves —
+   audience toggle / theme / palette / language / font-size each read as a
+   distinct feature instead of a cramped strip of icons. Collapsing the
+   palette picker to a single toggle (below) freed up the width for this;
+   the narrow-viewport compacting bands in responsive.css intentionally
+   override this back down. */
+.navbar .d-flex.align-items-center.gap-2{gap:14px}
 .theme-toggle{
   border:1px solid var(--border);background:var(--surface);color:var(--text);
   border-radius:50%;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;
@@ -1604,13 +1611,24 @@ main:focus{outline:none}
 
 /* ===========================================================================
    PALETTE PICKER
+   ---------------------------------------------------------------------------
+   Collapsed into a toggle + dropdown (assets/js/palette.js), matching
+   .lang-switch/.fontsize-switch, so the navbar utility row has room to space
+   each feature apart instead of showing all 6 swatches inline.
    =========================================================================== */
-.palette-picker{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  margin-left:8px;
+.palette-switch{position:relative}
+.palette-toggle{padding:0}
+.palette-toggle-dot{
+  display:block;width:18px;height:18px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);
 }
+.palette-menu{
+  position:absolute;top:calc(100% + 10px);right:0;z-index:1200;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);padding:12px;
+}
+.palette-menu[hidden]{display:none}
 .pal-swatch{
   width:18px;height:18px;
   padding:0;
@@ -1632,13 +1650,15 @@ main:focus{outline:none}
   box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 /* Swatch colours are literals on purpose: each must show its own palette,
-   not the one currently active. */
-.pal-swatch[data-palette="navy"]      > span{background:linear-gradient(135deg,#4f8cff,#22c07a)}
-.pal-swatch[data-palette="corporate"] > span{background:linear-gradient(135deg,#0a66c2,#00a37a)}
-.pal-swatch[data-palette="emerald"]   > span{background:linear-gradient(135deg,#10a37f,#34d399)}
-.pal-swatch[data-palette="executive"] > span{background:linear-gradient(135deg,#c9a227,#8fbf6a)}
-.pal-swatch[data-palette="purple"]    > span{background:linear-gradient(135deg,#7c5cff,#22c07a)}
-.pal-swatch[data-palette="charcoal"]  > span{background:linear-gradient(135deg,#8fa3bf,#6fbf9b)}
+   not the one currently active. The toggle's own dot mirrors whichever
+   palette is active via the matching data-palette attribute (kept in sync
+   by palette.js / customizer.js). */
+.pal-swatch[data-palette="navy"]      > span, .palette-toggle[data-palette="navy"]      .palette-toggle-dot{background:linear-gradient(135deg,#4f8cff,#22c07a)}
+.pal-swatch[data-palette="corporate"] > span, .palette-toggle[data-palette="corporate"] .palette-toggle-dot{background:linear-gradient(135deg,#0a66c2,#00a37a)}
+.pal-swatch[data-palette="emerald"]   > span, .palette-toggle[data-palette="emerald"]   .palette-toggle-dot{background:linear-gradient(135deg,#10a37f,#34d399)}
+.pal-swatch[data-palette="executive"] > span, .palette-toggle[data-palette="executive"] .palette-toggle-dot{background:linear-gradient(135deg,#c9a227,#8fbf6a)}
+.pal-swatch[data-palette="purple"]    > span, .palette-toggle[data-palette="purple"]    .palette-toggle-dot{background:linear-gradient(135deg,#7c5cff,#22c07a)}
+.pal-swatch[data-palette="charcoal"]  > span, .palette-toggle[data-palette="charcoal"]  .palette-toggle-dot{background:linear-gradient(135deg,#8fa3bf,#6fbf9b)}
 
 /* ===========================================================================
    THEME CUSTOMIZER
