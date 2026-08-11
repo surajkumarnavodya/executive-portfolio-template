@@ -379,10 +379,10 @@ export class PortfolioDataService {
       'assets/js/portfolio-data-service.js',
       'assets/js/content-service.js',
       'assets/js/studio-app.js',
-      'assets/data/experience.json',
-      'assets/data/testimonials.json',
-      'assets/data/recognition.json',
-      'assets/data/success-stories.json',
+      'assets/demo-data/experience.json',
+      'assets/demo-data/testimonials.json',
+      'assets/demo-data/recognition.json',
+      'assets/demo-data/success-stories.json',
       'assets/images/profile.jpg',
       'assets/downloads/README.txt',
       'README.md',
@@ -392,7 +392,9 @@ export class PortfolioDataService {
     ];
 
     if (isMarketplace) {
-      return files.filter((filePath) => !filePath.startsWith('studio.html') && !filePath.includes('studio-app') && !filePath.includes('portfolio-data-service'));
+      // Fictional sample content (assets/demo-data/) is a Studio-only preview aid
+      // and must never ship in a buyer's exported site alongside their real config.
+      return files.filter((filePath) => !filePath.startsWith('studio.html') && !filePath.includes('studio-app') && !filePath.includes('portfolio-data-service') && !filePath.startsWith('assets/demo-data/'));
     }
 
     files.unshift('studio.html');

@@ -1,0 +1,17 @@
+{
+  "_comment": "FICTIONAL TEMPLATE SAMPLE DATA. These names, roles and quotes are invented for template demos and Studio previews only. Never publish this as a real endorsement. See assets/demo-data/README.md.",
+  "items": [
+    {
+      "name": "Aisha Patel",
+      "role": "VP Product",
+      "org": "Global HealthCorp",
+      "quote": "Transformed how we deliver products — measurable outcome orientation and a pragmatic approach to risk."
+    },
+    {
+      "name": "Michael Jones",
+      "role": "Head of Engineering",
+      "org": "FinServ Inc",
+      "quote": "A rare delivery leader who understands the code and the boardroom."
+    }
+  ]
+}

@@ -1,3 +1,20 @@
+## Packaging the buyer distributable
+
+```bash
+tools/package.sh                 # -> executive-portfolio-template.zip
+```
+```powershell
+tools\package.ps1                # -> executive-portfolio-template.zip
+```
+
+Both build the zip with `git archive` against a real commit (`HEAD` by
+default), never the working directory — so `.vs/`, stray `*.patch` files, or
+anything else untracked can't end up in the zip no matter what's sitting on
+disk. `.github/`, `.vs/`, `tools/`, `assets/dev/`, `assets/tests/`,
+`docs/ReleaseQA.md` and `screenshots/` are excluded from the archive but stay
+in the repo. See the comments at the top of each script for the full
+exclusion list and an example of packaging a specific tag instead of `HEAD`.
+
 # CSS build tooling
 
 These scripts exist because two things in this repo are **generated, not

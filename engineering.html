@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<!--
+  =========================================================================
+  Copyright (c) 2026 Suraj Kumar. All rights reserved.
+  surajkumarnavodya.com
+
+  This page, its design, copy and code are the original work of Suraj Kumar.
+  Reproduction, republication or reuse of any part of this site, in whole or
+  in substantial part, without prior written permission is not permitted.
+
+  If you are reading this because you like the layout: you are welcome to
+  learn from it. Please do not republish it with your own name on the
+  achievements. Questions: surajkumar.navodya@gmail.com
+  =========================================================================
+-->
+<!--
+  engineering.html — the technical view of this same site, for technical
+  interviewers and engineering-manager audiences. index.html (the delivery /
+  program-management view) is the other half; see the "Delivery leadership /
+  Engineering" toggle in the nav of both pages.
+
+  Deliberately does NOT load assets/js/config.js. Everything on this page is
+  static, hand-authored markup — same pattern index.html already uses for its
+  non-config-driven sections (Success Stories, Testimonials, the Recognition
+  cred-rows). Loading config.js here would be actively harmful, not just
+  redundant: assets/js/customizer.js's init() unconditionally calls
+  PortfolioComponents.render('hero', <preset>) on every page load regardless
+  of config, and assets/js/main.js renders cfg.hero/cfg.about/etc. over
+  whatever static HTML exists at their target ids. Both target fixed ids
+  (#top for the hero, #main for section reordering) that components.js
+  registers by direct document.querySelector(...) lookups the moment the
+  bundle runs — so simply never using id="top" / id="main" on this page means
+  those two lookups fail at registration time and every later render() call
+  against them silently no-ops (confirmed by reading components.js's create()
+  and customizer.js's applyPreset()/applySectionLayout() before writing this
+  file). That is why this page's hero uses id="eng-hero" and the main wrapper
+  uses id="eng-content" instead of the obvious "top"/"main" — not a style
+  choice, a deliberate guard against the shared bundle overwriting this
+  page's content with index.html's delivery-manager preset copy.
+
+  Everything else in the shared dist bundle (theme toggle, palette picker,
+  nav dropdown/scroll-spy/mobile-collapse, reveal-on-scroll, KPI count-up,
+  hero rotator, i18n language switch, Copilot) has no config.js dependency —
+  verified by grepping each source file for PORTFOLIO_CONFIG before relying
+  on it here — so it all behaves identically to index.html without it.
+-->
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraj Kumar | Senior .NET Full Stack Engineer | Agentic AI & SQL Server</title>
+    <meta name="description" content="Suraj Kumar — Senior .NET engineer, 7+ years hands-on in C#, SQL Server and Azure. 430+ Stack Overflow answers, 795k developers reached, 2× C# Corner MVP, hands-on Agentic AI/RAG projects. Now leading delivery without giving up the stack.">
+    <link rel="canonical" href="https://surajkumarnavodya.com/engineering.html">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/images/profile.jpg">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#0b1420">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Suraj Kumar">
+
+    <!-- Open Graph (LinkedIn / WhatsApp / Slack link previews) -->
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="Suraj Kumar">
+    <meta property="og:title" content="Suraj Kumar | Senior .NET Engineer · Agentic AI & SQL Server">
+    <meta property="og:description" content="Senior .NET engineer — 7+ years hands-on in C#, SQL Server and Azure. 430+ Stack Overflow answers, 795k developers reached, 2× C# Corner MVP. Hands-on with RAG pipelines and multi-agent systems.">
+    <meta property="og:url" content="https://surajkumarnavodya.com/engineering.html">
+    <!-- Reuses the same og-image.png as index.html — that image was designed around
+         the delivery-page headline/stats, so it under-represents this page's
+         engineering framing in link previews. Flagged in the session notes;
+         a dedicated engineering og-image is a reasonable follow-up, not done here
+         since it wasn't asked for and the asset doesn't exist yet. -->
+    <!-- og:image / twitter:image MUST be an absolute URL — see index.html for why. -->
+    <meta property="og:image" content="https://surajkumarnavodya.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="profile:first_name" content="Suraj">
+    <meta property="profile:last_name" content="Kumar">
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Suraj Kumar | Senior .NET Engineer">
+    <meta name="twitter:description" content="7+ years hands-on in C#, SQL Server and Azure. 430+ Stack Overflow answers, 795k developers reached, 2× C# Corner MVP. Hands-on with RAG pipelines and multi-agent systems.">
+    <meta name="twitter:image" content="https://surajkumarnavodya.com/og-image.png">
+
+    <!-- Structured data — same person as index.html's JSON-LD, jobTitle and
+         knowsAbout reweighted toward the engineering audience this page targets. -->
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Suraj Kumar",
+          "url": "https://surajkumarnavodya.com/engineering.html",
+          "jobTitle": "Senior .NET Full Stack Engineer",
+          "description": "Senior .NET engineer with 7+ years hands-on in C#, SQL Server and Azure, now also leading enterprise delivery — 430+ Stack Overflow answers, 795k developers reached, 2× C# Corner MVP, hands-on Agentic AI/RAG projects.",
+          "image": "https://surajkumarnavodya.com/assets/images/profile.jpg",
+          "address": { "@type": "PostalAddress", "addressLocality": "Mumbai", "addressRegion": "Maharashtra", "addressCountry": "IN" },
+          "email": "surajkumar.navodya@gmail.com",
+          "alumniOf": [
+            { "@type": "CollegeOrUniversity", "name": "Sikkim Manipal University" },
+            { "@type": "CollegeOrUniversity", "name": "Magadh University" }
+          ],
+          "knowsAbout": ["C#",".NET Core","ASP.NET Core Web API","Entity Framework Core","SQL Server","Angular","Azure","Azure DevOps","Python","T-SQL","Query Optimization","RAG Pipelines","LangGraph","Agentic AI","Prompt Engineering","Generative AI"],
+          "hasCredential": [
+            { "@type": "EducationalOccupationalCredential", "name": "LTIMindtree Certified Agile Practitioner" },
+            { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "Project Management Professional (PMP)", "recognizedBy": { "@type": "Organization", "name": "Project Management Institute" } },
+            { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "Certified ScrumMaster (CSM)", "recognizedBy": { "@type": "Organization", "name": "Scrum Alliance" } }
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/surajkumar-navodya",
+            "https://www.c-sharpcorner.com/members/suraj-kumar23/articles",
+            "https://stackoverflow.com/users/10532500/suraj-kumar"
+          ]
+        }
+    </script>
+
+    <!-- Same CDN dependencies as index.html — Bootstrap 5.3, Google Fonts, Bootstrap Icons. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="assets/images/profile.avif" type="image/avif">
+    <!-- Fraunces + Inter + JetBrains Mono only — see index.html for why the other two
+         customizer typography presets (Source Sans 3 + Playfair Display) load on demand
+         from customizer.js instead of being fetched by every visitor up front. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          integrity="sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk" crossorigin="anonymous">
+
+    <!-- Same hand-maintained bundle as index.html — identical design system,
+         colour tokens and typography scale. No critical-CSS inlining here
+         (index.html's inlined block is generated from this exact bundle and
+         would need hand-duplication to stay in sync); this page accepts a
+         slightly less optimized first paint as a reasonable trade-off for a
+         secondary, lower-traffic page. -->
+    <link rel="stylesheet" href="assets/dist/css/template.min.css">
+</head>
+<body>
+
+    <!-- Accessibility: first tab stop, visible only when focused. -->
+    <a class="skip-link" href="#eng-content">Skip to main content</a>
+
+    <!-- ================= TELEMETRY (reframed for this audience) ================= -->
+    <div class="telemetry" aria-label="Engineering achievements">
+        <div class="lane tele-rotator" id="teleRotator" aria-live="off">
+            <span class="ti on">SQL SERVER <b>405+ ANSWERS</b></span>
+            <span class="ti">DEVELOPERS REACHED <b>795K+</b></span>
+            <span class="ti">C# CORNER MVP <b>2&times;</b></span>
+            <span class="ti">SO REPUTATION <b>5,685</b></span>
+            <span class="ti">SO BADGES <b>77</b></span>
+            <span class="ti">YEARS HANDS-ON <b>7+</b></span>
+            <span class="ti">AGENTIC AI <b>JOHNS HOPKINS</b></span>
+            <span class="ti">AI4ICPS <b>IIT KHARAGPUR</b></span>
+        </div>
+    </div>
+
+    <!-- ================= NAV ================= -->
+    <nav class="navbar navbar-expand-xl fixed-top" aria-label="Primary">
+        <div class="container">
+            <a class="navbar-brand" href="#eng-hero"><picture><source srcset="assets/images/profile.avif" type="image/avif"><source srcset="assets/images/profile.webp" type="image/webp"><img class="brand-avatar" src="assets/images/profile.jpg" alt="" aria-hidden="true" width="34" height="34" decoding="async" fetchpriority="high"></picture><span class="brand-name">SURAJ KUMAR<span class="dot">.</span></span></a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-2" style="color:var(--heading)"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav mx-auto align-items-xl-center">
+                    <li class="nav-item"><a class="nav-link" href="#stack">Stack</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#proof">Proof</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sql-depth">SQL Server</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#writing">Writing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#eng-leadership">Leadership</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <!-- Two views of one career, not two people. -->
+                    <div class="audience-toggle" role="group" aria-label="Choose which view of this site to see">
+                        <a href="index.html" title="Delivery leadership view" aria-label="Delivery leadership view"><i class="bi bi-briefcase" aria-hidden="true"></i><span class="aud-label">Delivery</span></a>
+                        <a href="engineering.html" aria-current="page" title="Engineering view" aria-label="Engineering view"><i class="bi bi-code-slash" aria-hidden="true"></i><span class="aud-label">Engineering</span></a>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light theme"><i class="bi bi-sun"></i></button>
+                    <div class="palette-picker" role="group" aria-label="Accent colour">
+                        <button class="pal-swatch" type="button" data-palette="navy" aria-label="Executive navy accent"><span></span></button>
+                        <button class="pal-swatch" type="button" data-palette="corporate" aria-label="Corporate blue accent"><span></span></button>
+                        <button class="pal-swatch" type="button" data-palette="emerald" aria-label="Emerald accent"><span></span></button>
+                        <button class="pal-swatch" type="button" data-palette="executive" aria-label="Executive gold accent"><span></span></button>
+                        <button class="pal-swatch" type="button" data-palette="purple" aria-label="Purple accent"><span></span></button>
+                        <button class="pal-swatch" type="button" data-palette="charcoal" aria-label="Charcoal accent"><span></span></button>
+                    </div>
+                    <div class="lang-switch">
+                        <button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose language"><i class="bi bi-translate"></i></button>
+                        <div class="lang-menu" id="langMenu" hidden role="menu" aria-label="Choose a language"></div>
+                    </div>
+                    <div class="fontsize-switch">
+                        <button class="theme-toggle fontsize-toggle" id="fontsizeToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Adjust text size">A</button>
+                        <div class="fontsize-menu" id="fontsizeMenu" hidden role="menu" aria-label="Choose a text size"></div>
+                    </div>
+                    <span class="nav-divider" aria-hidden="true"></span>
+                    <a class="btn-accent btn text-nowrap ms-1" href="#contact">Start a conversation</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= PERSISTENT CTA ================= -->
+    <a class="persistent-cta" href="#contact" aria-label="Start a conversation — jump to contact section" aria-hidden="true" tabindex="-1">
+        <i class="bi bi-chat-dots-fill" aria-hidden="true"></i><span>Start a conversation</span>
+    </a>
+
+    <!-- ================= HERO ================= -->
+    <header class="hero" id="eng-hero" aria-labelledby="eng-hero-title">
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="grid-bg" aria-hidden="true"></div>
+        <div class="container position-relative" style="z-index:1">
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+                    <p class="eyebrow eyebrow-chip mb-2"><span class="eyebrow-badge" aria-hidden="true"><i class="bi bi-code-slash"></i></span><span>Senior .NET Engineer, AI-Augmented</span></p>
+                    <h1 id="eng-hero-title">Senior .NET engineer — <br><span class="grad rotator" id="engHeroRotator"><span class="ph on">seven years hands-on.</span><span class="ph">C#, SQL Server, Azure.</span><span class="ph">RAG. Agentic AI. Live.</span><span class="ph">still reviewing the PRs.</span></span></h1>
+                    <p class="value-statement">Senior .NET engineer with 7+ years hands-on in C#, SQL Server and Azure — now also leading delivery, but I still read the stack before I read the status report. Both sides are real; this page is the engineering half.</p>
+                    <div class="domain-strip" aria-label="Current technology stack">
+                        <span class="dom-label">Stack</span>
+                        <span class="dom">C#</span>
+                        <span class="dom">.NET Core</span>
+                        <span class="dom">SQL Server</span>
+                        <span class="dom">Azure</span>
+                        <span class="dom">Angular</span>
+                    </div>
+
+                    <div class="row g-2 hero-stats">
+                        <div class="col-6 col-md-3"><div class="hero-stat s-blue"><span class="stat-icon" aria-hidden="true"><i class="bi bi-code-square"></i></span><div><h4>7+</h4><small>Years Hands-On .NET</small></div></div></div>
+                        <div class="col-6 col-md-3"><div class="hero-stat s-purple"><span class="stat-icon" aria-hidden="true"><i class="bi bi-stack-overflow"></i></span><div><h4>430+</h4><small>Stack Overflow Answers</small></div></div></div>
+                        <div class="col-6 col-md-3"><div class="hero-stat s-teal"><span class="stat-icon" aria-hidden="true"><i class="bi bi-people-fill"></i></span><div><h4>795K+</h4><small>Developers Reached</small></div></div></div>
+                        <div class="col-6 col-md-3"><div class="hero-stat s-amber"><span class="stat-icon" aria-hidden="true"><i class="bi bi-award-fill"></i></span><div><h4>2&times;</h4><small>C# Corner MVP</small></div></div></div>
+                    </div>
+
+                    <p class="highlights-label">Selected highlights</p>
+                    <div class="executive-ribbon">
+                        <div class="executive-grid">
+                            <div class="exec-item i-violet"><i class="bi bi-cpu" aria-hidden="true"></i><span><b>RAG</b> &amp; Agentic AI Projects</span></div>
+                            <div class="exec-item i-amber"><i class="bi bi-patch-check-fill" aria-hidden="true"></i><span><b>77</b> Stack Overflow Badges</span></div>
+                            <div class="exec-item i-green"><i class="bi bi-shield-check" aria-hidden="true"></i><span><b>Zero</b> Critical Go&#8209;Live Escalations</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="eng-content" tabindex="-1">
+
+        <!-- ================= CURRENT STACK ================= -->
+        <section id="stack" aria-labelledby="stack-title">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">Current stack</p>
+                    <h2 class="sec-title serif" id="stack-title">What I actually work in.</h2>
+                    <p class="sec-sub mb-5">Split honestly between what I use hands-on today and what I've worked with but don't touch day to day.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 reveal d1">
+                        <div class="x-card skill-cat h-100">
+                            <p class="pov-label"><i class="bi bi-lightning-charge me-1"></i>Current &amp; hands-on</p>
+                            <span class="skill-pill">PLACEHOLDER — CONFIRM WHICH GO HERE</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 reveal d2">
+                        <div class="x-card skill-cat h-100">
+                            <p class="pov-label"><i class="bi bi-clock-history me-1"></i>Worked with previously</p>
+                            <span class="skill-pill">PLACEHOLDER — CONFIRM WHICH GO HERE</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- REMINDER for Suraj: sort the stack below into the two cards above —
+                     left the split as a placeholder rather than guess your current depth
+                     on each. -->
+                <div class="x-card mt-4">
+                    <p class="pov-label mb-2"><i class="bi bi-list-check me-1"></i>Full stack (unsorted)</p>
+                    <span class="skill-pill">C#</span><span class="skill-pill">.NET Core / .NET 8+</span><span class="skill-pill">ASP.NET Core Web API</span><span class="skill-pill">EF Core</span><span class="skill-pill">SQL Server</span><span class="skill-pill">Angular</span><span class="skill-pill">Azure</span><span class="skill-pill">Azure DevOps</span><span class="skill-pill">Python</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ENGINEERING PROOF ================= -->
+        <section id="proof" aria-labelledby="proof-title" style="background:var(--bg-2)">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">Engineering proof</p>
+                    <h2 class="sec-title" id="proof-title">Three things I've actually built.</h2>
+                    <p class="sec-sub mb-5">Not a skills list — working systems, with the stack and the reasoning behind them.</p>
+                </div>
+                <!-- REMINDER for Suraj: replace the PLACEHOLDER hrefs below with real
+                     repo or write-up links for DualLens Analytics and the Autonomous
+                     Financial Analyst capstone. -->
+                <div class="row g-4">
+                    <div class="col-lg-4 reveal d1">
+                        <div class="x-card case-study h-100">
+                            <div class="d-flex gap-2 mb-3 flex-wrap"><span class="tag">RAG Pipeline</span><span class="tag">Retrieval &amp; Evaluation</span></div>
+                            <h3 class="fs-5 fw-bold">DualLens Analytics</h3>
+                            <p class="text-2">A retrieval-augmented generation (RAG) pipeline built with LangGraph — covering retrieval and answer evaluation, not just generation, so answers are checked against source documents rather than trusted on faith.</p>
+                            <p class="case-stack mt-3"><b>Stack</b> &middot; LangGraph &middot; RAG &middot; Retrieval Evaluation</p>
+                            <a class="btn-outline btn btn-sm text-nowrap mt-3" href="PLACEHOLDER_DUALLENS_REPO_URL" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-2"></i>View project</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal d2">
+                        <div class="x-card case-study h-100">
+                            <div class="d-flex gap-2 mb-3 flex-wrap"><span class="tag">Multi-Agent System</span><span class="tag">Johns Hopkins Capstone</span></div>
+                            <h3 class="fs-5 fw-bold">Autonomous Financial Analyst</h3>
+                            <p class="text-2">Capstone project for the Johns Hopkins &amp; Great Learning Agentic AI Certificate — a multi-agent financial analyst built with LangGraph, ChromaDB and GPT-4o-mini, orchestrating multiple agents rather than a single prompt-response loop.</p>
+                            <p class="case-stack mt-3"><b>Stack</b> &middot; LangGraph &middot; ChromaDB &middot; GPT-4o-mini &middot; Multi-Agent Orchestration</p>
+                            <a class="btn-outline btn btn-sm text-nowrap mt-3" href="PLACEHOLDER_AUTONOMOUS_FINANCIAL_ANALYST_REPO_URL" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-2"></i>View project</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal d3">
+                        <div class="x-card case-study h-100">
+                            <div class="d-flex gap-2 mb-3 flex-wrap"><span class="tag">Single-File Architecture</span><span class="tag">Performance &amp; SEO</span><span class="chip green"><span class="cd"></span>LIVE</span></div>
+                            <h3 class="fs-5 fw-bold">This portfolio site</h3>
+                            <p class="text-2">The site you're on right now — a single-file HTML/CSS/jQuery build with no framework or build step, JSON-LD structured data for search visibility, and hand-tuned performance work: critical-CSS inlining, AVIF/WebP images, subsetted font loading.</p>
+                            <p class="case-stack mt-3"><b>Stack</b> &middot; HTML &middot; CSS &middot; jQuery &middot; Bootstrap 5 &middot; JSON-LD</p>
+                            <a class="btn-outline btn btn-sm text-nowrap mt-3" href="https://surajkumarnavodya.com/" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-2"></i>View live</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STACK OVERFLOW / SQL SERVER =================
+             Same figures as index.html (https://stackoverflow.com/users/10532500/suraj-kumar,
+             verified Jul 2026) — copy reframed for a technical audience: this is evidence
+             of SQL Server depth, not evidence that engineers trust the author as a manager. -->
+        <section id="sql-depth" aria-labelledby="sql-depth-title">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">SQL Server depth</p>
+                    <h2 class="sec-title serif" id="sql-depth-title">Unscripted, peer-reviewed SQL Server work.</h2>
+                    <p class="sec-sub mb-5">This is what depth looks like when it's public and anyone can call out a wrong answer.</p>
+                </div>
+                <div class="so-panel reveal">
+                    <div class="so-head">
+                        <span class="so-mark" aria-hidden="true"><i class="bi bi-stack-overflow"></i></span>
+                        <div class="flex-grow-1">
+                            <p class="pov-label mb-1">SQL Server depth, in public</p>
+                            <h3 class="so-title">795k developers reached, mostly on SQL Server.</h3>
+                        </div>
+                        <a class="btn-outline btn text-nowrap so-cta" href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>View profile
+                        </a>
+                    </div>
+
+                    <p class="so-lede">Contributing since 2018 — <strong>430 answers</strong>, <strong>5,685 reputation</strong>, <strong>92% of it on <code>sql-server</code></strong>. These are the actual problems engineers hit at 2am when a report times out or an execution plan goes sideways — indexing, set-based rewrites, and the everyday failure modes of production SQL Server.</p>
+
+                    <div class="so-topics">
+                        <div class="so-topic">
+                            <i class="bi bi-braces" aria-hidden="true"></i>
+                            <div>
+                                <strong>Query design &amp; set-based logic</strong>
+                                <span>Rewriting row-by-row and cursor-driven logic into set-based T-SQL the optimizer can actually work with.</span>
+                            </div>
+                        </div>
+                        <div class="so-topic">
+                            <i class="bi bi-diagram-3" aria-hidden="true"></i>
+                            <div>
+                                <strong>Joins, grouping &amp; window functions</strong>
+                                <span>Duplicate rows, wrong aggregates, and the <code>GROUP BY</code> vs <code>OVER()</code> decisions behind them.</span>
+                            </div>
+                        </div>
+                        <div class="so-topic">
+                            <i class="bi bi-speedometer2" aria-hidden="true"></i>
+                            <div>
+                                <strong>Indexing &amp; execution plans</strong>
+                                <span>Reading plans to find the scan, the spool, or the missing index costing the query its runtime.</span>
+                            </div>
+                        </div>
+                        <div class="so-topic">
+                            <i class="bi bi-bug" aria-hidden="true"></i>
+                            <div>
+                                <strong>T-SQL troubleshooting</strong>
+                                <span>Stored procedures, CTEs, dynamic SQL, date and NULL handling — the everyday failure modes.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="so-stats">
+                        <div class="so-stat">
+                            <b>795k</b>
+                            <span>Developers reached</span>
+                        </div>
+                        <div class="so-stat">
+                            <b>430</b>
+                            <span>Answers contributed</span>
+                        </div>
+                        <div class="so-stat">
+                            <b>5,685</b>
+                            <span>Reputation earned</span>
+                        </div>
+                        <div class="so-stat">
+                            <b>7+ yrs</b>
+                            <span>Answering since 2018</span>
+                        </div>
+                    </div>
+
+                    <details class="so-details">
+                        <summary>View full contribution breakdown</summary>
+                    <div class="so-meta">
+                        <div class="so-tags">
+                            <p class="so-meta-label">Top answer tags</p>
+                            <div class="so-tag-row">
+                                <span class="so-tag">sql-server</span>
+                                <span class="so-tag-fig">405 answers — 92% of my activity</span>
+                            </div>
+                        </div>
+                        <div class="so-badges">
+                            <p class="so-meta-label">Badges earned</p>
+                            <div class="so-badge-row">
+                                <span class="so-badge gold"><span class="bdot"></span><b>8</b> Gold</span>
+                                <span class="so-badge silver"><span class="bdot"></span><b>24</b> Silver</span>
+                                <span class="so-badge bronze"><span class="bdot"></span><b>45</b> Bronze</span>
+                            </div>
+                            <p class="so-badge-note">Includes Marshal, Steward &times;3, Copy Editor, Refiner and Deputy — earned for moderation and review quality, not just answers.</p>
+                        </div>
+                    </div>
+
+                    <p class="so-foot">Why it matters for this role: this is unscripted, peer-reviewed SQL Server work — the same depth I'd bring to code review, schema design and performance triage on a team.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TECHNICAL WRITING ================= -->
+        <section id="writing" aria-labelledby="writing-title" style="background:var(--bg-2)">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">Technical writing</p>
+                    <h2 class="sec-title serif" id="writing-title">2&times; C# Corner MVP, published in public.</h2>
+                    <p class="sec-sub mb-5">Writing up how something actually works forces a level of understanding that using it day-to-day doesn't.</p>
+                </div>
+                <!-- REMINDER for Suraj: replace the ENG_ARTICLE_* placeholders below with
+                     real, engineering-relevant published articles (title, date and direct
+                     URL) — these are deliberately not the same 3 placeholders as index.html's
+                     Insights section, so the two pages don't end up pointing at the same
+                     eventual content by accident. -->
+                <div class="row g-4">
+                    <div class="col-md-6 reveal d1">
+                        <a class="x-card insight-card d-block h-100 text-decoration-none" href="ENG_ARTICLE_URL_1" target="_blank" rel="noopener">
+                            <p class="tag mb-3">C# / .NET</p>
+                            <h3 class="fs-6 fw-bold mb-2">ENG ARTICLE TITLE 1</h3>
+                            <p class="text-2 mb-2" style="font-size:12px;opacity:.75">ENG_PUBLISHED_DATE_1</p>
+                            <p class="text-2 mb-0" style="font-size:14px">ENG_ARTICLE_DESCRIPTION_1</p>
+                        </a>
+                    </div>
+                    <div class="col-md-6 reveal d2">
+                        <a class="x-card insight-card d-block h-100 text-decoration-none" href="ENG_ARTICLE_URL_2" target="_blank" rel="noopener">
+                            <p class="tag mb-3">SQL Server</p>
+                            <h3 class="fs-6 fw-bold mb-2">ENG ARTICLE TITLE 2</h3>
+                            <p class="text-2 mb-2" style="font-size:12px;opacity:.75">ENG_PUBLISHED_DATE_2</p>
+                            <p class="text-2 mb-0" style="font-size:14px">ENG_ARTICLE_DESCRIPTION_2</p>
+                        </a>
+                    </div>
+                </div>
+                <p class="text-2 text-center mt-4 mb-0" style="font-size:14px">
+                    <i class="bi bi-journal-text me-1" style="color:var(--accent)"></i>
+                    All articles on <a href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener" style="color:var(--accent)">C# Corner</a>.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= ENGINEERING LEADERSHIP ================= -->
+        <section id="eng-leadership" aria-labelledby="eng-leadership-title">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">Engineering leadership</p>
+                    <h2 class="sec-title" id="eng-leadership-title">What the delivery years add, not what they cost.</h2>
+                    <p class="sec-sub mb-5">Four concrete things I bring as a lead specifically because I've also run delivery — kept tight, not a slide of platitudes.</p>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6 reveal d1">
+                        <div class="x-card h-100">
+                            <p class="pov-label mb-2"><i class="bi bi-eye me-1"></i>Code review culture</p>
+                            <p class="text-2 mb-0" style="font-size:14.5px">Every PR gets read by someone who's shipped the same class of bug — not rubber-stamped for velocity.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 reveal d2">
+                        <div class="x-card h-100">
+                            <p class="pov-label mb-2"><i class="bi bi-people me-1"></i>Mentoring into module owners</p>
+                            <p class="text-2 mb-0" style="font-size:14.5px">Grown engineers into module owners on live accounts — reducing key-person risk instead of concentrating it in one senior developer.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 reveal d3">
+                        <div class="x-card h-100">
+                            <p class="pov-label mb-2"><i class="bi bi-calculator me-1"></i>Estimation grounded in having built it</p>
+                            <p class="text-2 mb-0" style="font-size:14.5px">I estimate from having built the thing, not from a template — that's what protects a sprint commitment and the delivery margin behind it.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 reveal d1">
+                        <div class="x-card h-100">
+                            <p class="pov-label mb-2"><i class="bi bi-robot me-1"></i>Governing AI coding tools with review discipline</p>
+                            <p class="text-2 mb-0" style="font-size:14.5px">Teams using AI coding tools ship faster and worse without review discipline — I govern for the productivity without losing the discipline.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+        <section id="contact" aria-labelledby="contact-title" style="background:var(--bg-2)">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">Contact</p>
+                    <h2 class="sec-title" id="contact-title">Open to senior engineering and technical leadership roles.</h2>
+                    <p class="sec-sub mb-5">Open to Senior .NET Full Stack Lead, Technical Lead and Engineering Manager roles — especially where I can still touch the code.</p>
+                </div>
+                <div class="contact-panel reveal">
+                    <div class="row g-0">
+                        <div class="col-lg-5">
+                            <div class="contact-side">
+                                <h3 class="fs-4 fw-bold mb-4">Reach me directly</h3>
+                                <div class="c-item"><i class="bi bi-envelope"></i><div><strong>Email</strong><br><a href="mailto:surajkumar.navodya@gmail.com">surajkumar.navodya@gmail.com</a></div></div>
+                                <div class="c-item"><i class="bi bi-linkedin"></i><div><strong>LinkedIn</strong><br><a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener">linkedin.com/in/surajkumar-navodya</a></div></div>
+                                <div class="c-item"><i class="bi bi-geo-alt"></i><div><strong>Location</strong><br>Mumbai, India &middot; Open to relocation — India and GCC</div></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="p-4 p-lg-5">
+                                <h3 class="fs-4 fw-bold mb-2">Next step</h3>
+                                <p class="text-2 mb-4" style="font-size:14.8px">Book a conversation about a hands-on engineering or technical-lead role, or take the résumé with you. I reply within one business day.</p>
+                                <div class="cta-final mb-3">
+                                    <a class="btn-accent btn cta-primary" href="mailto:surajkumar.navodya@gmail.com?subject=Engineering%20conversation"><i class="bi bi-calendar-check me-2"></i>Schedule a Conversation</a>
+                                    <a class="btn-outline btn cta-secondary" href="assets/aff991fc366a/40257fcfd3621de6d7ff.pdf" download><i class="bi bi-download me-2"></i>Download my résumé</a>
+                                </div>
+                                <p class="cta-alt mb-4">Prefer LinkedIn? <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener">Connect with me there</a>.</p>
+                                <ul class="text-2 mb-0" style="font-size:14.5px;padding-left:1.15rem">
+                                    <li class="mb-2">Open to Senior .NET Full Stack Lead, Technical Lead and Engineering Manager roles.</li>
+                                    <li class="mb-0">Strong fit for hands-on engineering with code-review and mentoring responsibility, AI-augmented engineering workflows, and SQL Server–heavy systems.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <a class="footer-cta" href="https://surajkumarnavodya.com/">VIEW THE PORTFOLIO →</a>
+            <span>
+                <a href="#eng-hero" aria-label="Back to top">Top ↑</a>
+                <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener me">LinkedIn</a>
+                <a href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener me">C# Corner</a>
+                <a href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener me">Stack Overflow</a>
+                <a href="mailto:surajkumar.navodya@gmail.com">Email</a>
+            </span>
+        </div>
+    </footer>
+
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- ================= PORTFOLIO COPILOT (verbatim, shared with index.html) ================= -->
+    <div class="copilot-dock" id="copilotDock">
+        <button class="copilot-fab" id="copilotFab" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="copilotPanel">
+            <span class="spark" aria-hidden="true">✦</span> Ask my Copilot <kbd>Ctrl K</kbd>
+        </button>
+        <button class="copilot-dismiss" id="copilotDismiss" type="button" aria-label="Hide the Copilot button" title="Hide — press Ctrl K or reload to bring it back">×</button>
+    </div>
+
+    <div class="copilot-panel" id="copilotPanel" role="dialog" aria-modal="false" aria-label="Portfolio Copilot" hidden>
+        <div class="copilot-head">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+                <b>Portfolio Copilot</b>
+                <small>ON-DEVICE · ANSWERS FROM THIS PAGE · NOTHING LEAVES YOUR BROWSER</small>
+            </div>
+            <button class="copilot-close" id="copilotClose" type="button" aria-label="Close Copilot">×</button>
+        </div>
+        <div class="copilot-log" id="copilotLog" aria-live="polite"></div>
+        <div class="copilot-chips" id="copilotChips">
+            <button type="button" data-q="What's his AI experience?">AI experience</button>
+            <button type="button" data-q="What's his biggest program?">Biggest program</button>
+            <button type="button" data-q="Why delivery leadership?">Why delivery?</button>
+            <button type="button" data-q="Which certifications?">Certifications</button>
+            <button type="button" data-q="How do I contact him?">Contact</button>
+        </div>
+        <div class="copilot-input">
+            <input type="text" id="copilotInput" placeholder="Ask about experience, AI, programs…" aria-label="Ask the Portfolio Copilot" maxlength="160" autocomplete="off">
+            <button type="button" id="copilotSend" aria-label="Send">➤</button>
+        </div>
+    </div>
+
+    <!-- Mount point for Google's Website Translator widget (assets/js/i18n.js
+         drives its hidden <select> directly; the widget itself is never shown). -->
+    <div id="google_translate_element" aria-hidden="true"></div>
+
+    <!-- jQuery + Bootstrap bundle, then the shared dist bundle — deliberately
+         NOT loading assets/js/config.js, see the note at the top of this file. -->
+    <script defer src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+            integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script defer src="assets/dist/js/template.min.js"></script>
+</body>
+</html>

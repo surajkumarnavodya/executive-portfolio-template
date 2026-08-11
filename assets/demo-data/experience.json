@@ -1,0 +1,28 @@
+{
+  "_comment": "FICTIONAL TEMPLATE SAMPLE DATA. This company, role and history are invented for template demos and Studio previews only. Never publish this as real work history. See assets/demo-data/README.md.",
+  "items": [
+    {
+      "title": "Director of Delivery",
+      "company": "Alpha Digital Solutions",
+      "start": "Jan 2020",
+      "end": "Present",
+      "blurb": "Leading a 50-person delivery organisation focused on cloud migration and AI-enabled products.",
+      "bullets": [
+        "Scaled delivery from 2 to 20 concurrent clients",
+        "Introduced AI-assisted sprint planning reducing estimation variance by 30%",
+        "Owned P&L for a $6M portfolio"
+      ]
+    },
+    {
+      "title": "Senior Program Manager",
+      "company": "BlueWave Technologies",
+      "start": "Jul 2016",
+      "end": "Dec 2019",
+      "blurb": "Delivered enterprise modernization programs across BFSI and healthcare domains.",
+      "bullets": [
+        "Led migration of legacy systems to microservices on Azure",
+        "Established enterprise governance and QA processes"
+      ]
+    }
+  ]
+}

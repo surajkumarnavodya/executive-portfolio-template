@@ -42,5 +42,5 @@ This template keeps backward compatibility for authored HTML while evolving runt
 - Confirm `main` wrapper still contains the homepage sections.
 
 ### Demo packs do not appear in Studio
-- Confirm [demo-profiles.json](</D:/My Portfolio Website/assets/data/demo-profiles.json>) exists and is valid JSON.
+- Confirm [demo-profiles.json](../assets/demo-data/demo-profiles.json) exists and is valid JSON.
 - Open via local server (`http://localhost`) instead of `file://`.

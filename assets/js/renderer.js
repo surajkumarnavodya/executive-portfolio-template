@@ -13,6 +13,25 @@
 
   var base = dataCfg.path || 'assets/data/';
 
+  /* Guard against fictional demo/sample content (assets/demo-data/) ever being
+   * rendered as if it were real: any data path containing "demo" only renders
+   * on studio.html, where it's an intentional, labeled preview. On every other
+   * page a single config flag flipped without also fixing the path would
+   * otherwise silently publish invented names/quotes as real content. */
+  var isStudioPage = /(^|\/)studio\.html$/i.test(window.location.pathname);
+  if (/demo/i.test(base) && !isStudioPage) {
+    console.error('renderer.js: refusing to render data from "' + base + '" — the path contains "demo" and this is not studio.html. Fictional sample content must never be published; point cfg.data.path at your own real JSON.');
+    return;
+  }
+
+  /* Sample files under assets/demo-data/ are wrapped as { _comment, items }
+   * so the fictional-data warning can't be silently dropped by a naive
+   * array consumer. Real user data (a bare array) passes through unchanged. */
+  function unwrap(payload) {
+    if (payload && !Array.isArray(payload) && Array.isArray(payload.items)) { return payload.items; }
+    return payload;
+  }
+
   function fetchJson(name) {
     var url = base + name;
     return fetch(url, { cache: 'no-cache' }).then(function (res) {
@@ -120,10 +139,10 @@
     renderPortfolio(portfolio);
   }).catch(function () {
     var tasks = [];
-    tasks.push(fetchJson('experience.json').then(renderExperience).catch(function () {}));
-    tasks.push(fetchJson('testimonials.json').then(renderTestimonials).catch(function () {}));
-    tasks.push(fetchJson('recognition.json').then(renderRecognition).catch(function () {}));
-    tasks.push(fetchJson('success-stories.json').then(renderSuccessStories).catch(function () {}));
+    tasks.push(fetchJson('experience.json').then(unwrap).then(renderExperience).catch(function () {}));
+    tasks.push(fetchJson('testimonials.json').then(unwrap).then(renderTestimonials).catch(function () {}));
+    tasks.push(fetchJson('recognition.json').then(unwrap).then(renderRecognition).catch(function () {}));
+    tasks.push(fetchJson('success-stories.json').then(unwrap).then(renderSuccessStories).catch(function () {}));
     Promise.all(tasks).catch(function () { /* ignore individual failures */ });
   });
 

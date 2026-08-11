@@ -1,0 +1,7 @@
+{
+  "_comment": "FICTIONAL TEMPLATE SAMPLE DATA. This award and issuer are invented for template demos and Studio previews only. Never publish this as a real credential. See assets/demo-data/README.md.",
+  "items": [
+    { "year": 2025, "title": "Enterprise Delivery Award", "issuer": "Tech Leadership Forum", "note": "For scaling cross-account delivery practices." },
+    { "year": 2023, "title": "Innovation in AI", "issuer": "Industry Summit", "note": "Applied agentic AI to automate release gating." }
+  ]
+}

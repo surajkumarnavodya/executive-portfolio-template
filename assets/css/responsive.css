@@ -42,7 +42,7 @@
   .pipeline .flow{animation:none}
   .pipeline .node-pulse{animation:none;opacity:0}
 }
-@media (max-width:576px){.copilot-fab kbd{display:none}}
+@media (max-width:767.98px){.copilot-fab kbd{display:none}}
 @media (prefers-reduced-motion:reduce){.copilot-panel.open{animation:none}}
 @media (max-width:576px){
   .copilot-panel{right:8px;left:8px;top:auto;bottom:150px;width:auto;transform:none;max-height:min(560px,calc(100vh - 190px))}
@@ -76,17 +76,17 @@
 }
 @media (min-width:992px){
   .hero > .container > .row{align-items:stretch}
-  /* The Exec Scorecard and Steering Snapshot share this column. Letting
-     justify-content:space-between dump 100% of the leftover height into
-     one gap between the two cards left Steering Snapshot visibly sunk
-     below the scorecard. Instead: a fixed, modest gap between the cards,
-     and the KPI board itself grows to fill the remaining height (so its
-     bottom still lines up with the hero CTA row) — but only the row of
-     cells is centered within that growth, not stretched apart, so the
-     cells keep their natural compact size. */
-  .hero-right{display:flex;flex-direction:column;gap:20px}
-  .hero-right .kpi-board{flex:1 1 auto;display:flex;flex-direction:column}
-  .hero-right .kpi-board>.row{flex:1 1 auto;align-content:center}
+  /* The KPI board used to share this column with the Executive Scorecard,
+     and grew (flex:1 1 auto) to fill the leftover height once the two
+     cards' combined content was shorter than the hero-left column. Now
+     that the Scorecard is gone and the board is the column's only card,
+     letting it keep growing stretched it to match hero-left's full height
+     — a mostly-empty box with the cell grid floating in the middle. It's
+     sized to its own content instead; hero-right (still stretched to the
+     row's height) just carries the leftover space as ordinary whitespace
+     above/below the card rather than the card itself being inflated. */
+  .hero-right{display:flex;flex-direction:column;gap:20px;justify-content:flex-start}
+  .hero-right .kpi-board{flex:0 0 auto}
   /* Reserve two lines for every label so cell bottoms line up */
   .kpi-lbl{min-height:2.5em}
 }
@@ -105,6 +105,43 @@
 }
 @media (min-width:992px) and (max-width:1399px){
   .navbar .btn-accent{padding:7.45px 13px;font-size:12.5px}
+}
+@media (min-width:992px) and (max-width:1599px){
+  /* The audience toggle is the newest thing competing for navbar width in
+     this already-tight band (see the .navbar .nav-link / .btn-accent rules
+     above it). Text labels alone — even shortened, even at a smaller
+     font — still pushed the theme toggle, palette picker and CTA button
+     past the container's right edge on index.html's 6-item nav. Measured
+     the real cutoff directly rather than assuming it matched the existing
+     992-1399px band used elsewhere on this page: the full-label toggle
+     stayed too wide through ~1460px, not just up to 1399px, so this band
+     is deliberately its own wider range rather than reusing that one.
+     Icon-only closes the gap through the whole band; the full word labels
+     only come back at >=1600px and inside the mobile menu, where width
+     isn't the constraint. aria-label on each link carries the full text at
+     every width regardless of what's visually shown.
+     Upper bound raised 1499 -> 1599 when the font-size switcher (below) was
+     added: at exactly 1500px the switcher returning to full size alone
+     pushed the CTA ~30px past the container edge, measured directly with
+     Playwright rather than assumed. */
+  .audience-toggle{padding:2px;gap:1px}
+  .audience-toggle a{padding:6px 6px}
+  .audience-toggle a .aud-label{display:none}
+  .audience-toggle a i{display:inline}
+  /* Icon-only audience toggle alone still left index.html short of fitting
+     at the low end of this band (1200px, right where the collapsed
+     hamburger switches to the expanded nav) — the palette picker's 6
+     swatches and the utility cluster's own gap were the next-cheapest
+     places to reclaim width without touching anything a visitor actually
+     reads. */
+  .palette-picker{gap:3px;margin-left:4px}
+  .pal-swatch{width:15px;height:15px}
+  .navbar .d-flex.align-items-center.gap-2{gap:3px!important}
+  /* The font-size switcher is the newest addition competing for width in
+     this same band — shrunk on the same terms as the palette picker above;
+     also the reason the gap above was tightened from 6px to 3px and this
+     band's own upper bound was raised (see comment at the top of this rule). */
+  .fontsize-toggle{min-width:24px;padding:0 3px;font-size:10px}
 }
 @media (max-width:991.98px){
   .navbar .btn-accent{padding:10.85px 18px;font-size:14px}

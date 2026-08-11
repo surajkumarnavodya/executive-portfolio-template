@@ -87,7 +87,7 @@ window.PORTFOLIO_CONFIG = {
       'disciplined delivery.',
       'outcomes. teams. trust.'
     ],
-    valueStatement: 'Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 8+ years as a hands-on .NET engineer.',
+    valueStatement: 'Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 7+ years as a hands-on .NET engineer.',
     activeTone: '',
     toneVariants: {
       authoritative: {
@@ -162,7 +162,7 @@ window.PORTFOLIO_CONFIG = {
     title: 'An engineer-turned-executive who leads delivery, not just tracks it.',
     summary: 'I run enterprise programs the way a P\u0026L owner would — accountable for outcomes, not just RAG statuses.',
     paragraphs: [
-      'Twelve-plus years in IT — the first eight hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency, and use both to keep delivery plans honest.',
+      'Twelve-plus years in IT — the first seven hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency, and use both to keep delivery plans honest.',
       'Today I own multi-account portfolios worth ₹2Cr+, leading 20+ engineers as the single point of accountability for client sponsors on delivery health, risk and scope. I’m now applying that same discipline to AI-augmented delivery, using agentic tooling to compress planning, reporting and QA cycles without sacrificing governance.',
     ],
     pillars: [
@@ -195,8 +195,9 @@ window.PORTFOLIO_CONFIG = {
     email: 'surajkumar.navodya@gmail.com',
     phone: '+91 90491 41305',
     location: 'Mumbai, India',
-    // Drop your PDF in assets/downloads/ and point this at it.
-    resume: 'Suraj_Kumar_Resume_Technical_PM.pdf',
+    // Deliberately not a human-guessable filename/path — see the "why" note
+    // in docs/ReleaseQA.md before renaming this back to something obvious.
+    resume: 'assets/aff991fc366a/40257fcfd3621de6d7ff.pdf',
     // Prefilled subject line for the "email me" links.
     emailSubject: 'Delivery leadership conversation'
   },
@@ -326,12 +327,16 @@ window.PORTFOLIO_CONFIG = {
 
   /* -------------------------------------------------- data ------------- */
   // Optional JSON-driven renderer. When `useData` is true, renderer.js will
-  // load content from assets/data/ and replace matching sections with the
+  // load content from `path` below and replace matching sections with the
   // JSON-driven output. Defaults to false to keep SEO-friendly static HTML.
   data: {
     // Set true to enable renderer.js and replace long-form HTML with JSON.
     useData: false,
-    // Relative path where JSON files live. Trailing slash recommended.
+    // Relative path to YOUR OWN real experience/testimonials/etc JSON files
+    // (create this directory yourself — it does not ship with the template).
+    // Never point this at assets/demo-data/ on a live site: that directory
+    // holds fictional sample content, and renderer.js will refuse to render
+    // any path containing "demo" outside of studio.html.
     path: 'assets/data/'
   }
 

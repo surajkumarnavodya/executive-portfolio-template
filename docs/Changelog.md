@@ -4,6 +4,43 @@ Semantic versioning: MAJOR.MINOR.PATCH.
 
 ---
 
+## v1.5.1 — 2026-08-11 — SEO/structured-data correctness, fictional-data guard, packaging & font-weight cleanup
+
+### Fixed (SEO / Open Graph)
+- **`og:image` / `twitter:image` were relative URLs** (`og-image.png`) in `index.html` and `engineering.html`. Open Graph and Twitter Card images must be absolute — LinkedIn, WhatsApp and Slack link previews were silently rendering blank. Changed both to `https://surajkumarnavodya.com/og-image.png`. Also made the JSON-LD Person `image` field absolute for the same reason (structured-data consumers have no page base URL to resolve a relative path against). Audited every other meta tag (`canonical`, `og:url`, `apple-touch-icon`, `manifest`) — all were already correctly absolute-where-required or intentionally relative (asset paths resolved against the document).
+
+### Fixed (JSON-LD / structured data)
+- **`worksFor: LTIMindtree`** removed from the Person schema in both pages — no longer accurate since leaving LTIMindtree in June 2026. Not replaced with a new employer.
+- **`telephone`** removed from the Person schema — the phone number was deliberately removed from the visible page in an earlier pass; publishing it in structured data defeated that.
+- **`hasCredential`** expanded from a single bare string (`"LTIMindtree Certified Agile Practitioner"`) to three `EducationalOccupationalCredential` objects, adding PMP (recognized by Project Management Institute) and CSM (recognized by Scrum Alliance). Validated all resulting JSON-LD with `JSON.parse` in both files.
+
+### Security — Fictional demo data
+- **`assets/data/` renamed to `assets/demo-data/`.** Every file in it (`testimonials.json`, `experience.json`, `recognition.json`, `success-stories.json`, `demo-profiles.json`) is fictional template sample content (invented names, employers, quotes, awards). Previously a single `cfg.data.useData` flag flip could have published it as real content on the live page.
+- Each demo JSON file is now wrapped as `{ "_comment": "FICTIONAL TEMPLATE SAMPLE DATA...", "items": [...] }` so the warning travels with the data itself; `renderer.js` and `studio-app.js` unwrap `.items` transparently.
+- **New guard in `renderer.js`:** any `cfg.data.path` containing `"demo"` now refuses to render — and logs a console error — on every page except `studio.html`. A misconfigured `data.path` (or `config.demo.js` accidentally left wired into `index.html`) can no longer silently publish fictional content.
+- `config.demo.js`'s `data.path` updated to `assets/demo-data/`; `config.js`'s default path comment now explicitly warns never to point it at `assets/demo-data/`.
+- `portfolio-data-service.js`'s Studio zip-export manifest updated to the new paths and now excludes `assets/demo-data/` entirely from marketplace-mode exports.
+- Added `assets/demo-data/README.md` explaining the directory and the guard.
+
+### Changed — Distributable packaging
+- Deleted `perf-optimizations.patch` (1.2 MB) — confirmed already applied (its inlined-critical-CSS and dead-CSS changes are already live in `index.html`/`style.css`).
+- `screenshots/` reduced from PNG+WebP+AVIF (three copies per shot) to AVIF+PNG — deleted the five `.webp` duplicates (~1.4 MB).
+- `.vs/` was already gitignored and, on inspection, was never actually committed to the repo — no history rewrite needed. Added `*.patch`, `*.diff` and `.idea/` to `.gitignore` for good measure.
+- **New `tools/package.sh` / `tools/package.ps1`** — build the buyer distributable via `git archive` against a real commit (default `HEAD`), never the working directory, so `.vs/`, stray patch files or other untracked local junk can never ship again. Excludes `.github/`, `.vs/`, `tools/`, `assets/dev/`, `assets/tests/`, `docs/ReleaseQA.md` and `screenshots/` from the archive while keeping them in the repo.
+
+### Changed — First-paint font weight
+- `index.html` and `engineering.html` reduced their eager Google Fonts request from five families (Inter, Fraunces, JetBrains Mono, Source Sans 3, Playfair Display) to three (Inter, Fraunces, JetBrains Mono — confirmed still in active use for data labels/eyebrows/timestamps throughout `style.css` via `--font-mono`).
+- Source Sans 3 + Playfair Display (the Template Customizer's alternate "source" typography preset) now load on demand: `customizer.js` injects a scoped Google Fonts `<link>` the first time a visitor actually picks that preset, instead of every visitor downloading it unconditionally. `studio.html` is unaffected (separate tool, own font loading, not in scope here).
+- Fixed a stale comment in both pages' `<head>` that still said "Instrument Serif" (replaced by Fraunces in an earlier session).
+
+### Changed — SEO
+- `sitemap.xml` updated for the current two-page site: added `engineering.html` (priority 0.8), refreshed `<lastmod>` on both entries to 2026-08-11, and corrected the explanatory comment (was still describing a single-page site).
+
+### Known limitation
+- Could not empirically measure before/after transferred font bytes locally — `fonts.googleapis.com` was not reachable from the sandboxed environment this pass ran in (SSL connect failure; `fonts.googleapis.com` was unreachable while other hosts were not). Recommend checking the Network tab in DevTools or a Lighthouse run against the live site to confirm the actual transfer-size reduction.
+
+---
+
 ## v1.5.0 — 2026-07-31 — Critical Bundle Regression Fix
 
 ### Fixed (Critical — All Sections Blank)

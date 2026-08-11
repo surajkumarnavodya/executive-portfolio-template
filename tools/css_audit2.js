@@ -38,7 +38,7 @@ const STATE_CLASSES = new Set([
 
 function collectDynamicTokens() {
   const tokens = new Set();
-  const dirs = ["assets/js", "assets/dist/js", "assets/data"].map((d) => path.join(ROOT, d));
+  const dirs = ["assets/js", "assets/dist/js", "assets/demo-data"].map((d) => path.join(ROOT, d));
   for (const d of dirs) {
     if (!fs.existsSync(d)) continue;
     for (const f of fs.readdirSync(d)) {

@@ -79,10 +79,13 @@ window.PORTFOLIO_CONFIG = {
   },
 
   /* -------------------------------------------------- data ------------- */
-  // Enable JSON-driven demo content. Place fictional data in assets/data/.
+  // Enable JSON-driven demo content, sourced from the fictional sample packs
+  // in assets/demo-data/ (see assets/demo-data/README.md). renderer.js only
+  // renders a "demo" path on studio.html — loading this config file on any
+  // other page renders nothing and logs a console error instead.
   data: {
     useData: true,
-    path: 'assets/data/'
+    path: 'assets/demo-data/'
   }
 
 };

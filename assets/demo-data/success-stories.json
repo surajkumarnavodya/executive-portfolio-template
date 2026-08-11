@@ -1,0 +1,7 @@
+{
+  "_comment": "FICTIONAL TEMPLATE SAMPLE DATA. These case studies are invented for template demos and Studio previews only. Never publish this as a real project outcome. See assets/demo-data/README.md.",
+  "items": [
+    { "title": "Cloud Migration for National Bank", "subtitle": "Reducing TCO and improving resilience", "summary": "Led a 12-month lift-and-shift to a modern cloud platform with a PCA-driven cutover and zero critical incidents.", "link": "#" },
+    { "title": "AI-assisted Claims Processing", "subtitle": "30% faster adjudication", "summary": "Delivered an ML-powered claims triage that reduced manual effort and improved SLAs.", "link": "#" }
+  ]
+}

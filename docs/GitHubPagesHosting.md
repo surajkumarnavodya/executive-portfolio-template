@@ -266,6 +266,8 @@ site (safe to exclude, though harmless if included):
 
 Everything else in the project root — `index.html`, `studio.html`,
 `component-catalog.html`, `assets/css/`, `assets/js/`, `assets/dist/`,
-`assets/images/`, `assets/data/`, `assets/downloads/`, `favicon.svg`,
+`assets/images/`, `assets/demo-data/`, `assets/downloads/`, `favicon.svg`,
 `site.webmanifest`, `sitemap.xml`, `robots.txt`, `portfolio.json` — is part
-of the working site and should be uploaded as-is.
+of the working site and should be uploaded as-is. `assets/demo-data/` holds
+only fictional sample content used by `studio.html`'s demo-pack picker —
+see `assets/demo-data/README.md`.

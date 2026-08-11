@@ -1978,3 +1978,52 @@ body{top:0!important;position:static!important}
    that shorter target instead of forcing hero-right to overflow it.
    =========================================================================== */
 .exec-scorecard .row-item{padding:7px 0}
+
+/* ===========================================================================
+   AUDIENCE TOGGLE — "Delivery leadership" / "Engineering"
+   ---------------------------------------------------------------------------
+   Two views of one career (index.html vs engineering.html), not two people,
+   so it lives in the primary nav controls next to the theme/palette pickers
+   rather than being hidden in a footer link. Reuses --accent/--border/--glass
+   and the same dark-navy-on-accent active-state pattern already proven for
+   .preset-chip[aria-pressed="true"] — no new colour tokens.
+   =========================================================================== */
+.audience-toggle{display:inline-flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--border);border-radius:999px;background:var(--glass)}
+.audience-toggle a{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--text-2);text-decoration:none;white-space:nowrap;transition:color .15s ease,background-color .15s ease}
+.audience-toggle a:hover{color:var(--heading)}
+.audience-toggle a[aria-current="page"]{background:var(--accent);color:#0c1a2e}
+.audience-toggle a i{display:none;font-size:13px}
+@media (max-width:420px){
+  .audience-toggle a{padding:6px 9px;font-size:11.5px}
+}
+
+/* ===========================================================================
+   FONT SIZE SWITCHER (assets/js/fontsize.js)
+   ---------------------------------------------------------------------------
+   Three-level site-wide text size (A / A+ / A++), persisted like the theme
+   and accent-colour pickers. Scales via CSS zoom on the root element rather
+   than a root font-size/rem conversion — this template's type is authored
+   in px/clamp() throughout, so a rem-relative change wouldn't reach most of
+   it, while zoom scales the whole rendered page the way a visitor already
+   expects "bigger text" to behave. "A" (data-fontsize="md") is the default
+   and has no override rule below — normal zoom is the browser default.
+   =========================================================================== */
+:root[data-fontsize="lg"]{zoom:1.12}
+:root[data-fontsize="xl"]{zoom:1.25}
+.fontsize-switch{position:relative}
+.fontsize-toggle{width:auto;min-width:38px;padding:0 10px;border-radius:19px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.02em}
+.fontsize-menu{
+  position:absolute;top:calc(100% + 10px);right:0;z-index:1200;
+  min-width:150px;
+  background:var(--surface-solid);border:1px solid var(--border);border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);padding:6px;
+}
+.fontsize-menu[hidden]{display:none}
+.fontsize-item{
+  display:block;width:100%;text-align:left;
+  background:none;border:none;color:var(--text-2);font-weight:500;font-size:14px;
+  border-radius:8px;padding:9px 14px;cursor:pointer;
+  transition:background .15s ease,color .15s ease;
+}
+.fontsize-item:hover,.fontsize-item:focus-visible{background:rgba(var(--accent-rgb),.12);color:var(--heading)}
+.fontsize-item[aria-pressed="true"]{color:var(--accent);font-weight:700}

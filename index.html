@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suraj Kumar | Enterprise Program & Project Manager | Digital Transformation & AI</title>
-    <meta name="description" content="Suraj Kumar — Program & Project Manager. 12+ years in IT, 8+ as a hands-on .NET engineer. Owns delivery health, client relationships and teams across ₹2Cr+ multi-account portfolios — 95%+ on-time, on-budget, with AI-augmented ways of working.">
+    <meta name="description" content="Suraj Kumar — Program & Project Manager. 12+ years in IT, 7+ as a hands-on .NET engineer. Owns delivery health, client relationships and teams across ₹2Cr+ multi-account portfolios — 95%+ on-time, on-budget, with AI-augmented ways of working.">
     <link rel="canonical" href="https://surajkumarnavodya.com/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/images/profile.jpg">
@@ -26,7 +26,6 @@
     <meta name="theme-color" content="#0b1420">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Suraj Kumar">
-    <meta name="keywords" content="Delivery Manager Mumbai, Program Manager India, Technical Program Manager, AI-augmented delivery, Agile delivery leader, LTIMindtree, enterprise digital transformation">
 
     <!-- Open Graph (LinkedIn / WhatsApp / Slack link previews) -->
     <meta property="og:type" content="profile">
@@ -34,7 +33,10 @@
     <meta property="og:title" content="Suraj Kumar | Program & Project Manager · AI-Augmented Delivery">
     <meta property="og:description" content="Delivery leader — 12+ years in enterprise IT delivery. Owns outcomes, teams and client relationships across ₹2Cr+ multi-account portfolios. 95%+ on-time, on-budget. Engineer-turned-leader, AI-augmented delivery.">
     <meta property="og:url" content="https://surajkumarnavodya.com/">
-    <!-- Add a 1200x630 preview image at this path (headline + key stats) so shared links don't render blank. -->
+    <!-- Add a 1200x630 preview image at this path (headline + key stats) so shared links don't render blank.
+         og:image / twitter:image MUST be an absolute URL — LinkedIn, WhatsApp and Slack
+         resolve link-preview images without a page base URL to fall back to, so a
+         relative path here silently fails and the shared link renders with no preview. -->
     <meta property="og:image" content="https://surajkumarnavodya.com/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -46,8 +48,6 @@
     <meta name="twitter:title" content="Suraj Kumar | Program & Project Manager">
     <meta name="twitter:description" content="Delivery leader — 12+ years in enterprise IT delivery. Owns outcomes, teams and client relationships across ₹2Cr+ multi-account portfolios. 95%+ on-time, on-budget.">
     <meta name="twitter:image" content="https://surajkumarnavodya.com/og-image.png">
-    <meta name="twitter:site" content="@surajkumarnavodya">
-    <meta name="twitter:creator" content="@surajkumarnavodya">
 
     <!-- Structured data: helps Google understand who you are and surface your profile richly -->
     <script type="application/ld+json">
@@ -57,12 +57,20 @@
           "name": "Suraj Kumar",
           "url": "https://surajkumarnavodya.com/",
           "jobTitle": "Program & Project Manager",
-          "worksFor": { "@type": "Organization", "name": "LTIMindtree" },
+          "description": "Program & Delivery Leader with 12+ years in enterprise IT, including 7+ years as a hands-on .NET engineer — owns delivery health, client relationships and teams across multi-account portfolios.",
+          "image": "https://surajkumarnavodya.com/assets/images/profile.jpg",
           "address": { "@type": "PostalAddress", "addressLocality": "Mumbai", "addressRegion": "Maharashtra", "addressCountry": "IN" },
           "email": "surajkumar.navodya@gmail.com",
-          "telephone": "+91-90491-41305",
-          "knowsAbout": ["Program Management","Delivery Management","Agile","Scrum","Enterprise Delivery Governance",".NET","SQL Server","Azure","Generative AI","Agentic AI"],
-          "hasCredential": ["LTIMindtree Certified Agile Practitioner"],
+          "alumniOf": [
+            { "@type": "CollegeOrUniversity", "name": "Sikkim Manipal University" },
+            { "@type": "CollegeOrUniversity", "name": "Magadh University" }
+          ],
+          "knowsAbout": ["Program Management","Delivery Management","PMO & Governance","Agile","Scrum","Risk Management","Stakeholder Management","Enterprise Delivery Governance","C#",".NET Core","SQL Server","Azure","Azure DevOps","Generative AI","Agentic AI","RAG Pipelines","Prompt Engineering"],
+          "hasCredential": [
+            { "@type": "EducationalOccupationalCredential", "name": "LTIMindtree Certified Agile Practitioner" },
+            { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "Project Management Professional (PMP)", "recognizedBy": { "@type": "Organization", "name": "Project Management Institute" } },
+            { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "Certified ScrumMaster (CSM)", "recognizedBy": { "@type": "Organization", "name": "Scrum Alliance" } }
+          ],
           "sameAs": [
             "https://www.linkedin.com/in/surajkumar-navodya",
             "https://www.c-sharpcorner.com/members/suraj-kumar23/articles",
@@ -74,12 +82,16 @@
     <!-- Bootstrap 5.3 (color modes power the dark/light theme) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- Fonts: Instrument Serif (display) · Inter (body) · JetBrains Mono (data labels) -->
+    <!-- Fonts: Fraunces (display) · Inter (body) · JetBrains Mono (data labels — used
+         throughout style.css for eyebrows, KPI values, timestamps, tags; see --font-mono).
+         Two other typography presets (Source Sans 3 + Playfair Display) are available in
+         the on-page Template Customizer but load on demand from customizer.js — every
+         visitor no longer pays for families only a customizer user would ever see. -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="image" href="assets/images/profile.avif" type="image/avif">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
           integrity="sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk" crossorigin="anonymous">
@@ -1939,19 +1951,13 @@
             .hero-right {
                 display: flex;
                 flex-direction: column;
-                gap: 20px
+                gap: 20px;
+                justify-content: flex-start
             }
 
                 .hero-right .kpi-board {
-                    flex: 1 1 auto;
-                    display: flex;
-                    flex-direction: column
+                    flex: 0 0 auto
                 }
-
-                    .hero-right .kpi-board > .row {
-                        flex: 1 1 auto;
-                        align-content: center
-                    }
 
             .kpi-lbl {
                 min-height: 2.5em
@@ -2425,6 +2431,113 @@
         .exec-scorecard .row-item {
             padding: 13.5px 0
         }
+
+        /* Audience toggle (Delivery leadership / Engineering) — sits in the
+           navbar, above the fold, see assets/css/style.css for the full rule. */
+        .audience-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            padding: 3px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--glass)
+        }
+
+        .audience-toggle a {
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-2);
+            text-decoration: none;
+            white-space: nowrap;
+            transition: color .15s ease, background-color .15s ease
+        }
+
+        .audience-toggle a:hover {
+            color: var(--heading)
+        }
+
+        .audience-toggle a[aria-current="page"] {
+            background: var(--accent);
+            color: #0c1a2e
+        }
+
+        @media (max-width:420px) {
+            .audience-toggle a {
+                padding: 6px 9px;
+                font-size: 11.5px
+            }
+        }
+
+        /* Font size switcher (assets/js/fontsize.js) — sits in the navbar,
+           above the fold, see assets/css/style.css for the full rationale. */
+        :root[data-fontsize="lg"] {
+            zoom: 1.12
+        }
+
+        :root[data-fontsize="xl"] {
+            zoom: 1.25
+        }
+
+        .fontsize-switch {
+            position: relative
+        }
+
+        .fontsize-toggle {
+            width: auto;
+            min-width: 38px;
+            padding: 0 10px;
+            border-radius: 19px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .02em
+        }
+
+        .fontsize-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            z-index: 1200;
+            min-width: 150px;
+            background: var(--surface-solid);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            padding: 6px
+        }
+
+        .fontsize-menu[hidden] {
+            display: none
+        }
+
+        .fontsize-item {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--text-2);
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 8px;
+            padding: 9px 14px;
+            cursor: pointer;
+            transition: background .15s ease, color .15s ease
+        }
+
+        .fontsize-item:hover,
+        .fontsize-item:focus-visible {
+            background: rgba(var(--accent-rgb), .12);
+            color: var(--heading)
+        }
+
+        .fontsize-item[aria-pressed="true"] {
+            color: var(--accent);
+            font-weight: 700
+        }
     </style>
 
     <!-- Full stylesheet, loaded without blocking first paint. -->
@@ -2466,15 +2579,15 @@
                     <li class="nav-item"><a class="nav-link" href="#leadership">Leadership</a></li>
                     <li class="nav-item"><a class="nav-link" href="#success-stories">Success Stories</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navExpertise" role="button" data-bs-toggle="dropdown" aria-expanded="false">Expertise</a>
-                        <ul class="dropdown-menu" aria-labelledby="navExpertise">
+                        <button class="nav-link dropdown-toggle" type="button" id="navExpertise" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="navExpertiseMenu">Expertise</button>
+                        <ul class="dropdown-menu" id="navExpertiseMenu" aria-labelledby="navExpertise">
                             <li><a class="dropdown-item" href="#expertise">Capabilities</a></li>
                             <li><a class="dropdown-item" href="#ai-leadership">AI Leadership</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navProof" role="button" data-bs-toggle="dropdown" aria-expanded="false">Proof</a>
-                        <ul class="dropdown-menu" aria-labelledby="navProof">
+                        <button class="nav-link dropdown-toggle" type="button" id="navProof" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="navProofMenu">Proof</button>
+                        <ul class="dropdown-menu" id="navProofMenu" aria-labelledby="navProof">
                             <li><a class="dropdown-item" href="#recognition">Recognition</a></li>
                             <li><a class="dropdown-item" href="#insights">Insights</a></li>
                             <li><a class="dropdown-item" href="#testimonials">Testimonials</a></li>
@@ -2482,6 +2595,12 @@
                     </li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
+                    <!-- Two views of one career, not two people — lets a visitor
+                         switch to the technical framing of this same site. -->
+                    <div class="audience-toggle" role="group" aria-label="Choose which view of this site to see">
+                        <a href="index.html" aria-current="page" title="Delivery leadership view" aria-label="Delivery leadership view"><i class="bi bi-briefcase" aria-hidden="true"></i><span class="aud-label">Delivery</span></a>
+                        <a href="engineering.html" title="Engineering view" aria-label="Engineering view"><i class="bi bi-code-slash" aria-hidden="true"></i><span class="aud-label">Engineering</span></a>
+                    </div>
                     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light theme"><i class="bi bi-sun"></i></button>
                     <div class="palette-picker" role="group" aria-label="Accent colour">
                         <button class="pal-swatch" type="button" data-palette="navy" aria-label="Executive navy accent"><span></span></button>
@@ -2495,6 +2614,10 @@
                         <button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose language"><i class="bi bi-translate"></i></button>
                         <div class="lang-menu" id="langMenu" hidden role="menu" aria-label="Choose a language"></div>
                     </div>
+                    <div class="fontsize-switch">
+                        <button class="theme-toggle fontsize-toggle" id="fontsizeToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Adjust text size">A</button>
+                        <div class="fontsize-menu" id="fontsizeMenu" hidden role="menu" aria-label="Choose a text size"></div>
+                    </div>
                     <span class="nav-divider" aria-hidden="true"></span>
                     <a class="btn-accent btn text-nowrap ms-1" href="#contact">Start a conversation</a>
                 </div>
@@ -2507,7 +2630,7 @@
          always reachable even while the navbar itself is hidden during
          scroll-down (see body.nav-hidden in ui.js / style.css). Hidden
          whenever the navbar is visible, so only one CTA shows at a time. -->
-    <a class="persistent-cta" href="#contact" aria-label="Start a conversation — jump to contact section">
+    <a class="persistent-cta" href="#contact" aria-label="Start a conversation — jump to contact section" aria-hidden="true" tabindex="-1">
         <i class="bi bi-chat-dots-fill" aria-hidden="true"></i><span>Start a conversation</span>
     </a>
 
@@ -2520,7 +2643,7 @@
                 <div class="col-lg-7">
                     <p class="eyebrow eyebrow-chip mb-2"><span class="eyebrow-badge" aria-hidden="true"><i class="bi bi-rocket-takeoff-fill"></i></span><span>Driving enterprise digital transformation</span></p>
                     <h1 id="hero-title">I own enterprise delivery — <br><span class="grad rotator" id="heroRotator"><span class="ph on">on time. on budget.</span><span class="ph">client confidence up.</span><span class="ph">disciplined delivery.</span><span class="ph">outcomes. teams. trust.</span></span></h1>
-                    <p class="value-statement">Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 8+ years as a hands-on .NET engineer.</p>
+                    <p class="value-statement">Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 7+ years as a hands-on .NET engineer.</p>
                     <div class="domain-strip" aria-label="Business domains delivered">
                         <span class="dom-label">Domains</span>
                         <span class="dom">HR</span>
@@ -2547,25 +2670,12 @@
                     </div>
                 </div>
                 <div class="col-lg-5 hero-right" role="region" aria-label="Executive dashboard">
-                    <!-- Executive Scorecard -->
-                    <div class="exec-scorecard reveal" aria-label="Executive delivery scorecard">
-                        <div class="sc-head">
-                            <i class="bi bi-bar-chart-line-fill" aria-hidden="true"></i>
-                            <h6>Executive Scorecard</h6>
-                            <span class="sc-status"><span class="d" aria-hidden="true"></span>All Systems Optimal</span>
-                        </div>
-                        <div class="row-item"><span class="sc-label"><span class="sc-dot" aria-hidden="true"></span>Client Satisfaction</span><span class="sc-track"><span class="sc-fill" style="width:96%" aria-hidden="true"></span></span><span class="val">96%</span></div>
-                        <div class="row-item"><span class="sc-label"><span class="sc-dot" aria-hidden="true"></span>SLA Compliance</span><span class="sc-track"><span class="sc-fill" style="width:99%" aria-hidden="true"></span></span><span class="val">99%</span></div>
-                        <div class="row-item"><span class="sc-label"><span class="sc-dot" aria-hidden="true"></span>Production Stability</span><span class="sc-track"><span class="sc-fill" style="width:100%" aria-hidden="true"></span></span><span class="val">99.9%</span></div>
-                        <div class="row-item"><span class="sc-label"><span class="sc-dot" aria-hidden="true"></span>Resource Utilization</span><span class="sc-track"><span class="sc-fill" style="width:96%" aria-hidden="true"></span></span><span class="val">96%</span></div>
-                        <div class="row-item"><span class="sc-label"><span class="sc-dot" aria-hidden="true"></span>Audit Success</span><span class="sc-track"><span class="sc-fill" style="width:100%" aria-hidden="true"></span></span><span class="val">100%</span></div>
-                    </div>
                     <!-- Executive KPI dashboard -->
                     <div class="kpi-board reveal" id="impact" data-component="kpi-cards" aria-label="Portfolio impact dashboard">
                         <div class="board-head">
-                            <i class="bi bi-activity"></i> STEERING SNAPSHOT
-                            <span class="rag"><span class="d"></span>LIVE</span>
+                            <i class="bi bi-activity"></i> DELIVERY TRACK RECORD · 2021–2026
                         </div>
+                        <p class="text-2 mb-2" style="font-size:12px;line-height:1.4;opacity:.78">Measured across L&amp;T Group accounts at LTIMindtree, 2021–2026.</p>
                         <!-- Static fallback numbers are baked in so link previews and crawlers never show zeros.
                              NOTE for Suraj: consider swapping one soft metric for a hard COMMERCIAL number a
                              delivery leader is judged on — e.g. delivery margin %, CSAT/NPS, or utilization %.
@@ -2627,7 +2737,7 @@
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-7 reveal d1">
-                        <p class="lede mb-3">Twelve-plus years in IT — the first eight hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency, and use both to keep delivery plans honest.</p>
+                        <p class="lede mb-3">Twelve-plus years in IT — the first seven hands-on in .NET engineering before moving into program and delivery leadership. That foundation means I read a status report and an architecture diagram with equal fluency, and use both to keep delivery plans honest.</p>
                         <p class="lede mb-0">Today I own multi-account portfolios worth ₹2Cr+, leading 20+ engineers as the single point of accountability for client sponsors on delivery health, risk and scope. I'm now applying that same discipline to AI-augmented delivery — using agentic tooling to compress planning, reporting and QA cycles without sacrificing governance.</p>
                     </div>
                     <div class="col-lg-5 reveal d2">
@@ -2883,11 +2993,7 @@
                             <p class="so-meta-label">Top answer tags</p>
                             <div class="so-tag-row">
                                 <span class="so-tag">sql-server</span>
-                                <span class="so-tag-fig">405 posts · 92% of activity</span>
-                            </div>
-                            <div class="so-tag-row">
-                                <span class="so-tag">sql</span>
-                                <span class="so-tag-fig">255 posts · 58% of activity</span>
+                                <span class="so-tag-fig">405 answers — 92% of my activity</span>
                             </div>
                         </div>
                         <div class="so-badges">
@@ -3104,7 +3210,7 @@
             <div class="container">
                 <div class="reveal">
                     <p class="eyebrow">Expertise</p>
-                    <h2 class="sec-title" id="expertise-title">Eight years of building before leading.</h2>
+                    <h2 class="sec-title" id="expertise-title">Seven years of building before leading.</h2>
                     <p class="sec-sub mb-5">2014–2021: enterprise applications across real estate, CRM, HR, MIS and regulated healthcare — the years that keep my delivery plans technically honest.</p>
                 </div>
                 <div class="row g-4">
@@ -3141,7 +3247,7 @@
                     <div class="col-md-6 col-lg-3 reveal d2">
                         <div class="x-card skill-cat h-100">
                             <p class="pov-label"><i class="bi bi-stars me-1"></i>AI &amp; GenAI</p>
-                            <span class="skill-pill">RAG Pipelines</span><span class="skill-pill">LangGraph</span><span class="skill-pill">Agentic Workflows</span><span class="skill-pill">Prompt Engineering</span><span class="skill-pill">OpenAI APIs</span><span class="skill-pill">Computer Vision <em class="learn">· learning</em></span>
+                            <span class="skill-pill">RAG Pipelines</span><span class="skill-pill">LangGraph</span><span class="skill-pill">Agentic Workflows</span><span class="skill-pill">Prompt Engineering</span><span class="skill-pill">OpenAI APIs</span>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3 reveal d1">
@@ -3170,10 +3276,10 @@
                         <p class="sec-sub">A deliberate bet on where enterprise delivery is heading — not AI hype. I'm formally trained, building hands-on, and positioning my delivery org to lead the shift instead of reacting to it.</p>
                         <div class="mt-4">
                             <div class="cred-row"><i class="bi bi-mortarboard-fill"></i><span>AI4ICPS (Hands-on approach to AI for real-world applications) Certificate of Achievement — <strong>IIT Kharagpur</strong></span><span class="chip green"><span class="cd"></span>COMPLETED</span></div>
-                            <div class="cred-row"><i class="bi bi-mortarboard"></i><span>Agentic AI Certificate — <strong>Johns Hopkins &amp; Great Learning</strong></span><span class="chip amber"><span class="cd"></span>IN PROGRESS</span></div>
+                            <div class="cred-row"><i class="bi bi-mortarboard"></i><span>Agentic AI Certificate — <strong>Johns Hopkins &amp; Great Learning</strong></span><span class="chip green"><span class="cd"></span>COMPLETED</span></div>
                             <div class="cred-row"><i class="bi bi-robot"></i><span>AI tooling (Copilot) applied in day-to-day delivery workflows</span><span class="chip blue"><span class="cd"></span>PRACTICE</span></div>
                             <div class="mt-3 d-flex gap-2 flex-wrap">
-                                <span class="tag">RAG Applications</span><span class="tag">Agentic AI</span><span class="tag">LangGraph</span><span class="tag">Prompt Engineering</span><span class="tag">Computer Vision — learning</span>
+                                <span class="tag">RAG Applications</span><span class="tag">Agentic AI</span><span class="tag">LangGraph</span><span class="tag">Prompt Engineering</span>
                             </div>
                         </div>
                     </div>
@@ -3285,25 +3391,32 @@
                     <h2 class="sec-title serif" id="insights-title">What I'm thinking about, in public.</h2>
                     <p class="sec-sub mb-5">A working point of view on delivery leadership, engineering depth, and AI-augmented execution — published, not just practiced.</p>
                 </div>
+                <!-- REMINDER for Suraj: each card below needs its real published article title,
+                     publication date and direct URL (not the profile listing) — replace the
+                     ARTICLE TITLE / PUBLISHED_DATE / ARTICLE_URL placeholders. The description
+                     line under each title is unchanged framing copy. -->
                 <div id="insights-content" class="row g-4">
                     <div class="col-md-4 reveal d1">
-                        <a class="x-card insight-card d-block h-100 text-decoration-none" href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener">
+                        <a class="x-card insight-card d-block h-100 text-decoration-none" href="ARTICLE_URL_1" target="_blank" rel="noopener">
                             <p class="tag mb-3">AI-Augmented Delivery</p>
-                            <h3 class="fs-6 fw-bold mb-2">Why delivery leaders need to read the stack, not just the status report.</h3>
+                            <h3 class="fs-6 fw-bold mb-2">ARTICLE TITLE 1</h3>
+                            <p class="text-2 mb-2" style="font-size:12px;opacity:.75">PUBLISHED_DATE_1</p>
                             <p class="text-2 mb-0" style="font-size:14px">Technical fluency changes what a program manager can catch before it becomes a client escalation.</p>
                         </a>
                     </div>
                     <div class="col-md-4 reveal d2">
-                        <a class="x-card insight-card d-block h-100 text-decoration-none" href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener">
+                        <a class="x-card insight-card d-block h-100 text-decoration-none" href="ARTICLE_URL_2" target="_blank" rel="noopener">
                             <p class="tag mb-3">Delivery Governance</p>
-                            <h3 class="fs-6 fw-bold mb-2">The RAID log is a leadership tool, not paperwork.</h3>
+                            <h3 class="fs-6 fw-bold mb-2">ARTICLE TITLE 2</h3>
+                            <p class="text-2 mb-2" style="font-size:12px;opacity:.75">PUBLISHED_DATE_2</p>
                             <p class="text-2 mb-0" style="font-size:14px">How disciplined risk tracking turns reactive firefighting into predictable, boardroom-ready delivery.</p>
                         </a>
                     </div>
                     <div class="col-md-4 reveal d3">
-                        <a class="x-card insight-card d-block h-100 text-decoration-none" href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener">
+                        <a class="x-card insight-card d-block h-100 text-decoration-none" href="ARTICLE_URL_3" target="_blank" rel="noopener">
                             <p class="tag mb-3">Engineering</p>
-                            <h3 class="fs-6 fw-bold mb-2">Answering SQL Server questions in public keeps a delivery leader honest.</h3>
+                            <h3 class="fs-6 fw-bold mb-2">ARTICLE TITLE 3</h3>
+                            <p class="text-2 mb-2" style="font-size:12px;opacity:.75">PUBLISHED_DATE_3</p>
                             <p class="text-2 mb-0" style="font-size:14px">430+ answers and counting — the reasoning gets peer-reviewed, which keeps estimates and timelines realistic.</p>
                         </a>
                     </div>
@@ -3346,6 +3459,10 @@
                 </div>
                 -->
 
+                <!-- REMINDER for Suraj: get each person's explicit permission before publishing
+                     their real name/title/photo here. Replace the NAME / TITLE / COMPANY
+                     placeholders below with the details they approve — the quote text itself
+                     is unchanged from what they originally gave you. -->
                 <div id="testimonials-content" class="row g-4">
                     <div class="col-lg-6 reveal d1">
                         <div class="x-card t-card">
@@ -3355,8 +3472,8 @@
                             <div class="t-person">
                                 <div class="t-avatar"><i class="bi bi-person-fill"></i></div>
                                 <div>
-                                    <strong>Software Engineer</strong>
-                                    <span class="t-role">Team Member · LTIMindtree</span>
+                                    <strong>NAME</strong>
+                                    <span class="t-role">TITLE · COMPANY</span>
                                 </div>
                             </div>
                         </div>
@@ -3369,8 +3486,8 @@
                             <div class="t-person">
                                 <div class="t-avatar"><i class="bi bi-person-fill"></i></div>
                                 <div>
-                                    <strong>WFM (Early Career Recruiter)</strong>
-                                    <span class="t-role">Colleague · LTIMindtree</span>
+                                    <strong>NAME</strong>
+                                    <span class="t-role">TITLE · COMPANY</span>
                                 </div>
                             </div>
                         </div>
@@ -3397,8 +3514,11 @@
                             <div class="contact-side">
                                 <h3 class="fs-4 fw-bold mb-4">Reach me directly</h3>
                                 <div class="c-item"><i class="bi bi-envelope"></i><div><strong>Email</strong><br><a href="mailto:surajkumar.navodya@gmail.com">surajkumar.navodya@gmail.com</a></div></div>
+                                <!-- Phone removed from public display. Restore by uncommenting:
                                 <div class="c-item"><i class="bi bi-telephone"></i><div><strong>Phone</strong><br><a href="tel:+919049141305">+91 90491 41305</a></div></div>
-                                <div class="c-item"><i class="bi bi-geo-alt"></i><div><strong>Location</strong><br>Mumbai · India — open to relocation, passport ready</div></div>
+                                -->
+                                <div class="c-item"><i class="bi bi-linkedin"></i><div><strong>LinkedIn</strong><br><a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener">linkedin.com/in/surajkumar-navodya</a></div></div>
+                                <div class="c-item"><i class="bi bi-geo-alt"></i><div><strong>Location</strong><br>Mumbai, India · Open to relocation — India and GCC</div></div>
                             </div>
                         </div>
                         <div class="col-lg-7">
@@ -3407,7 +3527,7 @@
                                 <p class="text-2 mb-4" style="font-size:14.8px">Book a conversation about a delivery leadership role, or take the résumé with you. I reply within one business day.</p>
                                 <div class="cta-final mb-3">
                                     <a class="btn-accent btn cta-primary" href="mailto:surajkumar.navodya@gmail.com?subject=Delivery%20leadership%20conversation"><i class="bi bi-calendar-check me-2"></i>Schedule an Executive Conversation</a>
-                                    <a class="btn-outline btn cta-secondary" href="Suraj_Kumar_Resume_Technical_PM.pdf" download><i class="bi bi-download me-2"></i>Download my résumé</a>
+                                    <a class="btn-outline btn cta-secondary" href="assets/aff991fc366a/40257fcfd3621de6d7ff.pdf" download><i class="bi bi-download me-2"></i>Download my résumé</a>
                                 </div>
                                 <p class="cta-alt mb-4">Prefer LinkedIn? <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener">Connect with me there</a>.</p>
                                 <ul class="text-2 mb-0" style="font-size:14.5px;padding-left:1.15rem">

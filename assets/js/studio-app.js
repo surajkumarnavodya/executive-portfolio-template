@@ -200,14 +200,13 @@ async function loadPortfolio() {
       return;
     }
     try {
-      const response = await fetch('assets/data/demo-profiles.json', { cache: 'no-cache' });
+      const response = await fetch('assets/demo-data/demo-profiles.json', { cache: 'no-cache' });
       if (!response.ok) {
         throw new Error('Could not load demo profile packs.');
       }
-      state.demoProfiles = await response.json();
-      if (!Array.isArray(state.demoProfiles)) {
-        state.demoProfiles = [];
-      }
+      const payload = await response.json();
+      // Wrapped as { _comment, items } — see assets/demo-data/README.md.
+      state.demoProfiles = Array.isArray(payload) ? payload : (Array.isArray(payload?.items) ? payload.items : []);
       select.innerHTML = '<option value="">Demo profile pack</option>' + state.demoProfiles.map((item, index) => (
         `<option value="${index}">${escapeHtml(item.name || `Pack ${index + 1}`)}</option>`
       )).join('');

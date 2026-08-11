@@ -92,9 +92,24 @@
 
   var FONTS = {
     inter: { label: 'Inter + Fraunces', body: '"Inter", system-ui, sans-serif', display: '"Fraunces", Georgia, serif' },
-    source: { label: 'Source Sans 3 + Playfair Display', body: '"Source Sans 3", system-ui, sans-serif', display: '"Playfair Display", Georgia, serif' },
+    source: { label: 'Source Sans 3 + Playfair Display', body: '"Source Sans 3", system-ui, sans-serif', display: '"Playfair Display", Georgia, serif', googleFonts: 'family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700' },
     system: { label: 'System Sans + Georgia', body: 'system-ui, -apple-system, "Segoe UI", sans-serif', display: 'Georgia, serif' }
   };
+
+  // Inter + Fraunces (+ JetBrains Mono for data labels) ship in every page's own
+  // <link>, since 'inter' is the default the live site actually renders in. The
+  // other typography presets are opt-in only: nobody pays their Google Fonts
+  // request unless they're actually picked in the customizer.
+  var optionalFontsLoaded = {};
+  function ensureFontLoaded(fontKey) {
+    var font = FONTS[fontKey];
+    if (!font || !font.googleFonts || optionalFontsLoaded[fontKey]) { return; }
+    optionalFontsLoaded[fontKey] = true;
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?' + font.googleFonts + '&display=swap';
+    document.head.appendChild(link);
+  }
 
   var state = {
     mode: themeCfg.defaultMode || 'dark',
@@ -180,6 +195,7 @@
     }
     if (state.accentAlt) { root.style.setProperty('--accent-2', state.accentAlt); }
     var font = FONTS[state.font] || FONTS.inter;
+    ensureFontLoaded(state.font);
     root.style.setProperty('--font-body', font.body);
     root.style.setProperty('--font-display', font.display);
     root.style.setProperty('--font-serif', font.display);

@@ -189,7 +189,7 @@
 | Item | Owner | Action Required |
 |---|---|---|
 | `og-image.png` missing | Buyer | Create a 1200×630 promotional image and place at root. See `docs/Customization.md`. |
-| Resume PDF missing | Buyer | Place `Suraj_Kumar_Resume_Technical_PM.pdf` at root, or update path in `config.js` → `contact.resume`. |
+| Resume PDF missing | Buyer | Drop your PDF anywhere under `assets/` using a **random, non-guessable folder and filename** (e.g. `assets/<12-hex-chars>/<20-hex-chars>.pdf` — generate with `openssl rand -hex 6` / `openssl rand -hex 10`), then point `config.js` → `contact.resume` at that path. A predictable name like `resume.pdf` or your real name is trivially found by anyone scanning common paths, even without ever visiting the site. Do **not** add the path to `robots.txt` — a `Disallow` entry there would publish the very path you're trying to keep unguessable to anyone who reads the file. |
 | Twitter/X handle | Buyer | Update `@surajkumarnavodya` in `twitter:site` and `twitter:creator` meta tags. |
 | Real testimonials | Buyer | Replace sample quotes with genuine LinkedIn recommendations. |
 | Apple touch icon size | Buyer | Provide a 180×180px PNG for best iOS home-screen quality. Update `<link rel="apple-touch-icon">` and `site.webmanifest`. |
@@ -239,7 +239,7 @@ The following checklist represents the criteria Lighthouse evaluates. All code-l
 | 6 accent colour palettes | ✅ |
 | Light + dark theme | ✅ |
 | Visual section layout builder | ✅ |
-| Demo content packs (`assets/data/demo-profiles.json`) | ✅ |
+| Demo content packs (`assets/demo-data/demo-profiles.json`) | ✅ |
 | Production minified bundles | ✅ |
 | WCAG 2.2 AA compliance (code level) | ✅ |
 | Zero 404s on referenced assets (buyer-supplied excepted) | ✅ |
