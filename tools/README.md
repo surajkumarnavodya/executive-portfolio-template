@@ -57,10 +57,35 @@ tools\package-template.ps1       # -> executive-portfolio-template.zip
 
 Excludes the live site's real content (`engineering.html`,
 `assets/js/config.js`, `portfolio.json`, the real profile photo, the real
-résumé) and substitutes the already-authored template equivalents
-(`config.demo.js`, `portfolio.template.json`, a placeholder photo) into the
-archive at their real in-product paths, since `git archive` pathspecs can
-exclude a path but can't substitute content at one.
+résumé, `assets/js/ui.js`, `assets/dist/js/template.min.js`) and substitutes
+the already-authored template equivalents (`config.demo.js`,
+`portfolio.template.json`, a placeholder photo) into the archive at their
+real in-product paths, since `git archive` pathspecs can exclude a path but
+can't substitute content at one. `assets/js/ui.js` needs special handling:
+its Portfolio Copilot knowledge base has this deployment's real career facts
+hardcoded as the default (`DEFAULT_KB` — necessary so `engineering.html`,
+which loads no `config.js` at all, still gets a working Copilot). The script
+runs `tools/build_template_ui.js` to produce a genericized `ui.js`, then
+`tools/build_bundle_js.js --override ui.js=...` to rebuild
+`template.min.js` with that genericized file compiled in — substituting only
+the source file wouldn't be enough, since `index.html` actually loads the
+compiled bundle, not `ui.js` directly.
+
+## Rebuilding the JS bundle
+
+```bash
+node tools/build_bundle_js.js                              # -> assets/dist/js/template.min.js
+node tools/build_bundle_js.js --override ui.js=path/to/alt.js --out path/to/out.js
+```
+
+Mirrors `build_bundle.js`'s approach (below) for the JS bundle — this used to
+be a fully hand-maintained concatenation, which is what caused the v1.5.0
+"Critical Bundle Regression" logged in `docs/Changelog.md` (a stray `export`
+keyword from a Studio-only ES module silently blanked the whole page). Run
+this after any change to a file in `assets/js/{components,counters,
+customizer,main,navigation,palette,renderer,theme,i18n,fontsize,ui}.js`. The
+`--override` flag is what `package-template.ps1`/`.sh` uses to swap in a
+genericized `ui.js` without touching the real source file.
 
 ### Shared mechanics
 

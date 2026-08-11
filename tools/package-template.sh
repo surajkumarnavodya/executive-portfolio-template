@@ -43,6 +43,11 @@ rm -f "$OUT"
 #   index.html                        - real content; replaced below with index.template.html
 #   portfolio.json                    - real data; replaced below with portfolio.template.json
 #   assets/js/config.js               - real identity/contact; replaced below with config.demo.js
+#   assets/js/ui.js                   - real Portfolio Copilot KB (DEFAULT_KB); replaced below
+#                                        with a genericized build (tools/build_template_ui.js)
+#   assets/dist/js/template.min.js    - the shared bundle compiles ui.js in; rebuilt below with
+#                                        the genericized ui.js so the compiled bundle can't leak
+#                                        real content even though it's not fetched separately
 #   assets/images/profile.*           - real photo; replaced below with the placeholder avatar
 #   assets/aff991fc366a/              - the real résumé, at its random hashed path — never shipped
 #   og-image.png                      - real branded social-preview image
@@ -63,6 +68,8 @@ git archive --format=zip --output="$WORKDIR/raw.zip" "$REF" -- . \
   ':!index.html' \
   ':!portfolio.json' \
   ':!assets/js/config.js' \
+  ':!assets/js/ui.js' \
+  ':!assets/dist/js/template.min.js' \
   ':!assets/images/profile.jpg' \
   ':!assets/images/profile.webp' \
   ':!assets/images/profile.avif' \
@@ -73,7 +80,8 @@ git archive --format=zip --output="$WORKDIR/raw.zip" "$REF" -- . \
   ':!index.template.html' \
   ':!portfolio.template.json' \
   ':!assets/images/profile-placeholder.jpg' \
-  ':!assets/images/profile-placeholder.webp'
+  ':!assets/images/profile-placeholder.webp' \
+  ':!assets/images/profile-placeholder.avif'
 
 mkdir -p "$WORKDIR/site"
 unzip -q "$WORKDIR/raw.zip" -d "$WORKDIR/site"
@@ -83,12 +91,21 @@ unzip -q "$WORKDIR/raw.zip" -d "$WORKDIR/site"
 # mkdir -p first: if every file that would live in a directory was excluded
 # above (true for assets/images/, once profile.* is excluded), git archive
 # never creates that directory at all.
-mkdir -p "$WORKDIR/site/assets/js" "$WORKDIR/site/assets/images"
+mkdir -p "$WORKDIR/site/assets/js" "$WORKDIR/site/assets/images" "$WORKDIR/site/assets/dist/js"
 cp index.template.html            "$WORKDIR/site/index.html"
 cp portfolio.template.json        "$WORKDIR/site/portfolio.json"
 cp assets/js/config.demo.js       "$WORKDIR/site/assets/js/config.js"
 cp assets/images/profile-placeholder.jpg  "$WORKDIR/site/assets/images/profile.jpg"
 cp assets/images/profile-placeholder.webp "$WORKDIR/site/assets/images/profile.webp"
+cp assets/images/profile-placeholder.avif "$WORKDIR/site/assets/images/profile.avif"
+
+# ui.js's real Copilot KB (assets/js/ui.js's DEFAULT_KB) needs its own
+# genericized build, then the shared JS bundle needs rebuilding with that
+# genericized ui.js in place of the real one — the bundle is what index.html
+# actually loads, so substituting only the source file wouldn't be enough.
+node tools/build_template_ui.js assets/js/ui.js "$WORKDIR/ui.template.js"
+cp "$WORKDIR/ui.template.js" "$WORKDIR/site/assets/js/ui.js"
+node tools/build_bundle_js.js --override "ui.js=$WORKDIR/ui.template.js" --out "$WORKDIR/site/assets/dist/js/template.min.js"
 
 # Prefer the `zip` CLI; fall back to Python's stdlib zipfile where it's
 # missing (e.g. Git Bash on Windows ships unzip, not zip).

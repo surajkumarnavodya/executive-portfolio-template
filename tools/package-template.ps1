@@ -51,6 +51,11 @@ try {
     #   index.html                        - real content; replaced below with index.template.html
     #   portfolio.json                    - real data; replaced below with portfolio.template.json
     #   assets/js/config.js               - real identity/contact; replaced below with config.demo.js
+    #   assets/js/ui.js                   - real Portfolio Copilot KB (DEFAULT_KB); replaced below
+    #                                        with a genericized build (tools/build_template_ui.js)
+    #   assets/dist/js/template.min.js    - the shared bundle compiles ui.js in; rebuilt below with
+    #                                        the genericized ui.js so the compiled bundle can't leak
+    #                                        real content even though it's not fetched separately
     #   assets/images/profile.*           - real photo; replaced below with the placeholder avatar
     #   assets/aff991fc366a/              - the real résumé, at its random hashed path -- never shipped
     #   og-image.png                      - real branded social-preview image
@@ -71,6 +76,8 @@ try {
         ':!index.html' `
         ':!portfolio.json' `
         ':!assets/js/config.js' `
+        ':!assets/js/ui.js' `
+        ':!assets/dist/js/template.min.js' `
         ':!assets/images/profile.jpg' `
         ':!assets/images/profile.webp' `
         ':!assets/images/profile.avif' `
@@ -81,7 +88,8 @@ try {
         ':!index.template.html' `
         ':!portfolio.template.json' `
         ':!assets/images/profile-placeholder.jpg' `
-        ':!assets/images/profile-placeholder.webp'
+        ':!assets/images/profile-placeholder.webp' `
+        ':!assets/images/profile-placeholder.avif'
 
     if ($LASTEXITCODE -ne 0) {
         throw "git archive failed with exit code $LASTEXITCODE"
@@ -97,11 +105,25 @@ try {
     # git archive never creates that directory at all.
     New-Item -ItemType Directory -Force -Path (Join-Path $siteDir "assets\js") | Out-Null
     New-Item -ItemType Directory -Force -Path (Join-Path $siteDir "assets\images") | Out-Null
+    New-Item -ItemType Directory -Force -Path (Join-Path $siteDir "assets\dist\js") | Out-Null
     Copy-Item "index.template.html"                    (Join-Path $siteDir "index.html") -Force
     Copy-Item "portfolio.template.json"                 (Join-Path $siteDir "portfolio.json") -Force
     Copy-Item "assets\js\config.demo.js"                (Join-Path $siteDir "assets\js\config.js") -Force
     Copy-Item "assets\images\profile-placeholder.jpg"   (Join-Path $siteDir "assets\images\profile.jpg") -Force
     Copy-Item "assets\images\profile-placeholder.webp"  (Join-Path $siteDir "assets\images\profile.webp") -Force
+    Copy-Item "assets\images\profile-placeholder.avif"  (Join-Path $siteDir "assets\images\profile.avif") -Force
+
+    # ui.js's real Copilot KB (assets/js/ui.js's DEFAULT_KB) needs its own
+    # genericized build, then the shared JS bundle needs rebuilding with that
+    # genericized ui.js in place of the real one -- the bundle is what
+    # index.html actually loads, so substituting only the source file
+    # wouldn't be enough.
+    $uiTemplate = Join-Path $workDir "ui.template.js"
+    node tools\build_template_ui.js assets\js\ui.js $uiTemplate
+    if ($LASTEXITCODE -ne 0) { throw "build_template_ui.js failed with exit code $LASTEXITCODE" }
+    Copy-Item $uiTemplate (Join-Path $siteDir "assets\js\ui.js") -Force
+    node tools\build_bundle_js.js --override "ui.js=$uiTemplate" --out (Join-Path $siteDir "assets\dist\js\template.min.js")
+    if ($LASTEXITCODE -ne 0) { throw "build_bundle_js.js failed with exit code $LASTEXITCODE" }
 
     Compress-Archive -Path (Join-Path $siteDir "*") -DestinationPath $Out -Force
 } finally {
