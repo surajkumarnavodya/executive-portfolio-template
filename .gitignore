@@ -370,5 +370,7 @@ FodyWeavers.xsd
 # JetBrains Rider / WebStorm (only VS 2022 is used here, but harmless to ignore)
 .idea/
 
-# Output of tools/package.ps1 / tools/package.sh (the buyer-facing zip)
+# Output of tools/package-live.ps1/.sh and tools/package-template.ps1/.sh
+/portfolio-live.zip
 /executive-portfolio-template.zip
+/_site/

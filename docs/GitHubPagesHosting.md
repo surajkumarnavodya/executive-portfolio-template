@@ -28,6 +28,19 @@ The entire repository root becomes the website root. Concretely:
 subfolder (`assets/`, `docs/`, `screenshots/`) intact, with `index.html`
 sitting at the top level (repo root) — not inside a subfolder.
 
+> **If you fill in `index.html`/`config.js` with your own real name, contact
+> details or résumé, do not also deploy `studio.html` at that same domain.**
+> Studio's "Export Website ZIP" button fetches whatever files are sitting next
+> to it — including `index.html` and `config.js` — and zips them up. If both
+> are live at the same origin, anyone who opens `studio.html` and clicks
+> Export can download your real content. Either drop `studio.html` (and
+> `portfolio.json`, `assets/js/studio-app.js`, `assets/js/content-service.js`,
+> `assets/js/asset-store.js`, `assets/js/portfolio-data-service.js`,
+> `assets/demo-data/`) from what you push live, or keep Studio only on a
+> separate domain/repo from your real site. `tools/package-live.sh` /
+> `tools/package-live.ps1` build exactly that "real site only" file set for
+> you — see `tools/README.md`.
+
 ---
 
 ## Prerequisites
