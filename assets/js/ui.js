@@ -14,6 +14,7 @@
    ============================================================ */
 (function () {
   'use strict';
+  var cfg = window.PORTFOLIO_CONFIG || {};
   function isReducedMotion() {
     var attr = document.documentElement.getAttribute('data-motion');
     if (attr === 'none') { return true; }
@@ -108,8 +109,16 @@
      PORTFOLIO COPILOT — on-device retrieval over a structured
      knowledge base. Keyword scoring picks the best entry; the
      answer types out. No network calls of any kind.
+
+     DEFAULT_KB below is this deployment's real content — used whenever no
+     cfg.copilot override is present, which is why engineering.html (no
+     config.js load at all) still gets a fully real, working Copilot. A page
+     that loads a config with its own cfg.copilot.kb (e.g. config.demo.js,
+     for the commercial template — this KB is real personal content and must
+     never ship in that product) overrides it entirely instead of merging,
+     so a template buyer's Copilot never mixes real and placeholder answers.
      ============================================================ */
-  var KB = [
+  var DEFAULT_KB = [
     { k: ['ai','genai','gen','ml','artificial','intelligence','rag','langgraph','agentic','agent','llm','copilot','multi-agent','pipeline'],
       a: "<b>AI is his deliberate bet, built hands-on.</b> Certified via IIT Kharagpur's AI4ICPS (completed) and pursuing the Johns Hopkins Agentic AI certificate. He's built RAG pipelines and multi-agent workflows with LangGraph himself — so he can scope and govern GenAI initiatives from judgement, not vendor decks — and applies AI tooling daily to reporting, planning and engineering workflows." },
     { k: ['experience','years','background','career','history','journey','profile','about','who'],
@@ -139,8 +148,13 @@
     { k: ['principle','philosophy','approach','operate','run','style','how'],
       a: "<b>Four operating principles:</b> Green is earned, not reported · Estimate honestly, protect the margin · Build people, not just plans · AI is a capability, not a slide." }
   ];
-  var FALLBACK = "I can answer about his <b>AI work, programs, metrics, leadership, certifications, stack, awards, or contact details</b> — try one of the chips below, or email <b>surajkumar.navodya@gmail.com</b> directly.";
-  var GREET = "Hi! I'm Suraj's Portfolio Copilot — I answer from this page only, right here in your browser. What would you like to know?";
+  var DEFAULT_FALLBACK = "I can answer about his <b>AI work, programs, metrics, leadership, certifications, stack, awards, or contact details</b> — try one of the chips below, or email <b>surajkumar.navodya@gmail.com</b> directly.";
+  var DEFAULT_GREET = "Hi! I'm Suraj's Portfolio Copilot — I answer from this page only, right here in your browser. What would you like to know?";
+
+  var copilotCfg = cfg.copilot || {};
+  var KB = (Array.isArray(copilotCfg.kb) && copilotCfg.kb.length) ? copilotCfg.kb : DEFAULT_KB;
+  var FALLBACK = typeof copilotCfg.fallback === 'string' ? copilotCfg.fallback : DEFAULT_FALLBACK;
+  var GREET = typeof copilotCfg.greet === 'string' ? copilotCfg.greet : DEFAULT_GREET;
 
   var fab = document.getElementById('copilotFab');
   var dock = document.getElementById('copilotDock');
@@ -155,14 +169,16 @@
   /* ---------- Contact form -> mailto compose (no backend) ---------- */
   var cfSend = document.getElementById('cfSend');
   if (cfSend) {
+    var recipientFirstName = (cfg.identity && cfg.identity.name ? String(cfg.identity.name).split(' ')[0] : 'Suraj');
+    var recipientEmail = (cfg.contact && cfg.contact.email) || 'surajkumar.navodya@gmail.com';
     cfSend.addEventListener('click', function () {
       var n = (document.getElementById('cfName').value || '').trim();
       var o = (document.getElementById('cfOrg').value || '').trim();
       var msg = (document.getElementById('cfMsg').value || '').trim();
       var subject = 'Portfolio enquiry' + (n ? ' — ' + n : '');
-      var bodyText = 'Hi Suraj,\n\n' + (msg || 'I would like to connect regarding a role.') +
+      var bodyText = 'Hi ' + recipientFirstName + ',\n\n' + (msg || 'I would like to connect regarding a role.') +
                      '\n\n' + n + (o ? '\n' + o : '');
-      window.location.href = 'mailto:surajkumar.navodya@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyText);
+      window.location.href = 'mailto:' + recipientEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyText);
     });
   }
 

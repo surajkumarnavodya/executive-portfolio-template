@@ -87,6 +87,33 @@ window.PORTFOLIO_CONFIG = {
   data: {
     useData: false,
     path: 'assets/demo-data/'
+  },
+
+  /* -------------------------------------------------- copilot ----------
+   * assets/js/ui.js's Portfolio Copilot has a real, hardcoded knowledge base
+   * by default (this deployment's real career facts — see ui.js's DEFAULT_KB
+   * for why: engineering.html loads no config.js at all, and still needs a
+   * working, real Copilot). Loading THIS config overrides that KB entirely
+   * with the fictional content below, so the demo/template Copilot never
+   * answers with real personal data.
+   * ----------------------------------------------------------------------- */
+  copilot: {
+    kb: [
+      { k: ['experience','years','background','career','history','journey','profile','about','who'],
+        a: "<b>15+ years in engineering leadership.</b> Individual contributor, then engineering manager, now VP of Engineering — every step spent close enough to the code to lead technical teams credibly." },
+      { k: ['team','leadership','people','lead','manage','coach','mentor','grow','engineers'],
+        a: "<b>Grows engineers into leads, not just headcount.</b> Coaching, clear ownership and reduced key-person risk are the throughline across every team he's run." },
+      { k: ['contact','email','phone','reach','call','hire','connect','talk','touch'],
+        a: "<b>Direct channels:</b> john@example.com · LinkedIn: linkedin.com/in/example. Replies within one business day." },
+      { k: ['location','relocate','relocation','city','based','where','remote'],
+        a: "<b>Based in Austin, TX</b> — open to remote and relocation for the right role." },
+      { k: ['resume','cv','download','pdf'],
+        a: "<b>Resume:</b> use the “Download resume” link in the hero at the top of this page." },
+      { k: ['stack','tech','technology','tools','skill'],
+        a: "This is placeholder sample content — replace assets/js/config.js's copilot.kb (or delete it to fall back to your own real Copilot content) before publishing." }
+    ],
+    fallback: "This is a template demo — replace cfg.copilot in assets/js/config.js with your own real Q&A content before publishing.",
+    greet: "Hi! I'm John's Portfolio Copilot (sample content) — I answer from this page only, right here in your browser."
   }
 
 };
