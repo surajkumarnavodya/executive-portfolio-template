@@ -4,15 +4,22 @@ This template now ships with a reusable component registry in `assets/js/compone
 
 ## Registered components
 
-- `hero` (`#top`)
-- `kpi-cards` (`.exec-scorecard` + `#impact`)
-- `timeline` (`#leadership`)
-- `experience` (`#experience`)
-- `success-stories` (`#success-stories`)
-- `testimonials` (`#testimonials`)
-- `recognition` (`#recognition`)
-- `contact` (`#contact`)
-- `footer` (`footer`)
+Each component registers against `[data-component="name"]` — an explicit
+opt-in attribute on the element itself, not an id or tag guess. A page only
+gets a component's behaviour if its markup carries the matching attribute;
+nothing renders into a same-named id/tag by accident.
+
+- `hero` (`[data-component="hero"]`)
+- `about` (`[data-component="about"]`)
+- `kpi-cards` (`[data-component="kpi-cards"]`)
+- `experience` (`[data-component="experience"]`)
+- `delivery-framework` (`[data-component="delivery-framework"]`)
+- `success-stories` (`[data-component="success-stories"]`)
+- `insights` (`[data-component="insights"]`)
+- `testimonials` (`[data-component="testimonials"]`)
+- `recognition` (`[data-component="recognition"]`)
+- `contact` (`[data-component="contact"]`)
+- `footer` (`[data-component="footer"]`)
 
 ## Runtime API
 

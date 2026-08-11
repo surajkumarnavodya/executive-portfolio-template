@@ -22,21 +22,12 @@
   Deliberately does NOT load assets/js/config.js. Everything on this page is
   static, hand-authored markup — same pattern index.html already uses for its
   non-config-driven sections (Success Stories, Testimonials, the Recognition
-  cred-rows). Loading config.js here would be actively harmful, not just
-  redundant: assets/js/customizer.js's init() unconditionally calls
-  PortfolioComponents.render('hero', <preset>) on every page load regardless
-  of config, and assets/js/main.js renders cfg.hero/cfg.about/etc. over
-  whatever static HTML exists at their target ids. Both target fixed ids
-  (#top for the hero, #main for section reordering) that components.js
-  registers by direct document.querySelector(...) lookups the moment the
-  bundle runs — so simply never using id="top" / id="main" on this page means
-  those two lookups fail at registration time and every later render() call
-  against them silently no-ops (confirmed by reading components.js's create()
-  and customizer.js's applyPreset()/applySectionLayout() before writing this
-  file). That is why this page's hero uses id="eng-hero" and the main wrapper
-  uses id="eng-content" instead of the obvious "top"/"main" — not a style
-  choice, a deliberate guard against the shared bundle overwriting this
-  page's content with index.html's delivery-manager preset copy.
+  cred-rows). This page uses ordinary ids (id="top", id="main") because
+  components.js now registers each component against an explicit
+  data-component="name" attribute rather than guessing from ids/tags — this
+  page carries none of those attributes, so nothing in the shared bundle
+  renders into it. (This page used to avoid id="top"/id="main" specifically
+  to dodge that risk; no longer necessary once registration became opt-in.)
 
   Everything else in the shared dist bundle (theme toggle, palette picker,
   nav dropdown/scroll-spy/mobile-collapse, reveal-on-scroll, KPI count-up,
@@ -138,7 +129,7 @@
 <body>
 
     <!-- Accessibility: first tab stop, visible only when focused. -->
-    <a class="skip-link" href="#eng-content">Skip to main content</a>
+    <a class="skip-link" href="#main">Skip to main content</a>
 
     <!-- ================= TELEMETRY (reframed for this audience) ================= -->
     <div class="telemetry" aria-label="Engineering achievements">
@@ -157,7 +148,7 @@
     <!-- ================= NAV ================= -->
     <nav class="navbar navbar-expand-xl fixed-top" aria-label="Primary">
         <div class="container">
-            <a class="navbar-brand" href="#eng-hero"><picture><source srcset="assets/images/profile.avif" type="image/avif"><source srcset="assets/images/profile.webp" type="image/webp"><img class="brand-avatar" src="assets/images/profile.jpg" alt="" aria-hidden="true" width="34" height="34" decoding="async" fetchpriority="high"></picture><span class="brand-name">SURAJ KUMAR<span class="dot">.</span></span></a>
+            <a class="navbar-brand" href="#top"><picture><source srcset="assets/images/profile.avif" type="image/avif"><source srcset="assets/images/profile.webp" type="image/webp"><img class="brand-avatar" src="assets/images/profile.jpg" alt="" aria-hidden="true" width="34" height="34" decoding="async" fetchpriority="high"></picture><span class="brand-name">SURAJ KUMAR<span class="dot">.</span></span></a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="bi bi-list fs-2" style="color:var(--heading)"></i>
             </button>
@@ -205,7 +196,7 @@
     </a>
 
     <!-- ================= HERO ================= -->
-    <header class="hero" id="eng-hero" aria-labelledby="eng-hero-title">
+    <header class="hero" id="top" aria-labelledby="eng-hero-title">
         <div class="hero-overlay" aria-hidden="true"></div>
         <div class="grid-bg" aria-hidden="true"></div>
         <div class="container position-relative" style="z-index:1">
@@ -243,7 +234,7 @@
         </div>
     </header>
 
-    <main id="eng-content" tabindex="-1">
+    <main id="main" tabindex="-1">
 
         <!-- ================= CURRENT STACK ================= -->
         <section id="stack" aria-labelledby="stack-title">
@@ -541,7 +532,7 @@
         <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
             <a class="footer-cta" href="https://surajkumarnavodya.com/">VIEW THE PORTFOLIO →</a>
             <span>
-                <a href="#eng-hero" aria-label="Back to top">Top ↑</a>
+                <a href="#top" aria-label="Back to top">Top ↑</a>
                 <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener me">LinkedIn</a>
                 <a href="https://www.c-sharpcorner.com/members/suraj-kumar23/articles" target="_blank" rel="noopener me">C# Corner</a>
                 <a href="https://stackoverflow.com/users/10532500/suraj-kumar" target="_blank" rel="noopener me">Stack Overflow</a>

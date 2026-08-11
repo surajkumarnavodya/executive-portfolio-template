@@ -224,9 +224,6 @@
     }
   });
 
-  create('timeline', '#experience-content', function (root, payload) {
-    if (typeof payload.html === 'string') { setSafeHTML(root, payload.html); }
-  });
   create('experience', '[data-component="experience"]', function (root, payload) {
     if (typeof payload.title === 'string') { text(root.querySelector('.sec-title'), payload.title); }
   });

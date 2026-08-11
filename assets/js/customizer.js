@@ -218,7 +218,10 @@
 
   function applySectionLayout() {
     sanitizeSectionState();
-    var main = document.getElementById('main');
+    // Opt-in gate: only touch a <main> that explicitly asks for the Visual
+    // Layout Builder via data-layout-root, rather than assuming any page
+    // with id="main" wants its section order/visibility managed here.
+    var main = document.querySelector('main[data-layout-root]');
     if (!main) { return; }
     state.sectionOrder.forEach(function (id) {
       var node = document.getElementById(id);
