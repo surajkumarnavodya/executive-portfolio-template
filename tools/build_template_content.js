@@ -259,14 +259,21 @@ apply('"He combines strong program and project management expertise with enough 
       '"[Paste a real testimonial quote here — one that speaks to your program/project management expertise and how you lead under pressure.]"');
 apply('"He brings clarity, structure, and steady ownership to difficult situations, keeps teams aligned without micromanagement, and creates trust through proactive leadership."',
       '"[Paste a real testimonial quote here — one that speaks to your leadership style and how you build trust with your team.]"');
-apply(`<!-- REMINDER for Suraj: get each person's WRITTEN permission (an email or
-                     message saying it's OK, not just a verbal yes) before publishing their
-                     real name/title/company/photo here. Replace the NAME / TITLE / COMPANY
-                     placeholders below with the details they approve — the quote text itself
-                     is unchanged from what they originally gave you. -->`,
-      `<!-- Get each person's WRITTEN permission before publishing their real name/title/photo
-                     here. Replace the NAME / TITLE / COMPANY placeholders, and the sample quote
-                     text, with a real testimonial and the details they approve. -->`);
+apply(`<!-- These two cards intentionally identify the reviewer by role and
+                     relationship only (e.g. "Team Member · LTIMindtree"), not by name —
+                     no permission step needed for that. If you later want to name someone
+                     instead, get their WRITTEN permission first (an email or message saying
+                     it's OK, not just a verbal yes), then swap <strong>role</strong> for
+                     their real name and keep the quote text unchanged. -->`,
+      `<!-- These two cards identify the reviewer by role and relationship only
+                     (e.g. "[Relationship] · [Your Company]"), not by name — no permission step
+                     needed for that. If you'd rather name someone, get their WRITTEN permission
+                     first (an email or message saying it's OK, not just a verbal yes), then
+                     swap <strong>role</strong> for their real name and keep the quote text. -->`);
+apply('<strong>Software Engineer</strong>\n                                    <span class="t-role">Team Member · LTIMindtree</span>',
+      '<strong>[Their Job Title]</strong>\n                                    <span class="t-role">Team Member · [Your Company]</span>');
+apply('<strong>WFM (Early Career Recruiter)</strong>\n                                    <span class="t-role">Colleague · LTIMindtree</span>',
+      '<strong>[Their Job Title]</strong>\n                                    <span class="t-role">Colleague · [Your Company]</span>');
 
 /* ---------- domain, script tag, location ---------- */
 apply('surajkumarnavodya.com', 'example.com', 7);

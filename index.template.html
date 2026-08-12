@@ -3459,9 +3459,11 @@
                 </div>
                 -->
 
-                <!-- Get each person's WRITTEN permission before publishing their real name/title/photo
-                     here. Replace the NAME / TITLE / COMPANY placeholders, and the sample quote
-                     text, with a real testimonial and the details they approve. -->
+                <!-- These two cards identify the reviewer by role and relationship only
+                     (e.g. "[Relationship] · [Your Company]"), not by name — no permission step
+                     needed for that. If you'd rather name someone, get their WRITTEN permission
+                     first (an email or message saying it's OK, not just a verbal yes), then
+                     swap <strong>role</strong> for their real name and keep the quote text. -->
                 <div id="testimonials-content" class="row g-4">
                     <div class="col-lg-6 reveal d1">
                         <div class="x-card t-card">
@@ -3471,8 +3473,8 @@
                             <div class="t-person">
                                 <div class="t-avatar"><i class="bi bi-person-fill"></i></div>
                                 <div>
-                                    <strong>NAME</strong>
-                                    <span class="t-role">TITLE · COMPANY</span>
+                                    <strong>[Their Job Title]</strong>
+                                    <span class="t-role">Team Member · [Your Company]</span>
                                 </div>
                             </div>
                         </div>
@@ -3485,8 +3487,8 @@
                             <div class="t-person">
                                 <div class="t-avatar"><i class="bi bi-person-fill"></i></div>
                                 <div>
-                                    <strong>NAME</strong>
-                                    <span class="t-role">TITLE · COMPANY</span>
+                                    <strong>[Their Job Title]</strong>
+                                    <span class="t-role">Colleague · [Your Company]</span>
                                 </div>
                             </div>
                         </div>
@@ -3523,11 +3525,15 @@
                         <div class="col-lg-7">
                             <div class="p-4 p-lg-5">
                                 <h3 class="fs-4 fw-bold mb-2">Next step</h3>
-                                <p class="text-2 mb-4" style="font-size:14.8px">Send a message about a delivery leadership role, or take the résumé with you. I reply within one business day.</p>
+                                <p class="text-2 mb-4" style="font-size:14.8px">Send a message about a delivery leadership role, or take the r&eacute;sum&eacute; with you. I reply within one business day.</p>
 
                                 <!-- Formspree endpoint: set assets/js/config.js's contact.formEndpoint
                                      (main.js syncs it onto data-endpoint below at load time). Create a
-                                     form at https://formspree.io first — the free tier is enough. -->
+                                     form at https://formspree.io first — the free tier is enough.
+                                     Until then, ui.js removes this form entirely at load (its
+                                     data-endpoint still contains "PLACEHOLDER_"), leaving only the
+                                     "Prefer email?" line below as the contact path. Setting a real
+                                     endpoint brings the form back automatically — nothing else to do. -->
                                 <form id="contactForm" class="mb-2" data-endpoint="PLACEHOLDER_FORMSPREE_ENDPOINT" novalidate>
                                     <!-- Honeypot: invisible to real visitors (off-screen, unlabelled to
                                          anything but a screen reader, not in tab order). A bot that
@@ -3560,7 +3566,7 @@
                                 <p class="cta-alt mb-4">Prefer email? Write directly to <a href="mailto:you@example.com">you@example.com</a>.</p>
 
                                 <div class="cta-final mb-3">
-                                    <a class="btn-outline btn cta-secondary" href="assets/downloads/your-resume.pdf" download><i class="bi bi-download me-2"></i>Download my résumé</a>
+                                    <a class="btn-outline btn cta-secondary" href="assets/downloads/your-resume.pdf" download><i class="bi bi-download me-2"></i>Download my r&eacute;sum&eacute;</a>
                                 </div>
                                 <p class="cta-alt mb-4">Prefer LinkedIn? <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener">Connect with me there</a>.</p>
                                 <ul class="text-2 mb-0" style="font-size:14.5px;padding-left:1.15rem">

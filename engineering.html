@@ -156,10 +156,22 @@
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav mx-auto align-items-xl-center">
                     <li class="nav-item"><a class="nav-link" href="#stack">Stack</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#proof">Proof</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#sql-depth">SQL Server</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#writing">Writing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#eng-leadership">Leadership</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                    <li class="nav-item dropdown">
+                        <button class="nav-link dropdown-toggle" type="button" id="navEngProof" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="navEngProofMenu">Proof</button>
+                        <ul class="dropdown-menu" id="navEngProofMenu" aria-labelledby="navEngProof">
+                            <li><a class="dropdown-item" href="#proof">Projects</a></li>
+                            <li><a class="dropdown-item" href="#sql-depth">SQL Server</a></li>
+                            <li><a class="dropdown-item" href="#writing">Writing</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="nav-link dropdown-toggle" type="button" id="navEngProfile" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="navEngProfileMenu">Profile</button>
+                        <ul class="dropdown-menu" id="navEngProfileMenu" aria-labelledby="navEngProfile">
+                            <li><a class="dropdown-item" href="#eng-leadership">Leadership</a></li>
+                            <li><a class="dropdown-item" href="#recognition">Recognition</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
                     <!-- Two views of one career, not two people. -->
@@ -259,6 +271,57 @@
                         <div class="x-card skill-cat h-100">
                             <p class="pov-label"><i class="bi bi-clock-history me-1"></i>Worked with previously</p>
                             <span class="skill-pill">C#</span><span class="skill-pill">.NET Core</span><span class="skill-pill">ASP.NET MVC</span><span class="skill-pill">JavaScript</span><span class="skill-pill">Angular</span><span class="skill-pill">SQL Server</span><span class="skill-pill">Microsoft Azure</span><span class="skill-pill">Azure DevOps</span><span class="skill-pill">CI/CD Pipelines</span><span class="skill-pill">Git / TFS</span><span class="skill-pill">Jira</span><span class="skill-pill">Power BI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= EXPERIENCE =================
+             Same facts as index.html's Experience timeline (dates, roles, orgs,
+             metrics) — kept identical rather than reworded, so the two pages
+             never drift into disagreeing about employment history. Only the
+             section intro copy is reframed for this audience. -->
+        <section id="experience" aria-labelledby="experience-title">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">Experience</p>
+                    <h2 class="sec-title serif" id="experience-title">Where the depth comes from.</h2>
+                    <p class="sec-sub mb-5">The same twelve-year trajectory as the delivery view, seen from the code side. Engineer &rarr; mentor &rarr; program leader.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div id="eng-experience-content" class="timeline">
+                            <div class="t-item reveal">
+                                <p class="t-when">NEXT PHASE &middot; TARGET &rarr; VISION</p>
+                                <p class="t-role mb-0">Senior .NET Full Stack Lead &rarr; Solution Architect</p>
+                                <p class="t-org">The trajectory this record points to</p>
+                                <p class="t-body">Near term: Senior .NET Full Stack Lead / Technical Lead owning architecture decisions, code quality and technical governance across a live account. The 3&ndash;5 year vision: Solution Architect &mdash; designing the systems, not just building within them, with the delivery-side judgment to know what a design actually costs to ship.</p>
+                            </div>
+                            <div class="t-item reveal">
+                                <p class="t-when">JUN 2021 &rarr; JUN 2026 &middot; LEADERSHIP PHASE</p>
+                                <p class="t-role mb-0">Specialist &ndash; Software Engineering</p>
+                                <p class="t-org">LTIMindtree &middot; L&amp;T Corporate IT, L&amp;T Realty, L&amp;T Construction &middot; Mumbai</p>
+                                <p class="t-body">&#8377;2Cr+ multi-account portfolio, 20+ engineers across .NET, Java, SQL Server and cloud. Own client-sponsor relationships and steering committees across L&amp;T Group accounts; ISO-standard governance; effort estimation and SLA management that protect delivery margin; grew engineers into module owners; HR automation cutting turnaround by 25%.</p>
+                            </div>
+                            <div class="t-item dev reveal">
+                                <p class="t-when">DEC 2017 &rarr; JUN 2021 &middot; ENGINEERING PHASE</p>
+                                <p class="t-role mb-0">Software Developer</p>
+                                <p class="t-org">Innovsource Services &middot; Mumbai</p>
+                                <p class="t-body">HR and MIS reporting solutions &mdash; <strong>+45% reporting performance</strong>. Mentored junior developers; contributed to enterprise architecture and IT governance forums (+25% team efficiency).</p>
+                            </div>
+                            <div class="t-item dev reveal">
+                                <p class="t-when">MAY 2016 &rarr; DEC 2017 &middot; ENGINEERING PHASE</p>
+                                <p class="t-role mb-0">Software Engineer</p>
+                                <p class="t-org">SA-Techno Consulting Services &middot; Pune</p>
+                                <p class="t-body">Regulatory-compliant applications for B. Braun Medical India &mdash; <strong>&minus;20% audit preparation time</strong>; improved SLA compliance in service delivery.</p>
+                            </div>
+                            <div class="t-item dev reveal">
+                                <p class="t-when">APR 2014 &rarr; MAY 2016 &middot; ENGINEERING PHASE</p>
+                                <p class="t-role mb-0">Software Developer</p>
+                                <p class="t-org">Intellect Software Solutions &middot; Mumbai</p>
+                                <p class="t-body">Enterprise .NET applications for real estate, CRM, sales and marketing &mdash; the foundation of everything since.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -489,6 +552,62 @@
             </div>
         </section>
 
+        <!-- ================= RECOGNITION =================
+             Same facts as index.html's Recognition section (education,
+             certifications, awards) — kept identical rather than reworded. -->
+        <section id="recognition" aria-labelledby="recognition-title" style="background:var(--bg-2)">
+            <div class="container">
+                <div class="reveal">
+                    <p class="eyebrow">Recognition</p>
+                    <h2 class="sec-title" id="recognition-title">Certified, recognized, still learning.</h2>
+                </div>
+                <div id="eng-recognition-content" class="row g-4 mt-2">
+                    <div class="col-12 reveal d1">
+                        <div class="x-card">
+                            <h3 class="fs-5 fw-bold mb-3"><i class="bi bi-mortarboard me-2" style="color:var(--accent)"></i>Education</h3>
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="cred-row"><i class="bi bi-book"></i><span>M.Sc. IT &mdash; Sikkim Manipal University &middot; 2021</span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="cred-row"><i class="bi bi-book"></i><span>BCA &mdash; Magadh University &middot; 2012</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 reveal d1">
+                        <div class="x-card">
+                            <h3 class="fs-5 fw-bold mb-3"><i class="bi bi-patch-check me-2" style="color:var(--accent)"></i>Certifications</h3>
+                            <div class="cred-grid">
+                                <div class="cred-row"><i class="bi bi-award"></i><span>LTIMindtree Certified Agile Practitioner &middot; 2024</span><span class="chip green"><span class="cd"></span>CERTIFIED</span></div>
+                                <div class="cred-row"><i class="bi bi-mortarboard"></i><span>Generative AI Overview for Project Managers &mdash; PMI &middot; 2026</span><span class="chip green"><span class="cd"></span>COMPLETED</span></div>
+                                <div class="cred-row"><i class="bi bi-award"></i><span>iLead: Transition to Leadership &mdash; LTIMindtree &middot; 2022</span><span class="chip green"><span class="cd"></span>COMPLETED</span></div>
+                                <div class="cred-row"><i class="bi bi-award"></i><span>Become a Project Manager &mdash; LinkedIn &middot; 2021</span><span class="chip green"><span class="cd"></span>COMPLETED</span></div>
+                                <div class="cred-row"><i class="bi bi-award"></i><span>Leadership and Team Development &mdash; International Business Management Institute (IBMI) &middot; 2020</span><span class="chip green"><span class="cd"></span>CERTIFIED</span></div>
+                                <div class="cred-row"><i class="bi bi-award"></i><span>Basic of Project Management &mdash; International Business Management Institute (IBMI) &middot; 2020</span><span class="chip green"><span class="cd"></span>CERTIFIED</span></div>
+                                <div class="cred-row"><i class="bi bi-award"></i><span>Enterprise Design Thinking Practitioner &mdash; IBM &middot; 2020</span><span class="chip green"><span class="cd"></span>CERTIFIED</span></div>
+                            </div>
+                            <p class="text-2 mt-3 mb-0" style="font-size:13.5px">
+                                <i class="bi bi-linkedin me-1" style="color:var(--accent)"></i>
+                                All certifications are independently verifiable on <a href="https://www.linkedin.com/in/surajkumar-navodya/details/certifications/" target="_blank" rel="noopener me">my LinkedIn profile</a>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 reveal d2">
+                        <div class="x-card">
+                            <h3 class="fs-5 fw-bold mb-3"><i class="bi bi-trophy me-2" style="color:var(--accent)"></i>Awards &amp; recognition</h3>
+                            <div class="cred-grid">
+                                <div class="cred-row"><i class="bi bi-star-fill"></i><span>2&times; MVP Award &mdash; C# Corner</span></div>
+                                <div class="cred-row"><i class="bi bi-star-fill"></i><span>LTIMindtree Spot Award : Super Crew &mdash; 2025</span></div>
+                                <div class="cred-row"><i class="bi bi-star-fill"></i><span>LTIMindtree Spot Award : Super Crew &mdash; 2024</span></div>
+                                <div class="cred-row"><i class="bi bi-star-fill"></i><span>LTIMindtree Epic Squad (India &amp; ME) Award &mdash; 2024</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ================= CONTACT ================= -->
         <section id="contact" aria-labelledby="contact-title" style="background:var(--bg-2)">
             <div class="container">
@@ -510,7 +629,7 @@
                         <div class="col-lg-7">
                             <div class="p-4 p-lg-5">
                                 <h3 class="fs-4 fw-bold mb-2">Next step</h3>
-                                <p class="text-2 mb-4" style="font-size:14.8px">Send a message about a hands-on engineering or technical-lead role, or take the résumé with you. I reply within one business day.</p>
+                                <p class="text-2 mb-4" style="font-size:14.8px">Send a message about a hands-on engineering or technical-lead role, or take the r&eacute;sum&eacute; with you. I reply within one business day.</p>
 
                                 <!-- PLACEHOLDER_FORMSPREE_ENDPOINT: this page loads no config.js, so the
                                      endpoint has to be set directly here (see assets/js/config.js's
@@ -552,7 +671,7 @@
                                 <p class="cta-alt mb-4">Prefer email? Write directly to <a href="mailto:surajkumar.navodya@gmail.com">surajkumar.navodya@gmail.com</a>.</p>
 
                                 <div class="cta-final mb-3">
-                                    <a class="btn-outline btn cta-secondary" href="assets/bc8ab7cb7c05/e4640e4f6baa38e0f7ba.pdf" download><i class="bi bi-download me-2"></i>Download my résumé</a>
+                                    <a class="btn-outline btn cta-secondary" href="assets/bc8ab7cb7c05/e4640e4f6baa38e0f7ba.pdf" download><i class="bi bi-download me-2"></i>Download my r&eacute;sum&eacute;</a>
                                 </div>
                                 <p class="cta-alt mb-4">Prefer LinkedIn? <a href="https://www.linkedin.com/in/surajkumar-navodya" target="_blank" rel="noopener">Connect with me there</a>.</p>
                                 <ul class="text-2 mb-0" style="font-size:14.5px;padding-left:1.15rem">
