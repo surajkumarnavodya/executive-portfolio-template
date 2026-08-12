@@ -160,7 +160,12 @@ body.nav-hidden .navbar.fixed-top{transform:translateY(-100%)}
   display:flex;align-items:center;justify-content:center;
   background:rgba(255,255,255,.22);color:var(--heading);font-size:13px;
 }
-[data-bs-theme="dark"] .hero-stat h4{
+/* .stat-value (a <p>, not a heading) — these hero stat numbers used to be
+   <h4>, which put an H4 directly after the page's H1 with no H2/H3 between
+   it (a real heading-hierarchy skip; SEO/accessibility pass). Renamed the
+   selector rather than the visual treatment — every declaration below is
+   unchanged, just re-targeted. */
+[data-bs-theme="dark"] .hero-stat .stat-value{
   font-size:clamp(16px,1.6vw,20px);line-height:1;margin:0 0 1px;
   color:var(--heading);white-space:nowrap;
 }
@@ -183,7 +188,7 @@ body.nav-hidden .navbar.fixed-top{transform:translateY(-100%)}
   background:rgba(2,8,20,.04);
   color:var(--heading);
 }
-[data-bs-theme="light"] .hero-stat h4{ color:var(--heading); }
+[data-bs-theme="light"] .hero-stat .stat-value{ color:var(--heading); }
 [data-bs-theme="light"] .hero-stat small{ color:var(--text-2); }
 
 /* ============================================================
@@ -810,7 +815,7 @@ p{line-height:1.6}
    serif. Overrides the global 400-weight display normalization
    so every figure stays crisp and legible at any zoom.
    ============================================================ */
-.hero-stat h4,
+.hero-stat .stat-value,
 .kpi-val,
 .exec-scorecard .val{
   font-family:var(--font-body) !important;
@@ -838,8 +843,8 @@ p{line-height:1.6}
      per theme. */
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
-[data-bs-theme="dark"] .hero-stat h4{font-size:clamp(17px,1.7vw,21.5px);margin:0 0 1px;color:var(--heading)}
-[data-bs-theme="light"] .hero-stat h4{ color:var(--heading) !important; }
+[data-bs-theme="dark"] .hero-stat .stat-value{font-size:clamp(17px,1.7vw,21.5px);margin:0 0 1px;color:var(--heading)}
+[data-bs-theme="light"] .hero-stat .stat-value{ color:var(--heading) !important; }
 .hero-stat small{font-size:clamp(9.5px,.9vw,10.5px);font-weight:600;color:rgba(255,255,255,.92)}
 /* --- Steering snapshot: taller cells, navy panel --- */
 .kpi-cell{padding:17px 14px;gap:12px;min-height:94px;align-items:center}
@@ -1530,7 +1535,7 @@ section{padding-top:28px}
    Some components intentionally use white glyphs in dark mode; ensure
    they switch to a dark glyph when the page uses the light colour scheme. */
 [data-bs-theme="light"] .hero-stat .stat-icon{ background:rgba(2,8,20,.04) !important; color:var(--heading) !important; }
-[data-bs-theme="light"] .hero-stat h4{ color:var(--heading) !important; }
+[data-bs-theme="light"] .hero-stat .stat-value{ color:var(--heading) !important; }
 [data-bs-theme="light"] .hero-stat small{ color:var(--text-2) !important; }
 
 /* LinkedIn square button shows a light glyph in dark mode; in light mode

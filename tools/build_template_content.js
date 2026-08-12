@@ -67,10 +67,10 @@ apply(
 );
 
 /* ---------- meta / head ---------- */
-apply('<title>Suraj Kumar | Enterprise Program & Project Manager | Digital Transformation & AI</title>',
-      '<title>[Your Name] | Enterprise Program & Project Manager | Digital Transformation & AI</title>');
-apply('content="Suraj Kumar — Program & Project Manager. 12+ years in IT, 8+ as a hands-on .NET engineer. Owns delivery health, client relationships and teams across ₹2Cr+ multi-account portfolios — 95%+ on-time, on-budget, with AI-augmented ways of working.">',
-      'content="[Your Name] — Program & Project Manager. [X]+ years in IT, [X]+ as a hands-on .NET engineer. Owns delivery health, client relationships and teams across [large] multi-account portfolios — [XX]%+ on-time, on-budget, with AI-augmented ways of working.">');
+apply('<title>Suraj Kumar | Program & Delivery Manager | Digital Transformation</title>',
+      '<title>[Your Name] | Program & Delivery Manager | Digital Transformation</title>');
+apply('content="Suraj Kumar — Program & Delivery Manager. 12+ years in IT, 8+ hands-on as a .NET engineer. ₹2Cr+ multi-account portfolios, 95%+ on-time, AI-augmented.">',
+      'content="[Your Name] — Program & Delivery Manager. [X]+ years in IT, [X]+ hands-on as a .NET engineer. [Large] multi-account portfolios, [XX]%+ on-time, AI-augmented.">');
 apply('content="Suraj Kumar">', 'content="[Your Name]">', 2);
 apply('content="Suraj Kumar | Program & Project Manager · AI-Augmented Delivery">',
       'content="[Your Name] | Program & Project Manager · AI-Augmented Delivery">');
@@ -81,23 +81,31 @@ apply('content="Suraj Kumar | Program & Project Manager">', 'content="[Your Name
 apply('content="Delivery leader — 12+ years in enterprise IT delivery. Owns outcomes, teams and client relationships across ₹2Cr+ multi-account portfolios. 95%+ on-time, on-budget.">',
       'content="Delivery leader — [X]+ years in enterprise IT delivery. Owns outcomes, teams and client relationships across [large] multi-account portfolios. [XX]%+ on-time, on-budget.">');
 
-/* ---------- JSON-LD ---------- */
-apply('"name": "Suraj Kumar",', '"name": "[Your Name]",');
+/* ---------- JSON-LD (@graph: WebSite / ProfilePage / Person) ---------- */
+apply('"name": "Suraj Kumar",', '"name": "[Your Name]",', 2);
+apply('"description": "Executive portfolio of Suraj Kumar — Program & Delivery Manager.",',
+      '"description": "Executive portfolio of [Your Name] — Program & Delivery Manager.",');
+apply('"name": "Suraj Kumar | Program & Delivery Manager | Digital Transformation",',
+      '"name": "[Your Name] | Program & Delivery Manager | Digital Transformation",');
 apply('"description": "Program & Delivery Leader with 12+ years in enterprise IT, including 8+ years as a hands-on .NET engineer — owns delivery health, client relationships and teams across multi-account portfolios.",',
       '"description": "Program & Delivery Leader with [X]+ years in enterprise IT, including [X]+ years as a hands-on .NET engineer — owns delivery health, client relationships and teams across multi-account portfolios.",');
 apply('"email": "surajkumar.navodya@gmail.com",', '"email": "you@example.com",');
 apply('{ "@type": "CollegeOrUniversity", "name": "Sikkim Manipal University" },', '{ "@type": "CollegeOrUniversity", "name": "[Your University]" },');
 apply('{ "@type": "CollegeOrUniversity", "name": "Magadh University" }', '{ "@type": "CollegeOrUniversity", "name": "[Your University 2]" }');
-apply('{ "@type": "EducationalOccupationalCredential", "name": "LTIMindtree Certified Agile Practitioner" },',
-      '{ "@type": "EducationalOccupationalCredential", "name": "[Your Certification]" },');
+apply('{ "@type": "EducationalOccupationalCredential", "name": "LTIMindtree Certified Agile Practitioner" }\n              ],',
+      '{ "@type": "EducationalOccupationalCredential", "name": "[Your Certification]" }\n              ],');
+// No GitHub entry here, matching the real index.html: JSON-LD isn't
+// protected by ui.js's runtime PLACEHOLDER_-hiding rule (that only touches
+// visible DOM <a> elements), so an unfilled sameAs URL would ship to search
+// engines as a real, broken link forever, not just until a buyer fills it
+// in. Add your own GitHub URL to this array once you have one — see
+// docs/Customization.md.
 apply(`"https://www.linkedin.com/in/surajkumar-navodya",
-            "https://github.com/PLACEHOLDER_GITHUB_USERNAME",
-            "https://www.c-sharpcorner.com/members/suraj-kumar23/articles",
-            "https://stackoverflow.com/users/10532500/suraj-kumar"`,
+                "https://www.c-sharpcorner.com/members/suraj-kumar23/articles",
+                "https://stackoverflow.com/users/10532500/suraj-kumar"`,
       `"https://www.linkedin.com/in/yourprofile",
-            "https://github.com/yourusername",
-            "https://example.com/your-articles",
-            "https://stackoverflow.com/users/0000000/yourname"`);
+                "https://example.com/your-articles",
+                "https://stackoverflow.com/users/0000000/yourname"`);
 
 /* ---------- contact / social URLs (site-wide) ---------- */
 apply('https://www.linkedin.com/in/surajkumar-navodya/details/certifications/', 'https://www.linkedin.com/in/yourprofile/details/certifications/');
@@ -125,11 +133,13 @@ apply(`<!-- Static fallback numbers are baked in so link previews and crawlers n
 apply('Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 8+ years as a hands-on .NET engineer.',
       'Enterprise Program &amp; Delivery Leader — [X]+ years running multi-crore, multi-account portfolios, backed by [X]+ years as a hands-on .NET engineer.');
 
-/* ---------- hero stats / executive ribbon ---------- */
-apply('<h4>12+</h4><small>Years Experience</small>', '<h4>[X]+</h4><small>Years Experience</small>');
-apply('<h4>₹2Cr+</h4><small>Portfolio Governed</small>', '<h4>[Amount]</h4><small>Portfolio Governed</small>');
-apply('<h4>40+</h4><small>Projects Delivered</small>', '<h4>[X]+</h4><small>Projects Delivered</small>');
-apply('<h4>20+</h4><small>Engineers Led</small>', '<h4>[X]+</h4><small>Engineers Led</small>');
+/* ---------- hero stats / executive ribbon ----------
+   <p class="stat-value">, not <h4> — see assets/css/style.css's comment on
+   .hero-stat .stat-value for why (heading-hierarchy fix, same visual output). */
+apply('<p class="stat-value">12+</p><small>Years Experience</small>', '<p class="stat-value">[X]+</p><small>Years Experience</small>');
+apply('<p class="stat-value">₹2Cr+</p><small>Portfolio Governed</small>', '<p class="stat-value">[Amount]</p><small>Portfolio Governed</small>');
+apply('<p class="stat-value">40+</p><small>Projects Delivered</small>', '<p class="stat-value">[X]+</p><small>Projects Delivered</small>');
+apply('<p class="stat-value">20+</p><small>Engineers Led</small>', '<p class="stat-value">[X]+</p><small>Engineers Led</small>');
 apply('<span><b>5+</b> Enterprise Awards</span>', '<span><b>[X]+</b> Enterprise Awards</span>');
 
 /* ---------- About ---------- */
@@ -276,7 +286,9 @@ apply('<strong>WFM (Early Career Recruiter)</strong>\n                          
       '<strong>[Their Job Title]</strong>\n                                    <span class="t-role">Colleague · [Your Company]</span>');
 
 /* ---------- domain, script tag, location ---------- */
-apply('surajkumarnavodya.com', 'example.com', 7);
+// Count grew from 7 to 15 with the @graph JSON-LD restructure (WebSite/
+// ProfilePage @id + url fields each reference the site's own domain).
+apply('surajkumarnavodya.com', 'example.com', 15);
 apply('<script defer src="assets/js/config.js"></script>', '<script defer src="assets/js/config.demo.js"></script>');
 apply('"addressLocality": "Mumbai", "addressRegion": "Maharashtra", "addressCountry": "IN"',
       '"addressLocality": "[Your City]", "addressRegion": "[Your Region]", "addressCountry": "[Your Country]"');

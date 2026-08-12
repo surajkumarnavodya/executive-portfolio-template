@@ -14,6 +14,7 @@ Disallow: /assets/downloads/
 Disallow: /assets/dev/
 Disallow: /assets/tests/
 Disallow: /studio.html
+Disallow: /component-catalog.html
 
 Sitemap: https://example.com/sitemap.xml
 Host: example.com

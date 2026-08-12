@@ -4,11 +4,15 @@
 User-agent: *
 Allow: /
 
-# Nothing here is private, but there is no value in indexing the raw assets.
+# Nothing here is private, but there is no value in indexing the raw assets
+# or the internal tooling pages — none of studio.html/component-catalog.html
+# are part of the live deployment (tools/package-live.sh excludes both), but
+# this stays as defense-in-depth in case the repo root is ever served as-is.
 Disallow: /assets/downloads/
 Disallow: /assets/dev/
 Disallow: /assets/tests/
 Disallow: /studio.html
+Disallow: /component-catalog.html
 
 Sitemap: https://surajkumarnavodya.com/sitemap.xml
 Host: surajkumarnavodya.com

@@ -94,7 +94,7 @@
 .hero h1{font-size:38px}
 }
 @media (max-width:420px){
-  .hero-stat h4{font-size:16px}
+  .hero-stat .stat-value{font-size:16px}
   .hero-stat small{font-size:9.5px}
   
   
