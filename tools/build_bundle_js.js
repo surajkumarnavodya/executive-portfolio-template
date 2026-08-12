@@ -9,8 +9,12 @@
  * page). This script makes rebuilding it a single deterministic command
  * instead of manual copy-paste.
  *
- * Composition: components, counters, customizer, main, navigation, palette,
- * renderer, theme, i18n, fontsize, ui, contact-form — in that order.
+ * Composition: bs-shim, components, counters, customizer, main, navigation,
+ * palette, renderer, theme, i18n, fontsize, ui, contact-form — in that
+ * order. bs-shim.js is first because it defines window.bootstrap.Collapse/
+ * Dropdown, which navigation.js calls (it replaces the CDN Bootstrap JS
+ * bundle — see bs-shim.js's own header for why: only 2 of Bootstrap's
+ * components are used anywhere on this site).
  * Deliberately excludes
  * the Studio-only ES modules (studio-app.js, content-service.js,
  * asset-store.js, portfolio-data-service.js) — they use `export class`,
@@ -35,7 +39,7 @@ const SRC = path.join(ROOT, 'assets/js');
 const DEFAULT_OUT = path.join(ROOT, 'assets/dist/js/template.min.js');
 
 const PARTS = [
-  'components.js', 'counters.js', 'customizer.js', 'main.js', 'navigation.js',
+  'bs-shim.js', 'components.js', 'counters.js', 'customizer.js', 'main.js', 'navigation.js',
   'palette.js', 'renderer.js', 'theme.js', 'i18n.js', 'fontsize.js', 'ui.js',
   'contact-form.js'
 ];

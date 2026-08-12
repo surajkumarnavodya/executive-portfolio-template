@@ -74,7 +74,9 @@ compiled bundle, not `ui.js` directly.
 ## Rebuilding the JS bundle
 
 ```bash
-node tools/build_bundle_js.js                              # -> assets/dist/js/template.min.js
+node tools/build_bundle_js.js                              # -> assets/dist/js/template.min.js (concatenation)
+npx terser assets/dist/js/template.min.js --compress --mangle --format comments=false -o assets/dist/js/template.min.js
+node -c assets/dist/js/template.min.js                      # always verify syntax after minifying
 node tools/build_bundle_js.js --override ui.js=path/to/alt.js --out path/to/out.js
 ```
 
@@ -82,10 +84,19 @@ Mirrors `build_bundle.js`'s approach (below) for the JS bundle — this used to
 be a fully hand-maintained concatenation, which is what caused the v1.5.0
 "Critical Bundle Regression" logged in `docs/Changelog.md` (a stray `export`
 keyword from a Studio-only ES module silently blanked the whole page). Run
-this after any change to a file in `assets/js/{components,counters,
-customizer,main,navigation,palette,renderer,theme,i18n,fontsize,ui}.js`. The
-`--override` flag is what `package-template.ps1`/`.sh` uses to swap in a
-genericized `ui.js` without touching the real source file.
+this after any change to a file in `assets/js/{bs-shim,components,counters,
+customizer,main,navigation,palette,renderer,theme,i18n,fontsize,ui,
+contact-form}.js`. The `--override` flag is what `package-template.ps1`/`.sh`
+uses to swap in a genericized `ui.js` without touching the real source file.
+
+**The terser step is a real minifier, not optional cosmetics** — until a 2026
+perf pass, `build_bundle_js.js`'s output was committed directly as
+`template.min.js` despite the filename, i.e. shipped un-minified (comments,
+whitespace and all). Terser's `--mangle` only renames local variables/params,
+never object property names, so `window.bootstrap.Collapse`/`.Dropdown` and
+every `window.PORTFOLIO_*` global stay intact — verified safe via the full
+Playwright functional pass (nav collapse, dropdowns, theme toggle, KPI
+count-up, Copilot) after minifying, not assumed.
 
 ### Shared mechanics
 
@@ -119,16 +130,30 @@ npm install postcss postcss-safe-parser jsdom
 Run these **in order** from inside `tools/`:
 
 ```bash
-node build_bundle.js       # 1. variables.css + style.css + responsive.css -> dist bundle
-node build_critical.js     # 2. extract first-viewport rules -> tools/critical.css
-python3 inline_critical.py # 3. inline that block into home.html + defer the bundle
+node build_bundle.js                                        # 1. variables.css + style.css + responsive.css -> dist bundle
+npx csso-cli ../assets/dist/css/template.min.css \
+  -o ../assets/dist/css/template.min.css                    # 1b. real minification (build_bundle.js only concatenates)
+node build_critical.js                                      # 2. extract first-viewport rules -> tools/critical.css
+python3 inline_critical.py                                  # 3. inline that block into index.html + defer the bundle
 ```
 
-Step 3 is idempotent for the preconnect it adds, but **not** for the style
-block — it expects to find the plain
-`<link rel="stylesheet" href="assets/dist/css/template.min.css">`. If you have
-already run it once, revert `home.html`'s head (or delete the existing
-`<style id="critical-css">` and restore the plain link) before re-running.
+Step 1b matters: `csso` also safely merges duplicate `@media` blocks (e.g.
+multiple separate `@media (prefers-reduced-motion:reduce){...}` rules), which
+is why a rule count before/after won't match 1:1 — that's expected, not data
+loss. Verify visually/functionally after, not just by diffing rule counts.
+
+Step 3 (`inline_critical.py`) is idempotent for the preconnect it adds, but
+**not** for the style block — it expects to find the plain
+`<link rel="stylesheet" href="assets/dist/css/template.min.css">`. Both
+`index.html` and `engineering.html` already carry the inlined
+`<style id="critical-css">` block (as of the 2026 perf pass, both pages get
+it, not just `index.html`), so re-running step 3 as-is will fail its own
+assertion rather than corrupt anything — for a routine CSS-only content
+change, splice the freshly generated `tools/critical.css` directly into the
+existing `<style id="critical-css">...</style>` block on **both** pages
+instead of re-running step 3. Only fall back to reverting the head (deleting
+the existing block and restoring the plain link) if the surrounding
+`<head>` structure itself needs to be rebuilt from scratch.
 
 ## Auditing for dead CSS
 

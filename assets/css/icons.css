@@ -1,0 +1,111 @@
+/*!
+ * icons.css — Executive Portfolio Template
+ * Self-hosted, subsetted replacement for the Bootstrap Icons CDN CSS + webfont.
+ *
+ * WHY: index.html + engineering.html use exactly 69 of Bootstrap Icons' ~2000
+ * glyphs (grep for bi-[a-z0-9-]+ across both pages/js confirms the set below).
+ * Loading the full bootstrap-icons.min.css (87KB) + bootstrap-icons.woff2
+ * (134KB) from a third CDN origin to render 69 icons was the single largest
+ * bytes-used-to-bytes-shipped mismatch in the project. This file + its
+ * matching font (assets/fonts/bootstrap-icons-subset.woff2, 7KB) replace both
+ * with zero markup changes — every `<i class="bi bi-x">` in the page is
+ * untouched, only the CSS/font behind the class names changed.
+ *
+ * Same font-family name, same selector shape, same font-display:block choice
+ * as upstream Bootstrap Icons 1.13.1 (that choice is deliberate — see
+ * CLAUDE.md's "Front-end performance pass" entry: swapping to font-display:
+ * swap on an icon font flashes fallback letterforms/tofu, which reads worse
+ * than a brief invisible icon). At 7KB self-hosted same-origin, the font
+ * loads well inside that safety window regardless.
+ *
+ * TO REGENERATE after adding/removing an icon class anywhere in the live
+ * pages:
+ *   1. List the new icon set:
+ *        grep -oE 'bi-[a-z0-9-]+' index.html engineering.html assets/js/*.js assets/css/*.css | sed 's/^[^:]*://' | sort -u
+ *   2. Download the current upstream CSS + font for the Bootstrap Icons
+ *      version pinned in index.html/engineering.html, e.g.:
+ *        curl -sLo bi.css   https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css
+ *        curl -sLo bi.woff2 https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/fonts/bootstrap-icons.woff2
+ *   3. Extract the `\fXXX` codepoint for each icon class from bi.css and
+ *      subset the font to just those codepoints:
+ *        pip install fonttools brotli
+ *        python -m fontTools.subset bi.woff2 --unicodes=0xf66b,0xf130,... \
+ *          --output-file=bootstrap-icons-subset.woff2 --flavor=woff2 \
+ *          --no-layout-closure --name-IDs=''
+ *   4. Rebuild this file's icon-rule list from the same codepoints and copy
+ *      the new font into assets/fonts/bootstrap-icons-subset.woff2.
+ *   5. Update assets/dist/css/template.min.css is NOT involved — this file is
+ *      loaded directly by <link>, not concatenated into the bundle (see
+ *      index.html's <head>).
+ */
+@font-face{font-display:block;font-family:bootstrap-icons;src:url("../fonts/bootstrap-icons-subset.woff2") format("woff2")}
+.bi::before,[class*=" bi-"]::before,[class^=bi-]::before{display:inline-block;font-family:bootstrap-icons!important;font-style:normal;font-weight:400!important;font-variant:normal;text-transform:none;line-height:1;vertical-align:-.125em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.bi-activity::before{content:"\f66b"}
+.bi-arrow-repeat::before{content:"\f130"}
+.bi-award::before{content:"\f154"}
+.bi-award-fill::before{content:"\f153"}
+.bi-bar-chart::before{content:"\f17e"}
+.bi-book::before{content:"\f194"}
+.bi-box-arrow-up-right::before{content:"\f1c5"}
+.bi-boxes::before{content:"\f685"}
+.bi-braces::before{content:"\f1c9"}
+.bi-briefcase::before{content:"\f1cc"}
+.bi-broadcast::before{content:"\f1d6"}
+.bi-bug::before{content:"\f1dc"}
+.bi-bullseye::before{content:"\f1de"}
+.bi-calculator::before{content:"\f1e0"}
+.bi-calendar-check::before{content:"\f1e2"}
+.bi-calendar-check-fill::before{content:"\f1e1"}
+.bi-chat-dots::before{content:"\f24a"}
+.bi-chat-dots-fill::before{content:"\f249"}
+.bi-check-circle-fill::before{content:"\f26a"}
+.bi-clipboard-check::before{content:"\f28b"}
+.bi-clock-history::before{content:"\f292"}
+.bi-cloud::before{content:"\f2c1"}
+.bi-cloud-check::before{content:"\f299"}
+.bi-code-slash::before{content:"\f2c6"}
+.bi-code-square::before{content:"\f2c7"}
+.bi-compass::before{content:"\f2d1"}
+.bi-cpu::before{content:"\f2d6"}
+.bi-currency-rupee::before{content:"\f7ec"}
+.bi-diagram-3::before{content:"\f2ee"}
+.bi-download::before{content:"\f30a"}
+.bi-envelope::before{content:"\f32f"}
+.bi-eye::before{content:"\f341"}
+.bi-geo-alt::before{content:"\f3e8"}
+.bi-github::before{content:"\f3ed"}
+.bi-graph-down-arrow::before{content:"\f672"}
+.bi-graph-up-arrow::before{content:"\f673"}
+.bi-journal-text::before{content:"\f444"}
+.bi-lightning-charge::before{content:"\f46d"}
+.bi-linkedin::before{content:"\f472"}
+.bi-list::before{content:"\f479"}
+.bi-map::before{content:"\f47f"}
+.bi-moon-stars::before{content:"\f496"}
+.bi-mortarboard::before{content:"\f6fe"}
+.bi-mortarboard-fill::before{content:"\f6fd"}
+.bi-patch-check::before{content:"\f4b6"}
+.bi-patch-check-fill::before{content:"\f4b5"}
+.bi-people::before{content:"\f4d0"}
+.bi-people-fill::before{content:"\f4cf"}
+.bi-person-badge-fill::before{content:"\f4d2"}
+.bi-person-fill::before{content:"\f4da"}
+.bi-play-circle::before{content:"\f4f3"}
+.bi-quote::before{content:"\f6b0"}
+.bi-robot::before{content:"\f6b1"}
+.bi-rocket-takeoff::before{content:"\f845"}
+.bi-rocket-takeoff-fill::before{content:"\f844"}
+.bi-search::before{content:"\f52a"}
+.bi-send::before{content:"\f6c0"}
+.bi-shield-check::before{content:"\f52f"}
+.bi-shield-exclamation::before{content:"\f530"}
+.bi-sliders::before{content:"\f56b"}
+.bi-speedometer2::before{content:"\f580"}
+.bi-stack-overflow::before{content:"\f667"}
+.bi-star-fill::before{content:"\f586"}
+.bi-stars::before{content:"\f589"}
+.bi-sun::before{content:"\f5a2"}
+.bi-telephone::before{content:"\f5c1"}
+.bi-translate::before{content:"\f658"}
+.bi-trophy::before{content:"\f5e7"}
+.bi-trophy-fill::before{content:"\f5e6"}

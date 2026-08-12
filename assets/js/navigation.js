@@ -1,35 +1,54 @@
 /*!
  * navigation.js — Executive Portfolio Template
  * Clean-URL scrolling, active-link highlighting, mobile nav collapse.
+ * Vanilla JS — no jQuery required (removed as a perf pass; every call site
+ * below was a simple DOM query/class-toggle, ported 1:1 with no behavior
+ * change: attr()->getAttribute(), hasClass()->classList.contains(),
+ * offset().top->getBoundingClientRect().top+scrollY, $(window).height()->
+ * innerHeight, etc.)
  */
-$(function () {
+(function () {
+  'use strict';
 
+  function ready(fn) {
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', fn); }
+    else { fn(); }
+  }
+
+  ready(function () {
 
   /* ---------- Clean-URL navigation: scroll to section without #hash in the address bar ---------- */
-  $(document).on('click', 'a[href^="#"]', function (ev) {
-    var hash = $(this).attr('href');
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest('a[href^="#"]');
+    if (!a) return;
+    var hash = a.getAttribute('href');
     if (hash === '#') return;                 // placeholder links — leave as-is
-    var $target = $(hash);
-    if (!$target.length) return;
+    var target;
+    try { target = document.querySelector(hash); } catch (e) { return; }
+    if (!target) return;
     ev.preventDefault();
-    if ($(this).hasClass('nav-link') || $(this).hasClass('dropdown-item')) {
-      $('.navbar .nav-link, .navbar .dropdown-item').removeClass('active');
-      $(this).addClass('active');
+    if (a.classList.contains('nav-link') || a.classList.contains('dropdown-item')) {
+      document.querySelectorAll('.navbar .nav-link, .navbar .dropdown-item').forEach(function (el) {
+        el.classList.remove('active');
+      });
+      a.classList.add('active');
       // A dropdown item was chosen: also light up its parent "Expertise"/"Proof" toggle.
-      var $parentToggle = $(this).closest('.dropdown').find('> .nav-link.dropdown-toggle');
-      if ($parentToggle.length) $parentToggle.addClass('active');
+      var dropdownParent = a.closest('.dropdown');
+      var parentToggle = dropdownParent && dropdownParent.querySelector(':scope > .nav-link.dropdown-toggle');
+      if (parentToggle) parentToggle.classList.add('active');
     }
     var prefersReduced = false;
     try { prefersReduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) {}
     if (document.documentElement.getAttribute('data-motion') === 'none') { prefersReduced = true; }
-    $target[0].scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+    target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
     history.replaceState(null, '', window.location.pathname + window.location.search);
   });
 
   /* Strip a hash if the page is opened with one (e.g. a shared #career link) */
   if (window.location.hash) {
-    var $onLoad = $(window.location.hash);
-    if ($onLoad.length) setTimeout(function () { $onLoad[0].scrollIntoView(); }, 0);
+    var onLoad = null;
+    try { onLoad = document.querySelector(window.location.hash); } catch (e) {}
+    if (onLoad) setTimeout(function () { onLoad.scrollIntoView(); }, 0);
     history.replaceState(null, '', window.location.pathname + window.location.search);
   }
 
@@ -47,34 +66,42 @@ $(function () {
      each candidate's real page offset avoids that regardless of how the
      menu is ordered or restructured later. */
   var navTargets = [];
-  $('.navbar .nav-link[href^="#"], .navbar .dropdown-item[href^="#"]').each(function () {
-    var id = $(this).attr('href').slice(1);
+  document.querySelectorAll('.navbar .nav-link[href^="#"], .navbar .dropdown-item[href^="#"]').forEach(function (a) {
+    var id = a.getAttribute('href').slice(1);
     var el = document.getElementById(id);
     if (el) navTargets.push({ id: id, el: el });
   });
 
   var lockUntil = 0;   // ignore the spy while a click-triggered smooth scroll runs
 
+  function offsetTop(el) {
+    return el.getBoundingClientRect().top + window.scrollY;
+  }
+
   function paintActive() {
     if (!navTargets.length || Date.now() < lockUntil) return;
-    var line = $(window).scrollTop() + (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 100) + 12;
+    var line = window.scrollY + (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 100) + 12;
     var current = null, currentTop = -Infinity, lowestId = null, lowestTop = -Infinity;
     navTargets.forEach(function (t) {
-      var top = $(t.el).offset().top;
+      var top = offsetTop(t.el);
       if (top <= line && top > currentTop) { current = t.id; currentTop = top; }
       if (top > lowestTop) { lowestTop = top; lowestId = t.id; }
     });
     // Bottom of page: always light whichever tracked section sits lowest,
     // not just the last one in the nav's own order.
-    if ($(window).scrollTop() + $(window).height() >= document.documentElement.scrollHeight - 4) {
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) {
       current = lowestId;
     }
-    var $links = $('.navbar .nav-link, .navbar .dropdown-item');
-    $links.removeClass('active');
+    var links = document.querySelectorAll('.navbar .nav-link, .navbar .dropdown-item');
+    links.forEach(function (el) { el.classList.remove('active'); });
     if (current) {
-      var $active = $links.filter('[href="#' + current + '"]').addClass('active');
-      var $parentToggle = $active.closest('.dropdown').find('> .nav-link.dropdown-toggle');
-      if ($parentToggle.length) $parentToggle.addClass('active');
+      var activeLinks = document.querySelectorAll('.navbar .nav-link[href="#' + current + '"], .navbar .dropdown-item[href="#' + current + '"]');
+      activeLinks.forEach(function (el) {
+        el.classList.add('active');
+        var dropdownParent = el.closest('.dropdown');
+        var parentToggle = dropdownParent && dropdownParent.querySelector(':scope > .nav-link.dropdown-toggle');
+        if (parentToggle) parentToggle.classList.add('active');
+      });
     }
   }
 
@@ -91,10 +118,13 @@ $(function () {
   var supportsScrollEnd = 'onscrollend' in window;
   if (supportsScrollEnd) { window.addEventListener('scrollend', releaseLock); }
 
-  $(window).on('scroll resize', paintActive);
+  window.addEventListener('scroll', paintActive, { passive: true });
+  window.addEventListener('resize', paintActive);
   paintActive();
-  $('.navbar .nav-link[href^="#"], .navbar .dropdown-item[href^="#"]').on('click', function () {
-    lockUntil = Date.now() + (supportsScrollEnd ? 4000 : 1000);
+  document.querySelectorAll('.navbar .nav-link[href^="#"], .navbar .dropdown-item[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      lockUntil = Date.now() + (supportsScrollEnd ? 4000 : 1000);
+    });
   });
 
   /* ---------- Collapse mobile nav on link click ----------
@@ -102,17 +132,22 @@ $(function () {
      meant tapping "Expertise"/"Proof" on mobile opened the submenu and
      immediately collapsed the whole nav, making child menus unusable.
      Its own links still close the nav via the .dropdown-item selector. */
-  $('.navbar .nav-link:not(.dropdown-toggle), .navbar .dropdown-item, .navbar .btn').on('click', function () {
-    var nav = document.getElementById('nav');
-    if (nav.classList.contains('show')) bootstrap.Collapse.getInstance(nav).hide();
+  document.querySelectorAll('.navbar .nav-link:not(.dropdown-toggle), .navbar .dropdown-item, .navbar .btn').forEach(function (el) {
+    el.addEventListener('click', function () {
+      var nav = document.getElementById('nav');
+      if (nav.classList.contains('show')) {
+        var instance = bootstrap.Collapse.getInstance(nav);
+        if (instance) instance.hide();
+      }
+    });
   });
 
   /* ---------- Open dropdowns on hover (expanded desktop nav only) ----------
      Bootstrap dropdowns are click-only by default. On a fine pointer opening
      "Expertise"/"Proof" on hover reads as more natural. Uses the real Dropdown
-     API (not a CSS :hover rule) so aria-expanded and Popper positioning stay
-     correct, with a short open/close delay to stop flicker when crossing the
-     gap between the toggle and the menu.
+     API (not a CSS :hover rule) so aria-expanded stays correct, with a short
+     open/close delay to stop flicker when crossing the gap between the
+     toggle and the menu.
 
      Two conditions gate this, and BOTH matter:
 
@@ -123,9 +158,9 @@ $(function () {
      the hamburger below 1200px, where the interaction model is click, not
      hover. Without it, a mouse user at a narrow width (or anyone testing
      mobile by resizing the window) got: hover silently opens the submenu,
-     then their click hits Bootstrap's toggle and closes what hover had just
-     opened - the menu appeared to flash open and vanish, with no way to
-     reach a child link.
+     then their click hits the toggle and closes what hover had just opened -
+     the menu appeared to flash open and vanish, with no way to reach a
+     child link.
 
      The query is also re-evaluated inside each handler rather than once at
      load, so resizing across the breakpoint switches modes immediately
@@ -156,16 +191,17 @@ $(function () {
     });
 
     /* In hover mode the pointer has already opened the menu by the time it
-       reaches the toggle, so Bootstrap's click handler would read "already
+       reaches the toggle, so a plain click handler would read "already
        open" and close it - the menu flashed open and vanished under the
        cursor. Swallow that click while the menu is open so hover stays in
        sole control of it.
 
-       Capture phase is required: Bootstrap listens on document during the
-       bubble phase, so the event has to be stopped before it gets there.
-       In click mode (touch, or a collapsed nav) this does nothing and
-       Bootstrap toggles normally. Keyboard is unaffected - Enter fires a
-       click with the menu closed, which passes straight through. */
+       Capture phase is required: the dropdown's own document-level toggle
+       listener runs during the bubble phase, so this has to stop the event
+       before it gets there. In click mode (touch, or a collapsed nav) this
+       does nothing and the dropdown toggles normally. Keyboard is
+       unaffected - Enter fires a click with the menu closed, which passes
+       straight through. */
     toggleEl.addEventListener('click', function (ev) {
       if (!hoverNavEnabled()) { return; }
       if (item.querySelector('.dropdown-menu.show')) {
@@ -174,4 +210,6 @@ $(function () {
       }
     }, true);
   });
-});
+
+  });
+})();

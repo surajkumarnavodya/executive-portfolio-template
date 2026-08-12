@@ -164,18 +164,27 @@ Internet Explorer is not supported. The template uses CSS custom properties,
 
 ## Dependencies
 
-Loaded from jsDelivr with Subresource Integrity hashes:
+CDN, loaded from jsDelivr with Subresource Integrity hashes:
 
 | Library | Version | Licence |
 |---|---|---|
-| Bootstrap | 5.3.8 | MIT |
-| Bootstrap Icons | 1.13.1 | MIT |
-| jQuery | 3.7.1 | MIT |
+| Bootstrap (CSS only — see below) | 5.3.8 | MIT |
 | Google Fonts — Inter, Fraunces, JetBrains Mono | — | SIL OFL 1.1 |
 
-To self-host instead, download each file, drop it in `assets/`, update the paths
-in `index.html`, and remove the `integrity` and `crossorigin` attributes — those
+To self-host instead, download the file, drop it in `assets/`, update the path
+in `index.html`, and remove the `integrity`/`crossorigin` attributes — those
 only validate over `http(s)`, and will **block** the file over `file://`.
+
+Self-hosted, part of this repo:
+
+| Asset | Source | Why |
+|---|---|---|
+| `assets/css/icons.css` + `assets/fonts/bootstrap-icons-subset.woff2` | Bootstrap Icons 1.13.1, subsetted | index.html/engineering.html use 69 of ~2000 glyphs; self-hosting the full CDN CSS+font cost 221KB and 2 requests for those 69 icons. See the regeneration recipe in `assets/css/icons.css`'s own header. |
+| `assets/js/bs-shim.js` (compiled into `template.min.js`) | Hand-written, ~2KB | Replaces the Bootstrap JS CDN bundle (jQuery-free build was still ~80KB incl. Popper). This site only ever used 2 of Bootstrap's components — Collapse (mobile nav) and Dropdown (2 nav menus, positioned by plain CSS, no Popper needed) — see the file's own header for the full reasoning. |
+
+**jQuery has been removed entirely** (was 3.7.1, MIT) — every call site (`counters.js`'s
+count-up, `navigation.js`'s scroll-spy/clean-url routing, `theme.js`'s toggle)
+is now vanilla JS with identical behavior.
 
 ---
 
@@ -183,16 +192,34 @@ only validate over `http(s)`, and will **block** the file over `file://`.
 
 Built-in optimizations in this release:
 
-- Minified production bundles: `assets/dist/css/template.min.css` and
-  `assets/dist/js/template.min.js`
-- Deferred script loading for non-critical JS
-- Critical profile image preload
+- Real minified production bundles (terser for JS, csso for CSS) —
+  `assets/dist/css/template.min.css` and `assets/dist/js/template.min.js`.
+  Previously these were only concatenated, not actually minified, despite
+  the filename; see `tools/README.md` for the regeneration commands.
+- No jQuery, no Bootstrap JS bundle — see Dependencies above.
+- Self-hosted, subsetted Bootstrap Icons (69 glyphs, ~13KB total vs. 221KB
+  for the full CDN CSS+font).
+- Inlined critical (above-the-fold) CSS on both `index.html` and
+  `engineering.html`, regenerated via `tools/build_critical.js` — the full
+  bundle loads non-blocking via a preload→stylesheet swap.
+- Google Fonts CSS also loads non-blocking (same preload→swap pattern);
+  Fraunces' variable-weight axis is requested as 400..700, not the family's
+  full 300..700 range, since nothing on the site uses a lower weight.
+- Deferred script loading for non-critical JS; the on-page Template
+  Customizer's settings panel (sliders, presets, layout builder) builds on
+  the browser's next idle moment rather than blocking initial load.
+- Critical profile image preload, with explicit `width`/`height` to avoid
+  layout shift.
 - WebP + AVIF profile image alternatives (`assets/images/profile.webp`, `assets/images/profile.avif`)
 - Motion-safe fallbacks via `prefers-reduced-motion` and runtime motion controls
 
-For further optimization, optional next steps remain:
-- Replace icon font usage with inline SVG sprite/subset
-- Remove jQuery dependency (all current call sites are straightforward to port)
+For further optimization, the largest remaining opportunity is Bootstrap CSS
+itself (232KB raw from the CDN) — this template uses a meaningful slice of
+its grid/flex/navbar/dropdown utilities throughout the markup, so subsetting
+it safely needs a proper PurgeCSS-style pass verified page-by-page, not a
+quick trim. Out of scope for an incremental pass; a documented audit caveat
+already exists in `tools/README.md`'s "Auditing for dead CSS" section for
+why a naive purge is unsafe here.
 
 ---
 

@@ -1,10 +1,8 @@
 /*!
  * counters.js — Executive Portfolio Template
- * Scroll reveals (vanilla JS, no jQuery required) + KPI count-up (jQuery).
- *
- * The reveal observer is intentionally vanilla JS so it works even when
- * jQuery is not yet available or fails to load from CDN (e.g. offline / file://).
- * The count-up animation degrades gracefully to a static number if jQuery is absent.
+ * Scroll reveals + KPI count-up. Fully vanilla JS (jQuery removed as a perf
+ * pass — the count-up tween below reimplements jQuery's default 'swing'
+ * easing curve exactly: 0.5 - cos(p*PI)/2, so the animation is unchanged.
  */
 
 /* ============================================================
@@ -48,10 +46,25 @@
 })();
 
 /* ============================================================
-   KPI COUNT-UP — jQuery-based, degrades to static if absent.
+   KPI COUNT-UP — vanilla requestAnimationFrame tween.
    ============================================================ */
 (function () {
   'use strict';
+
+  // Same curve as jQuery's built-in 'swing' easing (ease-in-out).
+  function swing(p) { return 0.5 - Math.cos(p * Math.PI) / 2; }
+
+  function tween(el, target, duration) {
+    var start = null;
+    function step(ts) {
+      if (start === null) { start = ts; }
+      var p = Math.min((ts - start) / duration, 1);
+      el.textContent = Math.floor(swing(p) * target);
+      if (p < 1) { requestAnimationFrame(step); }
+      else { el.textContent = target; }
+    }
+    requestAnimationFrame(step);
+  }
 
   function initCountUp() {
     var reduced = false;
@@ -66,12 +79,8 @@
         (function (el) {
           var target = parseInt(el.getAttribute('data-count'), 10);
           if (isNaN(target)) return;
-          if (reduced || typeof $ === 'undefined') { el.textContent = target; return; }
-          $({ n: 0 }).animate({ n: target }, {
-            duration: 1400, easing: 'swing',
-            step: function (now) { el.textContent = Math.floor(now); },
-            complete: function () { el.textContent = target; }
-          });
+          if (reduced) { el.textContent = target; return; }
+          tween(el, target, 1400);
         })(els[i]);
       }
     }

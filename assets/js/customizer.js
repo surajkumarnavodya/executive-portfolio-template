@@ -567,9 +567,28 @@
     applyTheme();
     applyPreset();
     applySectionLayout();
-    var panel = buildPanel();
-    bind(panel);
     document.body.classList.add('page-ready');
+
+    // buildPanel()/bind() construct the full settings UI (mode/palette/font/
+    // radius/motion controls, 8 preset buttons, the drag/drop layout builder,
+    // export/import) — a visitor who never opens the customizer never needs
+    // any of it painted or wired up during initial load. Deferred to the
+    // browser's next idle moment (setTimeout(0) on browsers without
+    // requestIdleCallback — Safari) rather than "on first click", so the
+    // open/close logic itself doesn't need restructuring: by the time
+    // anyone can plausibly click the toggle, this has already run.
+    var panel = null;
+    function buildAndBind() {
+      if (panel) { return panel; }
+      panel = buildPanel();
+      bind(panel);
+      return panel;
+    }
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(buildAndBind, { timeout: 2000 });
+    } else {
+      setTimeout(buildAndBind, 0);
+    }
 
     window.PortfolioThemeCustomizer = {
       getState: function () { return JSON.parse(JSON.stringify(state)); },
@@ -583,6 +602,9 @@
         applyPreset();
         applySectionLayout();
         saveStorage();
+        // If the panel hasn't been built yet (still idle-deferred), nothing
+        // to sync — buildAndBind() reads the current `state` object whenever
+        // it does run, so it always paints the latest values, not stale ones.
       },
       presets: Object.keys(PRESETS)
     };

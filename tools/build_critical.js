@@ -1,7 +1,7 @@
 /**
  * Extract critical (first-viewport) CSS from the template bundle.
  *
- * "Above the fold" for home.html = the telemetry ticker, the fixed navbar
+ * "Above the fold" for index.html = the telemetry ticker, the fixed navbar
  * (including its dropdowns, which are painted on first interaction but share
  * the navbar's box) and the <header class="hero">.
  *
@@ -61,7 +61,7 @@ function stripPseudo(sel) {
 }
 
 // ---- build the above-the-fold document ------------------------------------
-const dom = new JSDOM(fs.readFileSync(path.join(ROOT, "home.html"), "utf8"));
+const dom = new JSDOM(fs.readFileSync(path.join(ROOT, "index.html"), "utf8"));
 const doc = dom.window.document;
 {
   const keep = new Set();
