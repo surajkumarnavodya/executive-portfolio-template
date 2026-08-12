@@ -87,7 +87,7 @@ window.PORTFOLIO_CONFIG = {
       'disciplined delivery.',
       'outcomes. teams. trust.'
     ],
-    valueStatement: 'Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 7+ years as a hands-on .NET engineer.',
+    valueStatement: 'Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 8+ years as a hands-on .NET engineer.',
     activeTone: '',
     toneVariants: {
       authoritative: {
@@ -197,7 +197,7 @@ window.PORTFOLIO_CONFIG = {
     location: 'Mumbai, India',
     // Deliberately not a human-guessable filename/path — see the "why" note
     // in docs/ReleaseQA.md before renaming this back to something obvious.
-    resume: 'assets/aff991fc366a/40257fcfd3621de6d7ff.pdf',
+    resume: 'assets/f3230583c0ff/e9bb4c8c8cd214c449ac.pdf',
     // Prefilled subject line for the "email me" links.
     emailSubject: 'Delivery leadership conversation',
     // Create a form at https://formspree.io (free tier is fine), then paste

@@ -69,7 +69,7 @@ apply(
 /* ---------- meta / head ---------- */
 apply('<title>Suraj Kumar | Enterprise Program & Project Manager | Digital Transformation & AI</title>',
       '<title>[Your Name] | Enterprise Program & Project Manager | Digital Transformation & AI</title>');
-apply('content="Suraj Kumar — Program & Project Manager. 12+ years in IT, 7+ as a hands-on .NET engineer. Owns delivery health, client relationships and teams across ₹2Cr+ multi-account portfolios — 95%+ on-time, on-budget, with AI-augmented ways of working.">',
+apply('content="Suraj Kumar — Program & Project Manager. 12+ years in IT, 8+ as a hands-on .NET engineer. Owns delivery health, client relationships and teams across ₹2Cr+ multi-account portfolios — 95%+ on-time, on-budget, with AI-augmented ways of working.">',
       'content="[Your Name] — Program & Project Manager. [X]+ years in IT, [X]+ as a hands-on .NET engineer. Owns delivery health, client relationships and teams across [large] multi-account portfolios — [XX]%+ on-time, on-budget, with AI-augmented ways of working.">');
 apply('content="Suraj Kumar">', 'content="[Your Name]">', 2);
 apply('content="Suraj Kumar | Program & Project Manager · AI-Augmented Delivery">',
@@ -83,7 +83,7 @@ apply('content="Delivery leader — 12+ years in enterprise IT delivery. Owns ou
 
 /* ---------- JSON-LD ---------- */
 apply('"name": "Suraj Kumar",', '"name": "[Your Name]",');
-apply('"description": "Program & Delivery Leader with 12+ years in enterprise IT, including 7+ years as a hands-on .NET engineer — owns delivery health, client relationships and teams across multi-account portfolios.",',
+apply('"description": "Program & Delivery Leader with 12+ years in enterprise IT, including 8+ years as a hands-on .NET engineer — owns delivery health, client relationships and teams across multi-account portfolios.",',
       '"description": "Program & Delivery Leader with [X]+ years in enterprise IT, including [X]+ years as a hands-on .NET engineer — owns delivery health, client relationships and teams across multi-account portfolios.",');
 apply('"email": "surajkumar.navodya@gmail.com",', '"email": "you@example.com",');
 apply('{ "@type": "CollegeOrUniversity", "name": "Sikkim Manipal University" },', '{ "@type": "CollegeOrUniversity", "name": "[Your University]" },');
@@ -110,7 +110,7 @@ apply('mailto:surajkumar.navodya@gmail.com', 'mailto:you@example.com', 3);
 apply('surajkumar.navodya@gmail.com', 'you@example.com', 2);
 apply('tel:+919049141305', 'tel:+10000000000');
 apply('+91 90491 41305', '[Your Phone]');
-apply('assets/aff991fc366a/40257fcfd3621de6d7ff.pdf', 'assets/downloads/your-resume.pdf');
+apply('assets/f3230583c0ff/e9bb4c8c8cd214c449ac.pdf', 'assets/downloads/your-resume.pdf');
 
 /* ---------- KPI board / hero stats / scorecard ---------- */
 apply('Measured across L&amp;T Group accounts at LTIMindtree, 2021–2026.', 'Measured across [Client Group] accounts at [Your Employer], [Year]–[Year].');
@@ -122,7 +122,7 @@ apply(`<!-- Static fallback numbers are baked in so link previews and crawlers n
       `<!-- Static fallback numbers are baked in so link previews and crawlers never show zeros.
                              Replace the sample data-count values and labels below with your own real metrics —
                              e.g. delivery margin %, CSAT/NPS, or utilization %. -->`);
-apply('Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 7+ years as a hands-on .NET engineer.',
+apply('Enterprise Program &amp; Delivery Leader — 12+ years running multi-crore, multi-account portfolios, backed by 8+ years as a hands-on .NET engineer.',
       'Enterprise Program &amp; Delivery Leader — [X]+ years running multi-crore, multi-account portfolios, backed by [X]+ years as a hands-on .NET engineer.');
 
 /* ---------- hero stats / executive ribbon ---------- */

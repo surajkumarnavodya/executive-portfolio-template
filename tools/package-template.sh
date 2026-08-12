@@ -49,7 +49,9 @@ rm -f "$OUT"
 #                                        the genericized ui.js so the compiled bundle can't leak
 #                                        real content even though it's not fetched separately
 #   assets/images/profile.*           - real photo; replaced below with the placeholder avatar
-#   assets/aff991fc366a/              - the real résumé, at its random hashed path — never shipped
+#   assets/f3230583c0ff/              - the real PM/delivery résumé, at its random hashed path
+#   assets/bc8ab7cb7c05/              - the real engineering résumé, at its random hashed path
+#                                        (both never shipped)
 #   og-image.png                      - real branded social-preview image
 #   CLAUDE.md, AGENTS.md, .github/copilot-instructions.md - AI-assistant session
 #                                        logs about this real deployment, not buyer docs
@@ -73,7 +75,8 @@ git archive --format=zip --output="$WORKDIR/raw.zip" "$REF" -- . \
   ':!assets/images/profile.jpg' \
   ':!assets/images/profile.webp' \
   ':!assets/images/profile.avif' \
-  ':!assets/aff991fc366a' \
+  ':!assets/f3230583c0ff' \
+  ':!assets/bc8ab7cb7c05' \
   ':!og-image.png' \
   ':!CLAUDE.md' \
   ':!AGENTS.md' \

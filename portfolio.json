@@ -23,7 +23,7 @@
     "location": "Mumbai, India",
     "website": "https://surajkumarnavodya.com/",
     "linkedin": "https://www.linkedin.com/in/surajkumar-navodya",
-    "resume": "assets/aff991fc366a/40257fcfd3621de6d7ff.pdf"
+    "resume": "assets/f3230583c0ff/e9bb4c8c8cd214c449ac.pdf"
   },
   "navigation": [
     { "id": "leadership", "label": "Leadership" },
@@ -82,6 +82,6 @@
   },
   "assets": [
     { "id": "profile-photo", "src": "assets/images/profile.jpg", "type": "image", "name": "profile.jpg" },
-    { "id": "resume-doc", "src": "assets/aff991fc366a/40257fcfd3621de6d7ff.pdf", "type": "document", "name": "resume.pdf" }
+    { "id": "resume-doc", "src": "assets/f3230583c0ff/e9bb4c8c8cd214c449ac.pdf", "type": "document", "name": "resume.pdf" }
   ]
 }
