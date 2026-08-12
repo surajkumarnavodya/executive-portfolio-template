@@ -302,6 +302,23 @@ apply(`<span class="ti on">RISK EXPOSURE <b>&minus;20%</b></span>
             <span class="ti">[YOUR CERTIFICATE] <b>[INSTITUTION]</b></span>`);
 apply('<span class="brand-name">SURAJ KUMAR<span class="dot">.</span></span>', '<span class="brand-name">JOHN ANDERSON<span class="dot">.</span></span>');
 
+/* ---------- audience toggle (Delivery/Engineering) ----------
+   Links to engineering.html, the live site's second page — the template
+   product is single-page and never ships that file (package-template.sh
+   excludes it), so the "Engineering" link would 404 in every buyer's
+   deployment. Removed outright rather than repointed: there's no template
+   equivalent of "the other page" to send it to. Found by
+   tools/validate_release.js's dead-link check actually running the packaged
+   output in a browser, not by reading the markup. */
+apply(
+`                    <!-- Two views of one career, not two people — lets a visitor
+                         switch to the technical framing of this same site. -->
+                    <div class="audience-toggle" role="group" aria-label="Choose which view of this site to see">
+                        <a href="index.html" aria-current="page" title="Delivery leadership view" aria-label="Delivery leadership view"><i class="bi bi-briefcase" aria-hidden="true"></i><span class="aud-label">Delivery</span></a>
+                        <a href="engineering.html" title="Engineering view" aria-label="Engineering view"><i class="bi bi-code-slash" aria-hidden="true"></i><span class="aud-label">Engineering</span></a>
+                    </div>
+`, '');
+
 /* ---------- KPI board data-count values (drive the count-up animation, not
    just display text — must change independently of the surrounding label) ---------- */
 apply('<span class="count" data-count="95">95</span>', '<span class="count" data-count="90">90</span>');
