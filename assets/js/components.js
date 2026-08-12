@@ -144,7 +144,13 @@
       for (var s = 0; s < statEls.length; s += 1) {
         var stat = payload.stats[s];
         if (!stat) { continue; }
-        text(statEls[s].querySelector('h4'), stat.value);
+        // .stat-value, not h4 — the hero stat numbers were an accessibility
+        // fix away from a heading-hierarchy violation (H1 straight to H4,
+        // no H2/H3 between); this selector went stale then and silently
+        // stopped matching anything. Currently dormant (no shipped preset
+        // defines its own `stats` array to trigger this path), caught while
+        // verifying an unrelated hero change.
+        text(statEls[s].querySelector('.stat-value'), stat.value);
         text(statEls[s].querySelector('small'), stat.label);
       }
     }

@@ -71,7 +71,14 @@
       heroPhrases: ['outcomes. teams. trust.', 'on time. on budget.', 'client confidence up.', 'disciplined delivery.'],
       valueStatement: 'I lead enterprise delivery with governance rigor, strong client partnership, and measurable execution quality.',
       lede: 'Enterprise <strong>Program &amp; Project Manager</strong> with <strong>12+ years</strong> of experience and <strong>8+ years</strong> on .NET engineering foundation, delivering multi-account programs through strong governance, client partnerships, technical leadership, and measurable business outcomes.',
-      primaryCta: '<i class="bi bi-calendar-check me-2"></i>Schedule Delivery Discussion'
+      // Matches the nav button and persistent scroll CTA verbatim, on
+      // purpose — this is the DEFAULT preset (config.js: defaultPreset:
+      // 'deliveryManager'), so it's what every visitor actually sees
+      // (components.js's hero renderer applies primaryCta unconditionally,
+      // regardless of index.html's own static fallback text). One consistent
+      // action phrase repeated across the page beats three different
+      // phrasings of the same request.
+      primaryCta: '<i class="bi bi-calendar-check me-2"></i>Start a conversation'
     },
     engineeringManager: {
       key: 'engineeringManager',
