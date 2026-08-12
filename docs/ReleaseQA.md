@@ -90,22 +90,31 @@
 
 ## 3. Performance Audit Checklist
 
+**Note (2026 perf pass):** several rows below were stale relative to the
+codebase for a long stretch — jQuery and the Bootstrap JS CDN bundle were
+both removed (replaced by `assets/js/bs-shim.js`, ~2KB), Bootstrap Icons is
+now self-hosted and subsetted (`assets/css/icons.css` +
+`assets/fonts/bootstrap-icons-subset.woff2`), and both dist bundles are now
+actually minified (terser/csso) rather than just concatenated. The rows
+below reflect that pass; if you're reading this later and the numbers look
+wrong again, trust the actual files in `assets/dist/` over this table.
+
 | Check | Status | Notes |
 |---|---|---|
-| CSS minified | ✅ | `template.min.css` ~62KB (33% reduction from source) |
-| JS minified | ✅ | `template.min.js` ~70KB (27% reduction from source) |
-| Scripts deferred | ✅ | jQuery, Bootstrap, config.js, template.min.js all `defer` |
-| Critical CSS inlined | ⚠️ | Not inlined — loaded as external bundle. Consider inlining `variables.css` for first paint optimization. |
+| CSS minified | ✅ | `template.min.css` ~63KB (real minification via `csso`, not just concatenation) |
+| JS minified | ✅ | `template.min.js` ~61KB (real minification via `terser`) |
+| Scripts deferred | ✅ | `config.js` and `template.min.js` both `defer`. No jQuery, no separate Bootstrap JS script — both removed. |
+| Critical CSS inlined | ✅ | Inlined on both `index.html` and `engineering.html` via `tools/build_critical.js` (~28KB, first-viewport rules only); full bundle loads non-blocking via preload→stylesheet swap. |
 | Profile image AVIF | ✅ | profile.avif (1.1KB), profile.webp (1.8KB), profile.jpg (3KB) |
-| Image preload | ✅ | **Fixed:** Single `<link rel="preload">` for AVIF only (was 3 preloads) |
-| Picture/source format negotiation | ✅ | **Fixed:** Navbar avatar uses `<picture><source type>` for AVIF/WebP/JPEG selection |
-| Font preconnect | ✅ | `fonts.googleapis.com` + `fonts.gstatic.com` preconnect |
-| Font display | ✅ | Google Fonts URL includes `display=swap` |
-| Bootstrap from CDN with SRI | ✅ | SRI hashes on Bootstrap CSS, Bootstrap JS, jQuery, Bootstrap Icons |
-| No unused CSS (approx) | ✅ | Single shared stylesheet; no framework CSS purging needed (Bootstrap loaded via CDN, not bundled) |
+| Image preload | ✅ | Single `<link rel="preload">` for AVIF only |
+| Picture/source format negotiation | ✅ | Navbar avatar uses `<picture><source type>` for AVIF/WebP/JPEG selection |
+| Font preconnect | ✅ | `fonts.googleapis.com` + `fonts.gstatic.com` preconnect; Google Fonts CSS itself loads non-blocking (preload→swap) |
+| Font display | ✅ | Google Fonts URL includes `display=swap`; Fraunces' variable-weight axis narrowed to 400..700 (only range actually used) |
+| Bootstrap CSS from CDN with SRI | ✅ | SRI hash on Bootstrap CSS (the only remaining Bootstrap CDN dependency — its JS bundle and Bootstrap Icons are no longer CDN-loaded) |
+| No unused CSS (approx) | ✅ | Single shared stylesheet; Bootstrap CSS still loaded via CDN unpurged — see `tools/README.md`'s "Auditing for dead CSS" caveat for why a naive purge there is unsafe |
 | Lazy loading non-critical images | ✅ | Only profile.jpg in the DOM (34×34px nav icon) — no large images to lazy-load |
-| WebP/AVIF images | ✅ | profile in AVIF+WebP+JPG. og-image.png is buyer-supplied. |
-| No render-blocking resources | ✅ | CSS in `<head>`, scripts deferred |
+| WebP/AVIF images | ✅ | profile in AVIF+WebP+JPG. `og-image.png` ships as a generated placeholder in the template package — buyers should replace it, `tools/validate_release.js` doesn't fail on the placeholder but flags Studio/other reminders. |
+| No render-blocking resources | ⚠️ | Bootstrap CSS (232KB from CDN) is still render-blocking — the one deliberately-deferred larger optimization (see `README.md`'s Performance notes for why: this template uses too much of it to safely subset without a page-by-page verified purge). Everything else (fonts, icons, own CSS bundle) is non-blocking. |
 | Gzip/Brotli compression | 🔵 | Server-side. Enable in Apache/Nginx per Installation guide. |
 | Cache headers | 🔵 | Server-side. See `docs/Installation.md` for recommended `.htaccess` settings. |
 
@@ -122,9 +131,9 @@
 | JSON-LD Person schema | ✅ | **Fixed:** `email` field no longer has `mailto:` prefix. `jobTitle`, `worksFor`, `address`, `sameAs` all populated. |
 | Open Graph tags | ✅ | `og:type`, `og:title`, `og:description`, `og:image`, `og:url` present |
 | Twitter Card | ✅ | `summary_large_image`, `twitter:site`, `twitter:creator`, `twitter:image` |
-| OG image exists | ⚠️ | `og-image.png` referenced but not included — buyer must supply a 1200×630 promotional image. See `docs/Customization.md`. |
-| robots.txt | ✅ | Correct `User-agent: *`, `Allow: /`, meaningful `Disallow` paths, `Sitemap:` directive |
-| sitemap.xml | ✅ | Lists homepage with `changefreq` and `priority`. Add `component-catalog.html` and `studio.html` if indexing desired. |
+| OG image exists | ✅ | `og-image.png` ships in the template package as a generated 1200×630 placeholder (navy/accent branded, explicitly labeled "replace this image") — not a 404, but still not the buyer's real content. See `docs/Customization.md`. |
+| robots.txt | ✅ | Template package ships `robots.template.txt` → `robots.txt` — placeholder `example.com` domain (not the live site's real domain), correct `User-agent: *`, `Allow: /`, meaningful `Disallow` paths, `Sitemap:` directive |
+| sitemap.xml | ✅ | Template package ships `sitemap.template.xml` → `sitemap.xml` — lists only `index.html` (the live site's `engineering.html` entry is correctly not carried over, since that page isn't part of the template product). Add `component-catalog.html` and `studio.html` if indexing them is ever desired — not recommended, see README. |
 | `<meta name="robots">` | ✅ | `index, follow` |
 | Structured headings H1→H2→H3 | ✅ | One H1 in hero, H2 per section, H3 for subsections |
 | Internal links | ✅ | All nav links, CTA links, and footer links valid |
@@ -188,9 +197,9 @@
 
 | Item | Owner | Action Required |
 |---|---|---|
-| `og-image.png` missing | Buyer | Create a 1200×630 promotional image and place at root. See `docs/Customization.md`. |
+| `og-image.png` is a placeholder | Buyer | The template package now ships a generated 1200×630 placeholder (navy/accent branded, explicitly labeled). Replace it with a real promotional image before publishing. See `docs/Customization.md`. |
+| `robots.txt` / `sitemap.xml` / `site.webmanifest` domain | Buyer | All three ship pointing at the placeholder domain `example.com` (not the live site's real domain) — `robots.txt` and `sitemap.xml` both carry a comment saying so. Replace with your own domain before going live, or search engines won't discover your sitemap. `tools/validate_release.js --mode template` checks these files never regress to leaking the *original author's* domain, but can't know your domain in advance — it's still on you to fill in your own. |
 | Resume PDF missing | Buyer | Drop your PDF anywhere under `assets/` using a **random, non-guessable folder and filename** (e.g. `assets/<12-hex-chars>/<20-hex-chars>.pdf` — generate with `openssl rand -hex 6` / `openssl rand -hex 10`), then point `config.js` → `contact.resume` at that path. A predictable name like `resume.pdf` or your real name is trivially found by anyone scanning common paths, even without ever visiting the site. Do **not** add the path to `robots.txt` — a `Disallow` entry there would publish the very path you're trying to keep unguessable to anyone who reads the file. |
-| Twitter/X handle | Buyer | Update `@surajkumarnavodya` in `twitter:site` and `twitter:creator` meta tags. |
 | Real testimonials | Buyer | Replace sample quotes with genuine LinkedIn recommendations. |
 | Apple touch icon size | Buyer | Provide a 180×180px PNG for best iOS home-screen quality. Update `<link rel="apple-touch-icon">` and `site.webmanifest`. |
 | Google Fonts privacy | Buyer (EU) | For GDPR-strict deployments, self-host the four font families instead of loading from Google Fonts. |

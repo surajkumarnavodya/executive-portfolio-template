@@ -1,0 +1,19 @@
+# Executive Portfolio Template
+# REQUIRED: replace "https://example.com" below with your own domain before
+# going live — an un-edited placeholder domain here is harmless (it points at
+# a reserved, non-resolving domain, never at the original author's site) but
+# search engines will not discover your real sitemap until it's fixed.
+
+User-agent: *
+Allow: /
+
+# Nothing here is private, but there is no value in indexing the raw assets
+# or the optional Studio builder tool (see README.md — delete studio.html
+# and component-catalog.html entirely if you don't want them reachable at all).
+Disallow: /assets/downloads/
+Disallow: /assets/dev/
+Disallow: /assets/tests/
+Disallow: /studio.html
+
+Sitemap: https://example.com/sitemap.xml
+Host: example.com

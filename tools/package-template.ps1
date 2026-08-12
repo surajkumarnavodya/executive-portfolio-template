@@ -66,6 +66,15 @@ try {
     #   index.template.html, portfolio.template.json, assets/images/profile-placeholder.* -
     #                                        excluded at their OWN paths here; copied to their
     #                                        real in-product paths by the step below instead
+    #   assets/js/config.demo.js          - excluded at its OWN path once step below copies it
+    #                                        to assets/js/config.js -- shipping both left every
+    #                                        buyer wondering which of the two files to edit
+    #   robots.txt, sitemap.xml, site.webmanifest - all three hardcode the live domain
+    #                                        (surajkumarnavodya.com) and/or real identity;
+    #                                        replaced below with their .template equivalents
+    #   .gitattributes, .gitignore        - git-only metadata, meaningless once deployed
+    #   assets/js/asset-integration-test.js, verify-perf-edits.ps1 - stale dev-only
+    #                                        scripts (see package-live.ps1 for detail)
     git archive --format=zip --output=$rawZip $Ref -- . `
         ':!.github' `
         ':!.vs' `
@@ -78,6 +87,7 @@ try {
         ':!index.html' `
         ':!portfolio.json' `
         ':!assets/js/config.js' `
+        ':!assets/js/config.demo.js' `
         ':!assets/js/ui.js' `
         ':!assets/dist/js/template.min.js' `
         ':!assets/images/profile.jpg' `
@@ -86,13 +96,24 @@ try {
         ':!assets/f3230583c0ff' `
         ':!assets/bc8ab7cb7c05' `
         ':!og-image.png' `
+        ':!robots.txt' `
+        ':!sitemap.xml' `
+        ':!site.webmanifest' `
         ':!CLAUDE.md' `
         ':!AGENTS.md' `
         ':!index.template.html' `
         ':!portfolio.template.json' `
         ':!assets/images/profile-placeholder.jpg' `
         ':!assets/images/profile-placeholder.webp' `
-        ':!assets/images/profile-placeholder.avif'
+        ':!assets/images/profile-placeholder.avif' `
+        ':!assets/images/og-image-placeholder.png' `
+        ':!robots.template.txt' `
+        ':!sitemap.template.xml' `
+        ':!site.template.webmanifest' `
+        ':!.gitattributes' `
+        ':!.gitignore' `
+        ':!assets/js/asset-integration-test.js' `
+        ':!verify-perf-edits.ps1'
 
     if ($LASTEXITCODE -ne 0) {
         throw "git archive failed with exit code $LASTEXITCODE"
@@ -115,6 +136,10 @@ try {
     Copy-Item "assets\images\profile-placeholder.jpg"   (Join-Path $siteDir "assets\images\profile.jpg") -Force
     Copy-Item "assets\images\profile-placeholder.webp"  (Join-Path $siteDir "assets\images\profile.webp") -Force
     Copy-Item "assets\images\profile-placeholder.avif"  (Join-Path $siteDir "assets\images\profile.avif") -Force
+    Copy-Item "assets\images\og-image-placeholder.png"  (Join-Path $siteDir "og-image.png") -Force
+    Copy-Item "robots.template.txt"                     (Join-Path $siteDir "robots.txt") -Force
+    Copy-Item "sitemap.template.xml"                    (Join-Path $siteDir "sitemap.xml") -Force
+    Copy-Item "site.template.webmanifest"                (Join-Path $siteDir "site.webmanifest") -Force
 
     # ui.js's real Copilot KB (assets/js/ui.js's DEFAULT_KB) needs its own
     # genericized build, then the shared JS bundle needs rebuilding with that
@@ -128,6 +153,17 @@ try {
     node tools\build_bundle_js.js --override "ui.js=$uiTemplate" --out (Join-Path $siteDir "assets\dist\js\template.min.js")
     if ($LASTEXITCODE -ne 0) { throw "build_bundle_js.js failed with exit code $LASTEXITCODE" }
 
+    # build_bundle_js.js only concatenates -- real minification is a separate
+    # step (see tools/README.md). package-live.ps1 doesn't need this because
+    # it ships the already-minified, already-committed
+    # assets/dist/js/template.min.js unchanged; this script rebuilds the
+    # bundle fresh (to inject the genericized ui.js above) so it has to
+    # re-minify too, or buyers get a ~2x larger, un-minified bundle despite
+    # the "production bundle" README claim.
+    $bundlePath = Join-Path $siteDir "assets\dist\js\template.min.js"
+    npx --yes terser $bundlePath --compress --mangle --format comments=false -o $bundlePath
+    if ($LASTEXITCODE -ne 0) { Write-Warning "terser minification failed (exit $LASTEXITCODE) -- shipping the template bundle un-minified." }
+
     Compress-Archive -Path (Join-Path $siteDir "*") -DestinationPath $Out -Force
 } finally {
     Remove-Item -Recurse -Force $workDir -ErrorAction SilentlyContinue
@@ -135,3 +171,10 @@ try {
 
 $size = (Get-Item $Out).Length / 1MB
 Write-Host ("Wrote {0} ({1:N2} MB) from {2}" -f $Out, $size, $Ref)
+
+$validator = Join-Path $root "tools\validate_release.js"
+if (Test-Path $validator) {
+    Write-Host "Validating template release artifact..."
+    node $validator --mode template --zip $Out
+    if ($LASTEXITCODE -ne 0) { throw "Release validation failed with exit code $LASTEXITCODE" }
+}

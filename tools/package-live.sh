@@ -61,6 +61,18 @@ rm -f "$OUT"
 #                                         that shouldn't be publicly readable)
 #   README.md, LICENSE.txt             - template product documentation/licence
 #                                         terms, not live-site content
+#   .gitattributes, .gitignore         - git-only metadata, meaningless once deployed
+#   assets/js/asset-integration-test.js - manual Studio console test harness (lives
+#                                         outside assets/tests/, so the exclusion
+#                                         above doesn't already catch it; references
+#                                         a "home.html" this repo hasn't had in a
+#                                         long time — confirmed stale, not just unused)
+#   verify-perf-edits.ps1              - one-off manual verification script from a
+#                                         past editing session, same stale-reference
+#                                         problem as above
+#   robots.template.txt, sitemap.template.xml, site.template.webmanifest -
+#                                         package-template's raw material, never
+#                                         referenced by the real index.html
 git archive --format=zip --output="$OUT" "$REF" -- . \
   ':!.github' \
   ':!.vs' \
@@ -88,6 +100,19 @@ git archive --format=zip --output="$OUT" "$REF" -- . \
   ':!portfolio.template.json' \
   ':!assets/images/profile-placeholder.jpg' \
   ':!assets/images/profile-placeholder.webp' \
-  ':!assets/images/profile-placeholder.avif'
+  ':!assets/images/profile-placeholder.avif' \
+  ':!assets/images/og-image-placeholder.png' \
+  ':!.gitattributes' \
+  ':!.gitignore' \
+  ':!assets/js/asset-integration-test.js' \
+  ':!verify-perf-edits.ps1' \
+  ':!robots.template.txt' \
+  ':!sitemap.template.xml' \
+  ':!site.template.webmanifest'
 
 echo "Wrote $OUT ($(du -h "$OUT" | cut -f1)) from $REF"
+
+if [ -f "$ROOT/tools/validate_release.js" ]; then
+  echo "Validating live release artifact..."
+  node "$ROOT/tools/validate_release.js" --mode live --zip "$OUT"
+fi

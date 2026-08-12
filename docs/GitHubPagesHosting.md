@@ -37,9 +37,26 @@ sitting at the top level (repo root) — not inside a subfolder.
 > `portfolio.json`, `assets/js/studio-app.js`, `assets/js/content-service.js`,
 > `assets/js/asset-store.js`, `assets/js/portfolio-data-service.js`,
 > `assets/demo-data/`) from what you push live, or keep Studio only on a
-> separate domain/repo from your real site. `tools/package-live.sh` /
-> `tools/package-live.ps1` build exactly that "real site only" file set for
-> you — see `tools/README.md`.
+> separate domain/repo from your real site.
+>
+> **If you're working from the full source repo** (cloned via Git, with a
+> `tools/` folder present), `tools/package-live.sh` / `tools/package-live.ps1`
+> build exactly that "real site only" file set for you automatically — see
+> `tools/README.md`. Run `node tools/validate_release.js --mode live --zip
+> <output.zip>` afterward; it fails loudly if Studio (or any other dev-only
+> file) ends up in the artifact.
+>
+> **If you received this as a template ZIP** (unzipped a purchased download,
+> no `tools/` folder, no Git repo), you won't have that script — the
+> packaging step already happened before you got it. Studio *is* included in
+> the template ZIP as a documented optional feature (see the root `README.md`
+> → Quick start → "Portfolio Studio"), so once you've filled in `index.html`/
+> `config.js` with your own real content, manually delete `studio.html`,
+> `component-catalog.html`, `assets/css/studio.css`, `assets/js/studio-app.js`,
+> `assets/js/content-service.js`, `assets/js/asset-store.js`,
+> `assets/js/portfolio-data-service.js` and `assets/demo-data/` before
+> uploading — or keep them, but only on a private/staging deployment, never
+> the same public domain as your real site.
 
 ---
 

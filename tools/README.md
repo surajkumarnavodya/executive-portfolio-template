@@ -104,8 +104,42 @@ Both scripts build with `git archive` against a real commit (`HEAD` by
 default), never the working directory — so `.vs/`, stray `*.patch` files, or
 anything else untracked can't end up in either zip no matter what's sitting
 on disk. `.github/`, `.vs/`, `tools/`, `assets/dev/`, and `assets/tests/` are
-excluded from both. See the comments at the top of each script for its full
-exclusion list and an example of packaging a specific tag instead of `HEAD`.
+excluded from both, along with a handful of stale one-off dev scripts
+(`assets/js/asset-integration-test.js`, `verify-perf-edits.ps1`) and git-only
+metadata (`.gitattributes`, `.gitignore`) that have no purpose once deployed.
+See the comments at the top of each script for its full exclusion list and an
+example of packaging a specific tag instead of `HEAD`.
+
+Both scripts also require a real commit to build from — if you have
+uncommitted changes, package **against a commit**, not against what's on
+disk. Commit first (or use `git stash` only if you understand it will hide
+those changes from the *working directory* too, not just from packaging).
+
+### Release validation
+
+Both scripts call `tools/validate_release.js` automatically after writing
+their zip, and **fail the whole packaging run** (non-zero exit) if it finds
+a real problem — not just a warning. Run it standalone against any already-
+built artifact:
+
+```bash
+node tools/validate_release.js --mode live     --zip portfolio-live.zip
+node tools/validate_release.js --mode template --zip executive-portfolio-template.zip
+node tools/validate_release.js --mode template --dir /path/to/extracted/folder
+node tools/validate_release.js --mode template --zip out.zip --strict   # also fail on warnings
+```
+
+It checks (see the file's own header for the full list): the required
+top-level files exist (`index.html`, `robots.txt`, `sitemap.xml`,
+`site.webmanifest`, `favicon.svg`, both dist bundles, the self-hosted icon
+assets); no dev/internal file leaked in; no `href="/..."`/`src="/..."`
+absolute paths that would break a subdirectory deploy; `site.webmanifest`'s
+`start_url`/`scope` aren't the non-portable `"/"`; every `sitemap.xml`
+`<loc>` resolves to a file that actually exists in the package (catches e.g.
+a page that got excluded from one package but not removed from its
+sitemap); and, mode-specific, that the template package contains **zero**
+real-identity strings (name, email, real domain, past employer) and the live
+package contains **zero** Studio/demo-data files.
 
 # CSS build tooling
 
@@ -113,7 +147,9 @@ These scripts exist because two things in this repo are **generated, not
 hand-written**, and will silently drift if edited by hand:
 
 1. `assets/dist/css/template.min.css` — the production bundle
-2. the `<style id="critical-css">` block in `home.html`
+2. the `<style id="critical-css">` block in `index.html` (and, as of the
+   2026 perf pass, `engineering.html` too — both must be regenerated
+   together, see "Regenerating after a CSS change" below)
 
 They are intentionally kept outside the shipped site: nothing under `tools/`
 is served, and the repo still has no build step for normal editing.
@@ -168,15 +204,15 @@ Read the "Audit caveat" paragraph in `CLAUDE.md` before acting on it. Short
 version: this site is JS-driven, so a naive purge deletes the entire light theme
 (`[data-bs-theme="light"]` never matches the static DOM) along with any class
 that only ever appears inside a JS string. Every rule removed in the last pass
-was verified by hand against `home.html`, `component-catalog.html`,
+was verified by hand against `index.html`, `component-catalog.html`,
 `studio.html`, `assets/dev/theme-test.html` and every runtime JS file first.
 
 ## Composition notes
 
 - `studio.css` is **deliberately excluded** from the bundle. `studio.html` loads
   it directly, and no bundle-consuming page uses a `.studio-*` class.
-- The critical `<style>` block **must stay after** the Bootstrap and Bootstrap
-  Icons `<link>`s in `home.html`, or Bootstrap wins the cascade until the async
-  bundle lands.
+- The critical `<style>` block **must stay after** the Bootstrap `<link>` in
+  both `index.html` and `engineering.html`, or Bootstrap wins the cascade
+  until the async bundle lands.
 - If you change what counts as "above the fold", edit `ATF_SELECTORS` at the top
   of `build_critical.js` (currently `.telemetry`, `nav.navbar`, `header.hero`).

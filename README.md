@@ -48,59 +48,51 @@ install and no framework to learn. Open `index.html` in a browser and it works.
 
 ---
 
-## Folder structure
+## What's in this download
 
+Everything under **Your website** is required and live. Everything under
+**Optional tools** is safe to open locally or delete entirely — none of it
+is loaded by `index.html`, so removing it changes nothing about how your
+site looks or works.
+
+**Your website** (required)
 ```
-executive-portfolio-template/
-├── index.html                  the page
-├── component-catalog.html      reusable UI catalog
-├── robots.txt
-├── sitemap.xml
-├── site.webmanifest
-├── README.md
-├── LICENSE.txt
-│
-├── assets/
-│   ├── css/
-│   │   ├── variables.css       design tokens — colours, radii, shadows
-│   │   ├── style.css           layout, components, typography
-│   │   └── responsive.css      every media query
-│   │
-│   ├── dist/
-│   │   ├── css/template.min.css
-│   │   └── js/template.min.js
-│   │
-│   ├── js/
-│   │   ├── config.js           ← EDIT THIS ONE
-│   │   ├── config.demo.js      fictional profile, for demos
-│   │   ├── components.js       reusable section component registry
-│   │   ├── customizer.js       full runtime theme customizer + presets
-│   │   ├── palette.js          six-palette accent switching
-│   │   ├── theme.js            light/dark toggle
-│   │   ├── navigation.js       scrolling, active links, mobile nav
-│   │   ├── counters.js         scroll reveals, KPI count-up
-│   │   ├── i18n.js             page-translation widget + locale banner
-│   │   ├── fontsize.js         A / A+ / A++ text-size control
-│   │   ├── ui.js               progress bar, ticker, rotator, tilt, Copilot
-│   │   ├── contact-form.js     Formspree submission, validation, honeypot
-│   │   └── main.js             applies config.js to the page
-│   │
-│   ├── images/                 profile photo
-│   ├── demo-data/
-│   │   └── demo-profiles.json  sample executive profile/content packs
-│   └── downloads/               empty by default; see Quick start below
-│
-├── docs/
-│   ├── Installation.md
-│   ├── Customization.md
-│   ├── ThemeGuide.md
-│   ├── ComponentGuide.md
-│   ├── UpgradeGuide.md
-│   ├── BestPractices.md
-│   ├── FAQ.md
-│   └── Changelog.md
-│
-└── screenshots/
+index.html                      ← the page — open this in a browser first
+robots.txt, sitemap.xml,
+site.webmanifest, favicon.svg   SEO/PWA basics — all reference the placeholder
+                                 domain "example.com"; replace with your own
+og-image.png                    social-preview placeholder — replace before publishing
+assets/css/, assets/fonts/,
+assets/images/, assets/js/,
+assets/dist/                    styles, self-hosted icon font, images, source
+                                 JS, and the production CSS/JS bundles
+assets/js/config.js             ← EDIT THIS ONE: name, contact details, links
+assets/downloads/                empty by default; see Quick start below
+```
+
+**Optional tools** (not required to run the site — delete before deploying if
+you don't want them reachable on your live domain; see
+`docs/GitHubPagesHosting.md` for why that matters)
+```
+studio.html                     visual builder — drag/drop layout, live preview,
+component-catalog.html          config export/import, ZIP export
+assets/css/studio.css,
+assets/js/studio-app.js,
+assets/js/content-service.js,
+assets/js/asset-store.js,
+assets/js/portfolio-data-service.js
+assets/demo-data/                fictional sample content, only for Studio's
+                                 own demo-pack picker — never rendered on
+                                 index.html regardless of config
+portfolio.json                  Studio's own save format, independent of config.js
+```
+
+**Documentation**
+```
+README.md, LICENSE.txt
+docs/Installation.md, Customization.md, ThemeGuide.md, ComponentGuide.md,
+     UpgradeGuide.md, BestPractices.md, FAQ.md, Changelog.md, GitHubPagesHosting.md
+screenshots/                    marketplace listing images
 ```
 
 ---
@@ -109,8 +101,13 @@ executive-portfolio-template/
 
 1. Extract the archive.
 2. Open `assets/js/config.js` and change the name, email and links.
-3. Replace `assets/images/profile.jpg` with your own square photo.
-4. Add your résumé PDF somewhere **other than the obvious `assets/downloads/`
+3. Replace `assets/images/profile.jpg` (+ `.webp`/`.avif`) with your own square photo.
+4. Replace `og-image.png` (1200×630) with your own social-preview image.
+5. Edit `robots.txt` and `sitemap.xml` — both ship pointing at the placeholder
+   domain `example.com` (each file says so in its own comment); replace it
+   with your real domain, or search engines won't find your sitemap. Do the
+   same for `site.webmanifest`'s `name`/`short_name`/`description`.
+6. Add your résumé PDF somewhere **other than the obvious `assets/downloads/`
    path** and point `config.contact.resume` at it — `assets/downloads/` is
    named in `robots.txt`, which makes it the first path anyone scanning for
    your résumé would try. A short random folder + filename (e.g.
@@ -118,8 +115,12 @@ executive-portfolio-template/
    stop blind discovery by anyone who never visits the page — it does not
    hide the file from an actual visitor, since the download link is right
    there on the page. See `docs/ReleaseQA.md` for the full reasoning.
-5. Edit the page sections in `index.html` (see `docs/Customization.md`).
-6. Upload the whole folder to any static host.
+7. Edit the page sections in `index.html` (see `docs/Customization.md`).
+8. Decide what to do with the **Optional tools** above (keep, delete, or
+   deploy them only to a private/staging location — never your public domain
+   alongside real content; see `docs/GitHubPagesHosting.md`).
+9. Upload the whole folder to any static host — see "Deployment" below for
+   GitHub Pages / Netlify / Cloudflare Pages / Vercel specifics.
 
 ### Portfolio Studio
 
@@ -130,6 +131,35 @@ Full walkthrough: `docs/Installation.md`.
 ### Component Catalog
 
 Open `component-catalog.html` to review every reusable UI component with live examples.
+
+---
+
+## Deployment
+
+This is a static site — any host that serves plain files works. All internal
+links are relative (no leading `/`), so the site works identically whether
+it's deployed at your domain's root or in a subdirectory (e.g. a GitHub
+Pages *project* page at `username.github.io/repo-name/`).
+
+**GitHub Pages**
+1. Push this folder to a GitHub repo.
+2. Settings → Pages → Source → deploy from a branch (root).
+3. Full walkthrough, including the Studio-exposure warning above: `docs/GitHubPagesHosting.md`.
+
+**Netlify**
+1. Drag-and-drop the extracted folder onto [app.netlify.com/drop](https://app.netlify.com/drop), or connect the repo.
+2. Build command: none. Publish directory: `/` (the repo root).
+
+**Cloudflare Pages**
+1. Connect the repo (or use direct upload).
+2. Build command: none. Build output directory: `/`.
+
+**Vercel**
+1. Import the repo, or run `vercel` from this folder with the Vercel CLI.
+2. Framework preset: **Other**. Build command: none. Output directory: `./`.
+
+None of these need a `vercel.json`/`netlify.toml`/build config — there's
+nothing to build.
 
 ---
 

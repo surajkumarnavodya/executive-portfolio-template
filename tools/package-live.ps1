@@ -65,6 +65,18 @@ if (Test-Path $Out) {
 #                                           that shouldn't be publicly readable)
 #   README.md, LICENSE.txt               - template product documentation/licence
 #                                           terms, not live-site content
+#   .gitattributes, .gitignore           - git-only metadata, meaningless once deployed
+#   assets/js/asset-integration-test.js  - manual Studio console test harness (lives
+#                                           outside assets/tests/, so the exclusion
+#                                           above doesn't already catch it; references
+#                                           a "home.html" this repo hasn't had in a
+#                                           long time — confirmed stale, not just unused)
+#   verify-perf-edits.ps1                - one-off manual verification script from a
+#                                           past editing session, same stale-reference
+#                                           problem as above
+#   robots.template.txt, sitemap.template.xml, site.template.webmanifest -
+#                                           package-template's raw material, never
+#                                           referenced by the real index.html
 git archive --format=zip --output=$Out $Ref -- . `
     ':!.github' `
     ':!.vs' `
@@ -92,7 +104,15 @@ git archive --format=zip --output=$Out $Ref -- . `
     ':!portfolio.template.json' `
     ':!assets/images/profile-placeholder.jpg' `
     ':!assets/images/profile-placeholder.webp' `
-    ':!assets/images/profile-placeholder.avif'
+    ':!assets/images/profile-placeholder.avif' `
+    ':!assets/images/og-image-placeholder.png' `
+    ':!.gitattributes' `
+    ':!.gitignore' `
+    ':!assets/js/asset-integration-test.js' `
+    ':!verify-perf-edits.ps1' `
+    ':!robots.template.txt' `
+    ':!sitemap.template.xml' `
+    ':!site.template.webmanifest'
 
 if ($LASTEXITCODE -ne 0) {
     throw "git archive failed with exit code $LASTEXITCODE"
@@ -100,3 +120,10 @@ if ($LASTEXITCODE -ne 0) {
 
 $size = (Get-Item $Out).Length / 1MB
 Write-Host ("Wrote {0} ({1:N2} MB) from {2}" -f $Out, $size, $Ref)
+
+$validator = Join-Path $root "tools\validate_release.js"
+if (Test-Path $validator) {
+    Write-Host "Validating live release artifact..."
+    node $validator --mode live --zip $Out
+    if ($LASTEXITCODE -ne 0) { throw "Release validation failed with exit code $LASTEXITCODE" }
+}

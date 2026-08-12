@@ -58,6 +58,15 @@ rm -f "$OUT"
 #   index.template.html, portfolio.template.json, assets/images/profile-placeholder.* -
 #                                        excluded at their OWN paths here; copied to their
 #                                        real in-product paths by the step below instead
+#   assets/js/config.demo.js          - excluded at its OWN path once step below copies it
+#                                        to assets/js/config.js — shipping both left every
+#                                        buyer wondering which of the two files to edit
+#   robots.txt, sitemap.xml, site.webmanifest - all three hardcode the live domain
+#                                        (surajkumarnavodya.com) and/or real identity;
+#                                        replaced below with their .template equivalents
+#   .gitattributes, .gitignore        - git-only metadata, meaningless once deployed
+#   assets/js/asset-integration-test.js, verify-perf-edits.ps1 - stale dev-only
+#                                        scripts (see package-live.sh for detail)
 git archive --format=zip --output="$WORKDIR/raw.zip" "$REF" -- . \
   ':!.github' \
   ':!.vs' \
@@ -70,6 +79,7 @@ git archive --format=zip --output="$WORKDIR/raw.zip" "$REF" -- . \
   ':!index.html' \
   ':!portfolio.json' \
   ':!assets/js/config.js' \
+  ':!assets/js/config.demo.js' \
   ':!assets/js/ui.js' \
   ':!assets/dist/js/template.min.js' \
   ':!assets/images/profile.jpg' \
@@ -78,13 +88,24 @@ git archive --format=zip --output="$WORKDIR/raw.zip" "$REF" -- . \
   ':!assets/f3230583c0ff' \
   ':!assets/bc8ab7cb7c05' \
   ':!og-image.png' \
+  ':!robots.txt' \
+  ':!sitemap.xml' \
+  ':!site.webmanifest' \
   ':!CLAUDE.md' \
   ':!AGENTS.md' \
   ':!index.template.html' \
   ':!portfolio.template.json' \
   ':!assets/images/profile-placeholder.jpg' \
   ':!assets/images/profile-placeholder.webp' \
-  ':!assets/images/profile-placeholder.avif'
+  ':!assets/images/profile-placeholder.avif' \
+  ':!assets/images/og-image-placeholder.png' \
+  ':!robots.template.txt' \
+  ':!sitemap.template.xml' \
+  ':!site.template.webmanifest' \
+  ':!.gitattributes' \
+  ':!.gitignore' \
+  ':!assets/js/asset-integration-test.js' \
+  ':!verify-perf-edits.ps1'
 
 mkdir -p "$WORKDIR/site"
 unzip -q "$WORKDIR/raw.zip" -d "$WORKDIR/site"
@@ -101,6 +122,10 @@ cp assets/js/config.demo.js       "$WORKDIR/site/assets/js/config.js"
 cp assets/images/profile-placeholder.jpg  "$WORKDIR/site/assets/images/profile.jpg"
 cp assets/images/profile-placeholder.webp "$WORKDIR/site/assets/images/profile.webp"
 cp assets/images/profile-placeholder.avif "$WORKDIR/site/assets/images/profile.avif"
+cp assets/images/og-image-placeholder.png "$WORKDIR/site/og-image.png"
+cp robots.template.txt            "$WORKDIR/site/robots.txt"
+cp sitemap.template.xml           "$WORKDIR/site/sitemap.xml"
+cp site.template.webmanifest      "$WORKDIR/site/site.webmanifest"
 
 # ui.js's real Copilot KB (assets/js/ui.js's DEFAULT_KB) needs its own
 # genericized build, then the shared JS bundle needs rebuilding with that
@@ -109,6 +134,20 @@ cp assets/images/profile-placeholder.avif "$WORKDIR/site/assets/images/profile.a
 node tools/build_template_ui.js assets/js/ui.js "$WORKDIR/ui.template.js"
 cp "$WORKDIR/ui.template.js" "$WORKDIR/site/assets/js/ui.js"
 node tools/build_bundle_js.js --override "ui.js=$WORKDIR/ui.template.js" --out "$WORKDIR/site/assets/dist/js/template.min.js"
+
+# build_bundle_js.js only concatenates — real minification is a separate step
+# (see tools/README.md). package-live.sh doesn't need this because it ships
+# the already-minified, already-committed assets/dist/js/template.min.js
+# unchanged; this script rebuilds the bundle fresh (to inject the genericized
+# ui.js above) so it has to re-minify too, or buyers get a ~2x larger,
+# un-minified bundle despite the "production bundle" README claim.
+if command -v npx >/dev/null 2>&1; then
+  npx --yes terser "$WORKDIR/site/assets/dist/js/template.min.js" \
+    --compress --mangle --format comments=false \
+    -o "$WORKDIR/site/assets/dist/js/template.min.js"
+else
+  echo "WARNING: npx not found — shipping the template bundle un-minified." >&2
+fi
 
 # Prefer the `zip` CLI; fall back to Python's stdlib zipfile where it's
 # missing (e.g. Git Bash on Windows ships unzip, not zip).
@@ -127,3 +166,8 @@ PYEOF
 fi
 
 echo "Wrote $OUT ($(du -h "$OUT" | cut -f1)) from $REF"
+
+if [ -f "$ROOT/tools/validate_release.js" ]; then
+  echo "Validating template release artifact..."
+  node "$ROOT/tools/validate_release.js" --mode template --zip "$OUT"
+fi
