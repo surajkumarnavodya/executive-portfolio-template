@@ -93,6 +93,8 @@
   var FONTS = {
     inter: { label: 'Inter + Fraunces', body: '"Inter", system-ui, sans-serif', display: '"Fraunces", Georgia, serif' },
     source: { label: 'Source Sans 3 + Playfair Display', body: '"Source Sans 3", system-ui, sans-serif', display: '"Playfair Display", Georgia, serif', googleFonts: 'family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700' },
+    work: { label: 'Work Sans + Lora', body: '"Work Sans", system-ui, sans-serif', display: '"Lora", Georgia, serif', googleFonts: 'family=Work+Sans:wght@400;500;600;700&family=Lora:wght@500;600;700' },
+    plex: { label: 'IBM Plex Sans + IBM Plex Serif', body: '"IBM Plex Sans", system-ui, sans-serif', display: '"IBM Plex Serif", Georgia, serif', googleFonts: 'family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600;700' },
     system: { label: 'System Sans + Georgia', body: 'system-ui, -apple-system, "Segoe UI", sans-serif', display: 'Georgia, serif' }
   };
 
@@ -336,7 +338,7 @@
       '  <div class="customizer-group"><label class="customizer-label" for="tc-mode">Color mode</label><select id="tc-mode"><option value="dark">Dark</option><option value="light">Light</option></select></div>',
       '  <div class="customizer-group"><label class="customizer-label" for="tc-palette">Accent palette</label><select id="tc-palette"><option value="navy">Navy</option><option value="corporate">Corporate</option><option value="emerald">Emerald</option><option value="executive">Executive</option><option value="purple">Purple</option><option value="charcoal">Charcoal</option></select></div>',
       '  <div class="customizer-group customizer-row"><div><label class="customizer-label" for="tc-accent">Primary accent</label><input id="tc-accent" type="color"></div><div><label class="customizer-label" for="tc-accent-alt">Secondary accent</label><input id="tc-accent-alt" type="color"></div></div>',
-      '  <div class="customizer-group"><label class="customizer-label" for="tc-font">Font pairing</label><select id="tc-font"><option value="inter">' + FONTS.inter.label + '</option><option value="source">' + FONTS.source.label + '</option><option value="system">' + FONTS.system.label + '</option></select></div>',
+      '  <div class="customizer-group"><label class="customizer-label" for="tc-font">Font pairing</label><select id="tc-font"><option value="inter">' + FONTS.inter.label + '</option><option value="source">' + FONTS.source.label + '</option><option value="work">' + FONTS.work.label + '</option><option value="plex">' + FONTS.plex.label + '</option><option value="system">' + FONTS.system.label + '</option></select></div>',
       '  <div class="customizer-group"><label class="customizer-label" for="tc-radius">Border radius</label><input id="tc-radius" type="range" min="8" max="24" step="1"></div>',
       '  <div class="customizer-group"><label class="customizer-label" for="tc-motion">Animation intensity</label><select id="tc-motion"><option value="none">None</option><option value="reduced">Reduced</option><option value="normal">Normal</option><option value="vivid">Vivid</option></select></div>',
       '  <div class="customizer-group"><label class="customizer-label">Homepage preset</label><div class="customizer-preset-grid">',
