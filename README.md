@@ -12,8 +12,8 @@ install and no framework to learn. Open `index.html` in a browser and it works.
 ## Features
 
 **Layout**
-- Executive hero with a rotating headline, proof-point ribbon and one primary CTA
-- Steering Snapshot — a six-cell KPI board with count-up animation
+- Executive hero with a rotating headline and proof-point ribbon
+- Steering Snapshot — a four-cell KPI board with count-up animation
 - Case-study cards, capability matrix, experience timeline
 - Certifications, awards, recommendations, contact section
 
