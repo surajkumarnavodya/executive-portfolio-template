@@ -4,6 +4,81 @@ Semantic versioning: MAJOR.MINOR.PATCH.
 
 ---
 
+## v1.8.0 — 2026-08-12 — Performance, release engineering, SEO, accessibility, conversion and marketplace-readiness pass
+
+Five focused audits run back-to-back against the v1.7.0 baseline, each scoped
+to its own discipline, plus a closing commercial-template audit. Summary —
+full rationale for each item is in `CLAUDE.md`'s session log.
+
+### Performance
+- Removed jQuery and the Bootstrap JS bundle entirely; Collapse/Dropdown
+  reimplemented in a small original module (`assets/js/bs-shim.js`)
+- Bootstrap Icons self-hosted as a 69-glyph subsetted `.woff2` (134 KB → 7 KB
+  font, 87 KB → ~5 KB CSS) instead of loading the full icon set from a CDN
+- Dist JS/CSS bundles now genuinely minified (terser/csso) at package time,
+  not just concatenated
+- Reduced eager Google Fonts requests from 5 families to 3; the other two
+  (used only by one Template Customizer typography preset) load on demand
+- Trimmed the inlined critical-CSS block; lazy-initialized the Copilot and
+  Template Customizer panels
+
+### Release engineering
+- `tools/validate_release.js` — hard-fails a package build on missing
+  required files, absolute paths (breaks subdirectory deploys), unresolved
+  sitemap entries, or leaked real-identity strings in the template package
+- `tools/package-live.*` / `tools/package-template.*` hardened: correct
+  exclusion lists, automatic validation step, real re-minification
+- Confirmed both packages deploy correctly from a repo root and from a
+  subdirectory (e.g. a GitHub Pages project page)
+
+### SEO
+- Fixed title/meta-description length on both pages; added `WebSite` +
+  `ProfilePage` to the JSON-LD `@graph` alongside `Person`
+- Removed unverifiable JSON-LD credentials and a placeholder `sameAs` entry
+  the page itself didn't show anywhere
+- Fixed a heading-hierarchy skip (H1 straight to H4 in the hero stats)
+
+### Accessibility (WCAG 2.2 AA)
+- Added a keyboard-operable alternative to the drag-and-drop section
+  reorder control in the Template Customizer
+- Associated contact-form validation errors with their inputs via
+  `aria-describedby`; fixed an invalid `aria-pressed`/`menuitemradio` pairing
+- Custom dropdowns (language, font-size, palette, nav) now close correctly
+  on focus-out and on Escape, including the mobile nav collapse
+
+### UX / conversion / positioning
+- Added a 3-item hero CTA row (schedule a conversation → download résumé →
+  view case studies) on both pages
+- Reordered `index.html`'s sections to lead with positioning and business
+  impact ahead of career history, per an evidence-based information
+  hierarchy (no invented metrics or achievements)
+
+### Marketplace / commercial-template readiness
+- `contact.resume` and the visible download filename were two different
+  values — the filename was hardcoded in `index.html`, meaning a customer
+  had to hand-edit HTML to change what a downloaded résumé is named. Added
+  `contact.resumeFilename` to `config.js`/`config.demo.js`; `main.js` now
+  sets both the `href` and `download` attributes from config
+- The JSON-LD `Person` entity's `name`/`email`/`sameAs` were hardcoded
+  inside a `<script>` tag, disconnected from `cfg.identity`/`cfg.contact`/
+  `cfg.links` — a customer had to hand-edit JSON (one syntax slip silently
+  breaks the whole structured-data block) to keep it in sync. `main.js` now
+  parses and rewrites those three fields from config at load; domain-bearing
+  fields (`@id`/`url`/`image`, canonical, OG, Twitter meta) are deliberately
+  left as static HTML, since those need to be correct in the first response
+  for reliable crawling
+- `config.links.website` existed but was never read by any script — the
+  footer's "View the portfolio" link was hardcoded instead. Wired it up
+- Confirmed `index.template.html` regenerates byte-identical from the
+  current `index.html` via `tools/build_template_content.js` — no drift,
+  and internal `NOTE for Suraj`-style dev comments are correctly excluded
+  from the shipped template
+- Updated `LICENSE.txt`'s third-party component table, which still listed
+  Bootstrap 5.3.3, jQuery and Instrument Serif — all removed or replaced
+  in earlier passes; added a provenance note for the self-hosted icon subset
+
+---
+
 ## v1.7.0 — 2026-08-12 — Engineering page buildout, real contact form, credibility fixes
 
 ### Added

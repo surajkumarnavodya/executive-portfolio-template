@@ -110,11 +110,17 @@ apply(`"https://www.linkedin.com/in/surajkumar-navodya",
 /* ---------- contact / social URLs (site-wide) ---------- */
 apply('https://www.linkedin.com/in/surajkumar-navodya/details/certifications/', 'https://www.linkedin.com/in/yourprofile/details/certifications/');
 apply('https://www.linkedin.com/in/surajkumar-navodya/', 'https://www.linkedin.com/in/yourprofile/');
-// 4, not 3, since the hero-cta pass added a LinkedIn icon link to the hero.
-apply('https://www.linkedin.com/in/surajkumar-navodya', 'https://www.linkedin.com/in/yourprofile', 4);
+// 3: the hero-cta LinkedIn icon link was removed from the hero, so this is
+// back to the footer + Recognition + JSON-LD sameAs occurrences only.
+apply('https://www.linkedin.com/in/surajkumar-navodya', 'https://www.linkedin.com/in/yourprofile', 3);
 apply('linkedin.com/in/surajkumar-navodya', 'linkedin.com/in/yourprofile');
 apply('https://www.c-sharpcorner.com/members/suraj-kumar23/articles', 'https://example.com/your-articles', 3);
-apply('https://stackoverflow.com/users/10532500/suraj-kumar', 'https://stackoverflow.com/users/0000000/yourname', 4);
+// 5, not 4: the Insights section's third card now links directly to the
+// answers tab of this same profile (with ?tab=answers&sort=votes), which is
+// a substring superset of the bare profile URL below and gets swept up by
+// this same replacement, correctly turning into the generic profile URL
+// with the same query string preserved.
+apply('https://stackoverflow.com/users/10532500/suraj-kumar', 'https://stackoverflow.com/users/0000000/yourname', 5);
 apply('mailto:surajkumar.navodya@gmail.com', 'mailto:you@example.com', 3);
 apply('surajkumar.navodya@gmail.com', 'you@example.com', 2);
 apply('tel:+919049141305', 'tel:+10000000000');
@@ -126,7 +132,7 @@ apply('assets/f3230583c0ff/e9bb4c8c8cd214c449ac.pdf', 'assets/downloads/your-res
 apply('download="Suraj-Kumar-Program-Delivery-Manager-Resume.pdf"', 'download="Your-Name-Resume.pdf"');
 
 /* ---------- KPI board / hero stats / scorecard ---------- */
-apply('Measured across L&amp;T Group accounts at LTIMindtree, 2021–2026.', 'Measured across [Client Group] accounts at [Your Employer], [Year]–[Year].');
+apply('Measured across different accounts I worked for at LTIMindtree, 2021–2026.', 'Measured across [Client Group] accounts at [Your Employer], [Year]–[Year].');
 apply(`<!-- Static fallback numbers are baked in so link previews and crawlers never show zeros.
                              NOTE for Suraj: consider swapping one soft metric for a hard COMMERCIAL number a
                              delivery leader is judged on — e.g. delivery margin %, CSAT/NPS, or utilization %.
@@ -260,14 +266,24 @@ apply('430+ answers and counting — the reasoning gets peer-reviewed, which kee
       '[XXX]+ answers and counting — the reasoning gets peer-reviewed, which keeps estimates and timelines realistic.');
 apply('More articles on <a href="https://example.com/your-articles" target="_blank" rel="noopener" style="color:var(--accent)">C# Corner</a> and answers on <a href="https://stackoverflow.com/users/0000000/yourname" target="_blank" rel="noopener" style="color:var(--accent)">Stack Overflow</a>.',
       'More articles on <a href="https://example.com/your-articles" target="_blank" rel="noopener" style="color:var(--accent)">your publishing platform</a> and answers on <a href="https://stackoverflow.com/users/0000000/yourname" target="_blank" rel="noopener" style="color:var(--accent)">Stack Overflow</a>.');
-apply(`<!-- REMINDER for Suraj: each card below needs its real published article title,
-                     publication date and direct URL (not the profile listing) — replace the
-                     ARTICLE TITLE / PUBLISHED_DATE / ARTICLE_URL placeholders. The description
-                     line under each title is unchanged framing copy. -->`,
-      `<!-- Replace the ARTICLE TITLE / PUBLISHED_DATE / ARTICLE_URL placeholders below with
-                     your own real published article title, publication date and direct URL
-                     (not a profile listing). The description line under each title is
-                     reusable framing copy. -->`);
+// The three Insights cards now carry real, published articles/profile links
+// (title, tag and URL) instead of ARTICLE_URL_n-style placeholder tokens —
+// genericize each one back to a safe, obviously-unfilled placeholder so the
+// template product doesn't ship someone else's real byline as if it were
+// the buyer's own writing.
+apply('<p class="tag mb-3">ASP.NET MVC</p>\n                            <h3 class="fs-6 fw-bold mb-2">Generating Chart Dynamically In MVC Using Chart.js</h3>',
+      '<p class="tag mb-3">ARTICLE TAG 1</p>\n                            <h3 class="fs-6 fw-bold mb-2">ARTICLE TITLE 1</h3>');
+apply('https://www.c-sharpcorner.com/article/generating-runtime-chart-in-mvc-using-chart-js/', 'ARTICLE_URL_1');
+apply('<p class="tag mb-3">Power BI</p>\n                            <h3 class="fs-6 fw-bold mb-2">Working With Dates And Date Table In Power BI</h3>',
+      '<p class="tag mb-3">ARTICLE TAG 2</p>\n                            <h3 class="fs-6 fw-bold mb-2">ARTICLE TITLE 2</h3>');
+apply('https://www.c-sharpcorner.com/article/working-with-dates-and-date-table-in-power-bi/', 'ARTICLE_URL_2');
+apply('<p class="tag mb-3">SQL Server</p>\n                            <h3 class="fs-6 fw-bold mb-2">SQL Server Answers on Stack Overflow</h3>',
+      '<p class="tag mb-3">ARTICLE TAG 3</p>\n                            <h3 class="fs-6 fw-bold mb-2">ARTICLE TITLE 3</h3>');
+// Substring of the stackoverflow apply() above once that one has already
+// run, so this card's href — which carries the answers/sort query string —
+// needs its own explicit placeholder rather than inheriting the generic
+// profile-URL replacement.
+apply('https://stackoverflow.com/users/0000000/yourname?tab=answers&amp;sort=votes', 'ARTICLE_URL_3');
 
 /* ---------- Testimonials ---------- */
 apply('"He combines strong program and project management expertise with enough technical depth to support sound architectural decisions, while leading with calm and maintaining stakeholder confidence under pressure."',

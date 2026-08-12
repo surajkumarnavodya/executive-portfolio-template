@@ -37,6 +37,9 @@ window.PORTFOLIO_CONFIG = {
     phone: '+1 555 0100',
     location: 'Austin, TX',
     resume: 'assets/downloads/john-anderson-resume.pdf',
+    // The filename a visitor's browser saves the download as — see
+    // assets/js/config.js's contact.resumeFilename for the full explanation.
+    resumeFilename: 'John-Anderson-Resume.pdf',
     emailSubject: 'Engineering leadership conversation',
     // Left empty on purpose: this template doesn't ship a real Formspree
     // account. Create one at https://formspree.io and paste your own

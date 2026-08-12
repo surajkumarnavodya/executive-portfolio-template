@@ -198,6 +198,12 @@ window.PORTFOLIO_CONFIG = {
     // Deliberately not a human-guessable filename/path — see the "why" note
     // in docs/ReleaseQA.md before renaming this back to something obvious.
     resume: 'assets/f3230583c0ff/e9bb4c8c8cd214c449ac.pdf',
+    // The filename a visitor's browser actually saves the download as —
+    // separate from the path above on purpose, since the path is
+    // deliberately unguessable but the saved file should still be
+    // identifiable in someone's Downloads folder afterward. Set to '' to
+    // leave whatever filename is already on the download link in index.html.
+    resumeFilename: 'Suraj-Kumar-Program-Delivery-Manager-Resume.pdf',
     // Prefilled subject line for the "email me" links.
     emailSubject: 'Delivery leadership conversation',
     // Create a form at https://formspree.io (free tier is fine), then paste

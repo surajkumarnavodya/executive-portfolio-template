@@ -44,12 +44,20 @@ THIRD-PARTY COMPONENTS
 These remain the property of their authors under their own licences. Nothing
 here asserts any claim over them.
 
-  Bootstrap 5.3.3 ........... MIT ............ getbootstrap.com
-  Bootstrap Icons 1.11.3 .... MIT ............ icons.getbootstrap.com
-  jQuery 3.7.1 .............. MIT ............ jquery.org/license
+  Bootstrap 5.3.8 (CSS only) MIT ............ getbootstrap.com
+  Bootstrap Icons 1.13.1 .... MIT ............ icons.getbootstrap.com
+    Self-hosted as a subsetted font (assets/fonts/bootstrap-icons-subset.woff2,
+    assets/css/icons.css) containing only the glyphs this template actually
+    uses. Subsetting does not change the licence — still MIT, still
+    attributed to the Bootstrap Icons project.
   Inter ..................... SIL OFL 1.1 .... rsms.me/inter
-  Instrument Serif .......... SIL OFL 1.1 .... fonts.google.com
+  Fraunces .................. SIL OFL 1.1 .... fonts.google.com/specimen/Fraunces
   JetBrains Mono ............ SIL OFL 1.1 .... jetbrains.com/lp/mono
+
+  Bootstrap's own JavaScript (and its jQuery dependency) is NOT used by this
+  template. Collapse and dropdown behaviour are implemented directly in
+  assets/js/bs-shim.js, a small original module included under this
+  template's own licence.
 
 
 NO WARRANTY

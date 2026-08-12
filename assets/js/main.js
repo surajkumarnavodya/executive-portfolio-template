@@ -84,7 +84,10 @@
     });
   }
   if (ct.resume) {
-    each('a[download]', function (el) { el.setAttribute('href', ct.resume); });
+    each('a[download]', function (el) {
+      el.setAttribute('href', ct.resume);
+      if (ct.resumeFilename) { el.setAttribute('download', ct.resumeFilename); }
+    });
   }
   if (ct.formEndpoint) {
     // Config value wins over whatever the <form data-endpoint> attribute
@@ -97,6 +100,11 @@
 
   /* ---------------- external links ---------------------------------- */
   // Matched on the existing href so re-ordering the markup can't break it.
+  // Excludes .insight-card: those anchors deliberately point at one specific
+  // published article/answers page each, not the general profile URL this
+  // rewrite applies everywhere else — matching on domain substring alone
+  // would silently overwrite each card's specific link with the generic
+  // profile link from config.js.
   var linkMap = [
     ['linkedin.com',        links.linkedin],
     ['github.com',          links.github],
@@ -106,8 +114,38 @@
   linkMap.forEach(function (pair) {
     var needle = pair[0], url = pair[1];
     if (!url) { return; }                   // empty in config → leave markup untouched
-    each('a[href*="' + needle + '"]', function (el) { el.setAttribute('href', url); });
+    each('a[href*="' + needle + '"]:not(.insight-card)', function (el) { el.setAttribute('href', url); });
   });
+  if (links.website) {
+    each('.footer-cta', function (el) { el.setAttribute('href', links.website); });
+  }
+
+  /* ---------------- structured data (JSON-LD) ------------------------
+   * Keeps the Person entity's name/email/sameAs in sync with cfg.identity/
+   * cfg.contact/cfg.links, so a customer doesn't have to hand-edit JSON
+   * inside a <script> tag (one syntax mistake silently breaks the whole
+   * block) just to update their own name or profile links. Domain-bearing
+   * fields (@id/url/image, and the page's canonical/OG/Twitter meta) are
+   * deliberately left alone — those need to be correct in the very first
+   * HTML response for reliable crawling, so they stay the one documented
+   * find-and-replace step in docs/Installation.md instead of a runtime
+   * rewrite that could race the crawler.
+   * ------------------------------------------------------------------- */
+  var ld = document.querySelector('script[type="application/ld+json"]');
+  if (ld) {
+    try {
+      var ldData = JSON.parse(ld.textContent);
+      var graph = Array.isArray(ldData['@graph']) ? ldData['@graph'] : null;
+      var person = graph && graph.filter(function (node) { return node['@type'] === 'Person'; })[0];
+      if (person) {
+        if (id.name) { person.name = id.name; }
+        if (ct.email) { person.email = ct.email; }
+        var sameAs = [links.linkedin, links.github, links.stackoverflow, links.csharpcorner].filter(function (u) { return !!u; });
+        if (sameAs.length) { person.sameAs = sameAs; }
+        ld.textContent = JSON.stringify(ldData);
+      }
+    } catch (e) { /* malformed or hand-edited JSON-LD — leave it untouched rather than guess */ }
+  }
 
   /* ---------------- theme ------------------------------------------- */
   var root = document.documentElement;
