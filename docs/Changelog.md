@@ -4,6 +4,27 @@ Semantic versioning: MAJOR.MINOR.PATCH.
 
 ---
 
+## v1.7.0 — 2026-08-12 — Engineering page buildout, real contact form, credibility fixes
+
+### Added
+- Real contact form (Formspree, client-side validation, honeypot) on both pages, replacing the mailto-only CTA; falls back to a plain mailto link and stays hidden until an endpoint is configured
+- `engineering.html`: Experience and Recognition sections, nav grouped into Proof/Profile dropdowns, per-audience résumé download, GitHub link
+- Site-wide text-size control (A/A+/A++); palette picker collapsed into a single dropdown
+
+### Changed
+- Testimonials identify reviewers by role/relationship, not a name placeholder
+- Insights and Writing cards point at real published articles instead of profile-listing links
+- Employer org line simplified to "LTIMindtree · Mumbai" on both pages; engineering.html's Specialist entry gets its own developer-framed description
+- ".NET hands-on years" corrected 7+ → 8+ site-wide
+- README.md and CLAUDE.md brought back in line with the current feature set
+
+### Fixed
+- Unfilled `PLACEHOLDER_` links — and now unconfigured contact forms — are removed at render instead of shipping as dead links/buttons
+- `engineering.html` hero was centered instead of left-aligned like `index.html`
+- Résumé served from two separate unguessable paths (one per audience) instead of one shared path
+
+---
+
 ## v1.6.0 — 2026-08-11 — Live/template architecture split
 
 Migration plan executed in full; see `CLAUDE.md`'s session log for the
