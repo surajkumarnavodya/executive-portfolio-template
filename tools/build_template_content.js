@@ -147,8 +147,8 @@ apply('Coached engineers in Scrum and Kanban (+15% productivity), grew individua
       'Coached engineers in Scrum and Kanban ([+XX]% productivity), grew individual contributors into module owners, and structured teams to reduce key-person risk.');
 
 /* ---------- Experience timeline ---------- */
-apply('<p class="t-org">LTIMindtree · L&amp;T Corporate IT, L&amp;T Realty, L&amp;T Construction · Mumbai</p>',
-      '<p class="t-org">[Your Employer] · [Client Accounts] · [City]</p>');
+apply('<p class="t-org">LTIMindtree · Mumbai</p>',
+      '<p class="t-org">[Your Employer] · [City]</p>');
 apply('₹2Cr+ multi-account portfolio, 20+ engineers across .NET, Java, SQL Server and cloud (full delivery metrics under Steering Snapshot, above). Own client-sponsor relationships and steering committees across L&amp;T Group accounts; ISO-standard governance; effort estimation and SLA management that protect delivery margin; grew engineers into module owners; HR automation cutting turnaround by 25%.',
       '[Amount] multi-account portfolio, [X]+ engineers across .NET, Java, SQL Server and cloud (full delivery metrics under Steering Snapshot, above). Own client-sponsor relationships and steering committees across [Client Group] accounts; ISO-standard governance; effort estimation and SLA management that protect delivery margin; grew engineers into module owners; HR automation cutting turnaround by [XX]%.');
 apply('<p class="t-org">Innovsource Services · Mumbai</p>', '<p class="t-org">[Previous Employer] · [City]</p>');

@@ -13,27 +13,33 @@ install and no framework to learn. Open `index.html` in a browser and it works.
 
 **Layout**
 - Executive hero with a rotating headline, proof-point ribbon and one primary CTA
-- Executive Scorecard — labelled metric bars
 - Steering Snapshot — a six-cell KPI board with count-up animation
 - Case-study cards, capability matrix, experience timeline
 - Certifications, awards, recommendations, contact section
 
 **Behaviour**
 - Light and dark themes, remembered per visitor in `localStorage`
-- Six accent palettes with a one-click picker — see `docs/ThemeGuide.md`
+- Six accent palettes, collapsed into a single toggle + dropdown — see `docs/ThemeGuide.md`
 - Full Theme Customizer: accent, mode, fonts, radius, motion intensity
 - Eight homepage presets: CEO, CTO, CIO, Program Director, Delivery Manager, Engineering Manager, Product Leader, Consultant
 - Visual layout builder: drag/drop section ordering, section toggles, live preview, reset, config export/import
-- Section toggles: switch any of the eight sections off from `config.js`
+- Section toggles: switch any of the 11 content sections off from `config.js`
+- Site-wide text-size control (A / A+ / A++), remembered per visitor
+- Optional one-click page translation via Google's Website Translator widget, with a locale-based suggestion banner
 - Scroll-reveal animations that respect `prefers-reduced-motion`
 - Active-link navigation highlighting with clean URLs (no `#hash` litter)
 - Portfolio Copilot — an on-device Q&A widget with **no network calls**
-- Contact form that composes a `mailto:` message, so no backend is needed
+- Contact form with client-side validation and honeypot spam protection,
+  submitting to a Formspree endpoint you configure — falls back to a plain
+  `mailto:` link if no endpoint is set, and the form itself stays hidden
+  until one is, so nothing broken ever ships by default
 
 **Engineering**
 - Central `config.js` for name, contact details, links and theme
 - CSS split into design tokens, components and media queries
 - Reusable section component registry (`assets/js/components.js`)
+- Deterministic build scripts (`tools/build_bundle.js`, `tools/build_bundle_js.js`)
+  regenerate the production CSS/JS bundles from source — no hand copy-paste
 - Seven breakpoints, verified at 320 / 375 / 576 / 768 / 992 / 1200 / 1600px
 - Subresource Integrity on every CDN dependency
 - SEO package: OpenGraph, Twitter Card, Schema.org JSON-LD, sitemap, robots.txt
@@ -73,14 +79,16 @@ executive-portfolio-template/
 │   │   ├── theme.js            light/dark toggle
 │   │   ├── navigation.js       scrolling, active links, mobile nav
 │   │   ├── counters.js         scroll reveals, KPI count-up
+│   │   ├── i18n.js             page-translation widget + locale banner
+│   │   ├── fontsize.js         A / A+ / A++ text-size control
 │   │   ├── ui.js               progress bar, ticker, rotator, tilt, Copilot
 │   │   ├── contact-form.js     Formspree submission, validation, honeypot
 │   │   └── main.js             applies config.js to the page
 │   │
 │   ├── images/                 profile photo
-│   ├── data/
-│   │   ├── demo-profiles.json  sample executive profile/content packs
-│   └── downloads/              put your résumé PDF here
+│   ├── demo-data/
+│   │   └── demo-profiles.json  sample executive profile/content packs
+│   └── downloads/               empty by default; see Quick start below
 │
 ├── docs/
 │   ├── Installation.md
@@ -102,7 +110,14 @@ executive-portfolio-template/
 1. Extract the archive.
 2. Open `assets/js/config.js` and change the name, email and links.
 3. Replace `assets/images/profile.jpg` with your own square photo.
-4. Drop your résumé into `assets/downloads/` and point `config.contact.resume` at it.
+4. Add your résumé PDF somewhere **other than the obvious `assets/downloads/`
+   path** and point `config.contact.resume` at it — `assets/downloads/` is
+   named in `robots.txt`, which makes it the first path anyone scanning for
+   your résumé would try. A short random folder + filename (e.g.
+   `openssl rand -hex 6` for the folder, `-hex 10` for the file) is enough to
+   stop blind discovery by anyone who never visits the page — it does not
+   hide the file from an actual visitor, since the download link is right
+   there on the page. See `docs/ReleaseQA.md` for the full reasoning.
 5. Edit the page sections in `index.html` (see `docs/Customization.md`).
 6. Upload the whole folder to any static host.
 
@@ -153,10 +168,10 @@ Loaded from jsDelivr with Subresource Integrity hashes:
 
 | Library | Version | Licence |
 |---|---|---|
-| Bootstrap | 5.3.3 | MIT |
-| Bootstrap Icons | 1.11.3 | MIT |
+| Bootstrap | 5.3.8 | MIT |
+| Bootstrap Icons | 1.13.1 | MIT |
 | jQuery | 3.7.1 | MIT |
-| Google Fonts — Inter, Instrument Serif, JetBrains Mono | — | SIL OFL 1.1 |
+| Google Fonts — Inter, Fraunces, JetBrains Mono | — | SIL OFL 1.1 |
 
 To self-host instead, download each file, drop it in `assets/`, update the paths
 in `index.html`, and remove the `integrity` and `crossorigin` attributes — those
