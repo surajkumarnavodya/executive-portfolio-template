@@ -33,6 +33,16 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !menu.hidden) { setOpen(false); toggle.focus(); }
     });
+    // Tabbing past the open menu (not just clicking away) should close it
+    // too — otherwise it stays open, visually and in the a11y tree, after
+    // keyboard focus has already moved on. Deferred so it checks where
+    // focus actually landed rather than relying on focusout's relatedTarget,
+    // which isn't consistent enough across this project's browser matrix.
+    wrap.addEventListener('focusout', function () {
+      setTimeout(function () {
+        if (!wrap.contains(document.activeElement)) { setOpen(false); }
+      }, 0);
+    });
     menu.addEventListener('click', function (e) {
       if (e.target.closest && e.target.closest('.pal-swatch')) { setOpen(false); }
     });

@@ -123,6 +123,19 @@
     Collapse.getOrCreateInstance(target).toggle();
   });
 
+  // Escape closes an open collapse (the mobile nav menu, on this site) and
+  // returns focus to whichever toggle controls it — every other dismissible
+  // widget in this codebase (dropdowns, palette/font-size/language pickers,
+  // the customizer panel) already closes on Escape; this was the one gap.
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Escape') { return; }
+    var open = document.querySelector('.collapse.show');
+    if (!open) { return; }
+    var toggle = document.querySelector('[data-bs-toggle="collapse"][data-bs-target="#' + open.id + '"]');
+    Collapse.getOrCreateInstance(open).hide();
+    if (toggle) { toggle.focus(); }
+  });
+
   /* ================= Dropdown ================= */
   var dropdownInstances = new WeakMap();
 
@@ -170,6 +183,25 @@
       return;
     }
     if (!ev.target.closest('.dropdown-menu')) { closeAllDropdowns(); }
+  });
+
+  // Keyboard users can leave an open dropdown by tabbing past it, not just
+  // by clicking elsewhere — without this, the menu stays visually open
+  // (and in the accessibility tree) after focus has already moved on,
+  // which is confusing for anyone tracking focus rather than the mouse.
+  // focusout bubbles (blur doesn't), so one document-level listener covers
+  // every dropdown; the setTimeout defers the check until the browser has
+  // actually settled on the next focused element (relatedTarget isn't
+  // reliable enough across this project's supported browser matrix to use
+  // directly).
+  document.addEventListener('focusout', function (ev) {
+    var menu = ev.target.closest && ev.target.closest('.dropdown-menu');
+    var fromToggle = ev.target.closest && ev.target.closest('[data-bs-toggle="dropdown"]');
+    if (!menu && !fromToggle) { return; }
+    var host = (menu || fromToggle.parentElement);
+    setTimeout(function () {
+      if (!host.contains(document.activeElement)) { closeAllDropdowns(); }
+    }, 0);
   });
 
   document.addEventListener('keydown', function (ev) {

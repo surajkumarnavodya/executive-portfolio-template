@@ -64,8 +64,13 @@
     var toggle = document.getElementById('fontsizeToggle');
     if (!wrap || !menu || !toggle) { return; }
 
+    // Plain buttons + aria-pressed, not role="menuitemradio" — that role
+    // requires aria-checked (not aria-pressed) per spec, and pairing it
+    // with a container that isn't a fully-implemented ARIA menu (roving
+    // tabindex, arrow-only navigation) is worse than not using it. A
+    // labeled group of toggle buttons is what this actually is.
     menu.innerHTML = LEVELS.map(function (l) {
-      return '<button type="button" role="menuitemradio" class="fontsize-item" data-fontsize="' + l.key + '" aria-label="' + l.name + '">' + l.label + '</button>';
+      return '<button type="button" class="fontsize-item" data-fontsize="' + l.key + '" aria-label="' + l.name + '">' + l.label + '</button>';
     }).join('');
     paint(root.getAttribute('data-fontsize') || DEFAULT);
 
@@ -80,6 +85,13 @@
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !menu.hidden) { setOpen(false); toggle.focus(); }
+    });
+    // See palette.js's identical listener for why this is deferred rather
+    // than reading focusout's relatedTarget directly.
+    wrap.addEventListener('focusout', function () {
+      setTimeout(function () {
+        if (!wrap.contains(document.activeElement)) { setOpen(false); }
+      }, 0);
     });
     menu.addEventListener('click', function (e) {
       var btn = e.target.closest && e.target.closest('[data-fontsize]');

@@ -140,9 +140,11 @@
     var toggle = document.getElementById('langToggle');
     if (!wrap || !menu || !toggle) { return; }
 
+    // Plain buttons + aria-pressed, not role="menuitemradio" — see
+    // fontsize.js's identical note for why.
     var items = [{ code: PAGE_LANGUAGE, label: 'Original (English)' }].concat(LANGUAGES);
     menu.innerHTML = items.map(function (l) {
-      return '<button type="button" role="menuitemradio" class="lang-item" data-lang="' + escapeHtml(l.code) + '">' + escapeHtml(l.label) + '</button>';
+      return '<button type="button" class="lang-item" data-lang="' + escapeHtml(l.code) + '">' + escapeHtml(l.label) + '</button>';
     }).join('');
 
     function setOpen(open) {
@@ -157,11 +159,29 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !menu.hidden) { setOpen(false); toggle.focus(); }
     });
+    // See palette.js's identical listener for why this is deferred rather
+    // than reading focusout's relatedTarget directly.
+    wrap.addEventListener('focusout', function () {
+      setTimeout(function () {
+        if (!wrap.contains(document.activeElement)) { setOpen(false); }
+      }, 0);
+    });
     menu.addEventListener('click', function (e) {
       var btn = e.target.closest && e.target.closest('[data-lang]');
       if (!btn) { return; }
       setOpen(false);
       translateTo(btn.getAttribute('data-lang'));
+    });
+    // Arrow-key navigation across the language list, matching the
+    // convention already established by palette.js/fontsize.js.
+    menu.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') { return; }
+      var all = Array.prototype.slice.call(menu.querySelectorAll('.lang-item'));
+      var i = all.indexOf(document.activeElement);
+      if (i === -1) { return; }
+      var next = all[(i + (e.key === 'ArrowDown' ? 1 : all.length - 1)) % all.length];
+      next.focus();
+      e.preventDefault();
     });
 
     try {
@@ -184,8 +204,15 @@
   function showBanner(suggestion) {
     var el = document.createElement('div');
     el.className = 'i18n-banner';
-    el.setAttribute('role', 'dialog');
+    // Not role="dialog": this banner is non-modal (nothing behind it is
+    // blocked), appears without a user action, and never moves or traps
+    // focus — none of which a real dialog implementation would skip.
+    // role="region" + aria-live is what it actually is: a labeled,
+    // proactively-announced section a screen reader user gets told about
+    // even though they weren't already reading at this point in the DOM.
+    el.setAttribute('role', 'region');
     el.setAttribute('aria-label', 'Translate this page');
+    el.setAttribute('aria-live', 'polite');
     el.innerHTML =
       '<p class="i18n-banner-text">It looks like your browser is set to <strong>' + escapeHtml(suggestion.label) + '</strong>. Translate this page?</p>' +
       '<div class="i18n-banner-actions">' +
@@ -204,6 +231,15 @@
     });
     el.querySelector('.i18n-no').addEventListener('click', function () {
       try { localStorage.setItem(DISMISS_KEY, '1'); } catch (e) {}
+      dismiss();
+    });
+    // Escape dismisses like every other floating widget in this codebase
+    // (nav dropdown, palette/font-size/language pickers, customizer panel,
+    // Copilot) — doesn't remember the dismissal the way "No thanks" does,
+    // since Escape reads as "not now," not "never ask again."
+    document.addEventListener('keydown', function onKey(e) {
+      if (e.key !== 'Escape') { return; }
+      document.removeEventListener('keydown', onKey);
       dismiss();
     });
   }

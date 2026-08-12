@@ -228,11 +228,11 @@
                     </div>
                     <div class="lang-switch">
                         <button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose language"><i class="bi bi-translate"></i></button>
-                        <div class="lang-menu" id="langMenu" hidden role="menu" aria-label="Choose a language"></div>
+                        <div class="lang-menu" id="langMenu" hidden role="group" aria-label="Choose a language"></div>
                     </div>
                     <div class="fontsize-switch">
                         <button class="theme-toggle fontsize-toggle" id="fontsizeToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Adjust text size">A</button>
-                        <div class="fontsize-menu" id="fontsizeMenu" hidden role="menu" aria-label="Choose a text size"></div>
+                        <div class="fontsize-menu" id="fontsizeMenu" hidden role="group" aria-label="Choose a text size"></div>
                     </div>
                     <span class="nav-divider" aria-hidden="true"></span>
                     <a class="btn-accent btn text-nowrap ms-1" href="#contact">Start a conversation</a>
@@ -1162,18 +1162,18 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="cfName">Name</label>
-                                        <input type="text" class="form-control" id="cfName" name="name" autocomplete="name" required>
-                                        <div class="invalid-feedback">Enter your name.</div>
+                                        <input type="text" class="form-control" id="cfName" name="name" autocomplete="name" required aria-describedby="cfName-error">
+                                        <div class="invalid-feedback" id="cfName-error">Enter your name.</div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="cfEmail">Email</label>
-                                        <input type="email" class="form-control" id="cfEmail" name="email" autocomplete="email" required>
-                                        <div class="invalid-feedback">Enter a valid email address.</div>
+                                        <input type="email" class="form-control" id="cfEmail" name="email" autocomplete="email" required aria-describedby="cfEmail-error">
+                                        <div class="invalid-feedback" id="cfEmail-error">Enter a valid email address.</div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="cfMessage">Message</label>
-                                        <textarea class="form-control" id="cfMessage" name="message" rows="4" required></textarea>
-                                        <div class="invalid-feedback">Enter a message.</div>
+                                        <textarea class="form-control" id="cfMessage" name="message" rows="4" required aria-describedby="cfMessage-error"></textarea>
+                                        <div class="invalid-feedback" id="cfMessage-error">Enter a message.</div>
                                     </div>
                                     <div id="cfStatus" class="mb-3" role="status" aria-live="polite"></div>
                                     <div class="cta-final mb-3">

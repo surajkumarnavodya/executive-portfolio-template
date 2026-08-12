@@ -378,11 +378,18 @@
     }
 
     function setOpen(open) {
+      // Capture before hiding: once panel.hidden is true, its contents
+      // (including whatever had focus) leave the accessibility tree and
+      // document.activeElement silently reverts to <body> — too late to
+      // tell whether focus needs to come back to the toggle.
+      var hadFocusInside = !open && panel.contains(document.activeElement);
       panel.hidden = !open;
       toggle.setAttribute('aria-expanded', String(open));
       if (open) {
         var first = panel.querySelector('#tc-mode');
         if (first) { first.focus(); }
+      } else if (hadFocusInside) {
+        toggle.focus();
       }
     }
 
@@ -399,15 +406,63 @@
     if (!list) { return; }
     var dragId = null;
 
+    function labelFor(id) {
+      return id.replace(/-/g, ' ').replace(/\b\w/g, function (m) { return m.toUpperCase(); });
+    }
+
+    // Moves `id` one slot toward `direction` (-1 up, +1 down) in
+    // state.sectionOrder, re-applies, and re-renders. Used by both the
+    // Move up/down buttons below and can be called directly by tests.
+    function moveSection(id, direction, focusAfter) {
+      var from = state.sectionOrder.indexOf(id);
+      var to = from + direction;
+      if (from < 0 || to < 0 || to >= state.sectionOrder.length) { return; }
+      var moved = state.sectionOrder.splice(from, 1)[0];
+      state.sectionOrder.splice(to, 0, moved);
+      applySectionLayout();
+      saveStorage();
+      renderList();
+      if (focusAfter) {
+        // renderList() replaces the whole <ul>'s innerHTML, which would
+        // otherwise drop keyboard focus back to nothing (or the browser
+        // default of <body>) after every single move \u2014 punishing for
+        // someone repositioning an item several slots. Re-find the same
+        // button (by section id + direction) in the freshly-rendered list
+        // and refocus it, so repeated moves work like a normal keyboard flow.
+        var again = list.querySelector('[data-move="' + direction + '"][data-section-id="' + id + '"]');
+        if (again && !again.disabled) { again.focus(); }
+        else {
+          var fallback = list.querySelector('[data-section-id="' + id + '"] [data-move]:not([disabled])');
+          if (fallback) { fallback.focus(); }
+        }
+      }
+    }
+
     function renderList() {
-      list.innerHTML = state.sectionOrder.map(function (id) {
-        var label = id.replace(/-/g, ' ').replace(/\b\w/g, function (m) { return m.toUpperCase(); });
+      list.innerHTML = state.sectionOrder.map(function (id, index) {
+        var label = labelFor(id);
         var checked = state.sectionVisibility[id] !== false ? 'checked' : '';
+        var atTop = index === 0;
+        var atBottom = index === state.sectionOrder.length - 1;
         return '<li class="customizer-section-item" draggable="true" data-section-id="' + id + '">' +
           '<span class="customizer-drag-handle" aria-hidden="true">\u22EE\u22EE</span>' +
           '<label><input type="checkbox" data-section-toggle="' + id + '" ' + checked + '> ' + label + '</label>' +
+          '<span class="customizer-move-group">' +
+          '<button type="button" class="customizer-move-btn" data-move="-1" data-section-id="' + id + '" aria-label="Move ' + label + ' up"' + (atTop ? ' disabled' : '') + '>\u25B2</button>' +
+          '<button type="button" class="customizer-move-btn" data-move="1" data-section-id="' + id + '" aria-label="Move ' + label + ' down"' + (atBottom ? ' disabled' : '') + '>\u25BC</button>' +
+          '</span>' +
           '</li>';
       }).join('');
+
+      // Keyboard/AT path: two buttons per row, always present regardless of
+      // pointer type \u2014 satisfies WCAG 2.1.1/2.5.7 (dragging must have a
+      // non-drag equivalent). Does the exact same reorder the drop handler
+      // below does, just one step at a time.
+      list.querySelectorAll('[data-move]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          moveSection(btn.getAttribute('data-section-id'), parseInt(btn.getAttribute('data-move'), 10), true);
+        });
+      });
 
       list.querySelectorAll('.customizer-section-item').forEach(function (item) {
         item.addEventListener('dragstart', function () {

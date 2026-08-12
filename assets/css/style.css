@@ -1804,6 +1804,21 @@ body.page-ready{animation:page-fade calc(var(--dur-slow) * var(--motion-scale)) 
   line-height:1;
 }
 .customizer-section-item input[type="checkbox"]{accent-color:var(--accent)}
+/* Keyboard/AT-operable equivalent to the drag handle above (WCAG 2.1.1 /
+   2.5.7 — dragging must have a non-drag alternative). Pushed to the row's
+   trailing edge so the drag handle stays the primary visual affordance for
+   pointer users; these are a secondary, always-present path. */
+.customizer-section-item label{flex:1 1 auto}
+.customizer-move-group{display:flex;gap:2px;margin-left:auto;flex-shrink:0}
+.customizer-move-btn{
+  width:24px;height:24px;min-width:24px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);border-radius:6px;
+  background:var(--surface);color:var(--text-2);
+  font-size:10px;line-height:1;cursor:pointer;
+}
+.customizer-move-btn:hover:not(:disabled){color:var(--accent);border-color:var(--accent)}
+.customizer-move-btn:disabled{opacity:.35;cursor:default}
 
 /* Motion polish: micro interactions */
 a,button,.x-card,.pov-card,.hero-stat,.kpi-cell{
