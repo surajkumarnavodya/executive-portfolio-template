@@ -327,9 +327,23 @@
    each one). Anyone who forgets to fill one in gets a missing button, not
    a link that goes nowhere — a dead link in front of a hiring manager is
    worse than the section just being one button shorter.
+
+   Same rule for the contact form: it carries data-endpoint="PLACEHOLDER_
+   FORMSPREE_ENDPOINT" until a real Formspree endpoint is set (config.js's
+   contact.formEndpoint on index.html; the attribute directly on
+   engineering.html). Runs after main.js's sync, so a real endpoint set via
+   config.js is already in place by the time this check runs. A visitor
+   should never see a "Send message" button that we already know is not
+   wired up — the "Prefer email?" fallback line right below stays, so
+   direct email is still the one path shown. contact-form.js runs after
+   this and no-ops cleanly if the form is gone (getElementById returns
+   null). Once a real endpoint is set, the form reappears automatically —
+   no separate step to remember.
    ============================================================ */
 (function () {
   'use strict';
   var links = document.querySelectorAll('a[href*="PLACEHOLDER_"]');
   Array.prototype.forEach.call(links, function (a) { a.remove(); });
+  var forms = document.querySelectorAll('form[data-endpoint*="PLACEHOLDER_"]');
+  Array.prototype.forEach.call(forms, function (f) { f.remove(); });
 })();

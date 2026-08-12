@@ -3533,7 +3533,11 @@
 
                                 <!-- Formspree endpoint: set assets/js/config.js's contact.formEndpoint
                                      (main.js syncs it onto data-endpoint below at load time). Create a
-                                     form at https://formspree.io first — the free tier is enough. -->
+                                     form at https://formspree.io first — the free tier is enough.
+                                     Until then, ui.js removes this form entirely at load (its
+                                     data-endpoint still contains "PLACEHOLDER_"), leaving only the
+                                     "Prefer email?" line below as the contact path. Setting a real
+                                     endpoint brings the form back automatically — nothing else to do. -->
                                 <form id="contactForm" class="mb-2" data-endpoint="PLACEHOLDER_FORMSPREE_ENDPOINT" novalidate>
                                     <!-- Honeypot: invisible to real visitors (off-screen, unlabelled to
                                          anything but a screen reader, not in tab order). A bot that
