@@ -136,6 +136,31 @@ for (const f of cssFiles) {
   CHECK('no leading-slash absolute url() in ' + f, abs.length === 0, abs.slice(0, 5).join(', '));
 }
 
+// Every local (non-external, non-anchor) script/link/img/source reference in
+// each HTML file should resolve to a file that actually exists in the
+// package — this is what actually catches a broken deploy, not just an
+// absolute-path smell. Found a real bug this way during development: a
+// template package's index.html referenced assets/js/config.demo.js (a
+// file only the *source repo* keeps for local preview) instead of the
+// assets/js/config.js path that ships in the package.
+const REF_RE = /\b(?:src|href)="([^"]+)"/g;
+for (const f of htmlFiles) {
+  const html = read(f);
+  const seen = new Set();
+  let m;
+  while ((m = REF_RE.exec(html))) {
+    const ref = m[1];
+    if (seen.has(ref)) { continue; }
+    seen.add(ref);
+    if (/^(https?:)?\/\//.test(ref) || ref.startsWith('mailto:') || ref.startsWith('tel:') ||
+        ref.startsWith('#') || ref.startsWith('data:') || ref.startsWith('javascript:')) { continue; }
+    const clean = ref.split('#')[0].split('?')[0];
+    if (!clean) { continue; }
+    const target = path.normalize(path.join(path.dirname(f), clean)).split(path.sep).join('/');
+    CHECK('local reference in ' + f + ' resolves to a real file: ' + ref, exists(target));
+  }
+}
+
 const manifest = read('site.webmanifest');
 if (manifest) {
   let parsed = null;

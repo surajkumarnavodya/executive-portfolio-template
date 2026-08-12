@@ -131,6 +131,17 @@ try {
     New-Item -ItemType Directory -Force -Path (Join-Path $siteDir "assets\images") | Out-Null
     New-Item -ItemType Directory -Force -Path (Join-Path $siteDir "assets\dist\js") | Out-Null
     Copy-Item "index.template.html"                    (Join-Path $siteDir "index.html") -Force
+    # index.template.html deliberately loads config.demo.js directly (not
+    # config.js) so it can be opened straight from the source repo for a
+    # working local preview before packaging. In the package, config.demo.js's
+    # CONTENT is copied to config.js's PATH (below) and config.demo.js itself
+    # is excluded (redundant duplicate) -- so the copied index.html's <script>
+    # tag has to be repointed at config.js, or it 404s in the shipped
+    # package. Found by actually running the built package in a browser, not
+    # by reading the code.
+    $indexPath = Join-Path $siteDir "index.html"
+    (Get-Content $indexPath -Raw) -replace 'assets/js/config\.demo\.js', 'assets/js/config.js' |
+        Set-Content $indexPath -NoNewline
     Copy-Item "portfolio.template.json"                 (Join-Path $siteDir "portfolio.json") -Force
     Copy-Item "assets\js\config.demo.js"                (Join-Path $siteDir "assets\js\config.js") -Force
     Copy-Item "assets\images\profile-placeholder.jpg"   (Join-Path $siteDir "assets\images\profile.jpg") -Force

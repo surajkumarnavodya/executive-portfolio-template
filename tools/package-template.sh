@@ -117,6 +117,14 @@ unzip -q "$WORKDIR/raw.zip" -d "$WORKDIR/site"
 # never creates that directory at all.
 mkdir -p "$WORKDIR/site/assets/js" "$WORKDIR/site/assets/images" "$WORKDIR/site/assets/dist/js"
 cp index.template.html            "$WORKDIR/site/index.html"
+# index.template.html deliberately loads config.demo.js directly (not
+# config.js) so it can be opened straight from the source repo for a
+# working local preview before packaging. In the package, config.demo.js's
+# CONTENT is copied to config.js's PATH (below) and config.demo.js itself is
+# excluded (redundant duplicate) — so the copied index.html's <script> tag
+# has to be repointed at config.js, or it 404s in the shipped package. Found
+# by actually running the built package in a browser, not by reading the code.
+sed -i 's#assets/js/config\.demo\.js#assets/js/config.js#' "$WORKDIR/site/index.html"
 cp portfolio.template.json        "$WORKDIR/site/portfolio.json"
 cp assets/js/config.demo.js       "$WORKDIR/site/assets/js/config.js"
 cp assets/images/profile-placeholder.jpg  "$WORKDIR/site/assets/images/profile.jpg"
