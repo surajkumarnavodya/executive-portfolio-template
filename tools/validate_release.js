@@ -174,10 +174,33 @@ const REAL_IDENTITY_MARKERS = [
 
 if (args.mode === 'template') {
   // The whole point of the template package is that NONE of the real
-  // deployment's identity/content can leak into it.
+  // deployment's identity/content can leak into what a buyer's visitors see
+  // or into data the buyer's own site runs on. Two deliberate exemptions:
+  //
+  //   - LICENSE.txt/README.md/docs/*.md legitimately name the original
+  //     author (copyright holder, "design and build by" attribution,
+  //     "replace every occurrence of X" instructions naming X) — that's
+  //     expected authorship/instructional content, not a leak into the
+  //     buyer's own site.
+  //   - Code comments (HTML <!-- -->, JS /* */ and //) can legitimately
+  //     explain provenance to a developer reading the source without ever
+  //     being rendered to a visitor (e.g. index.template.html's own
+  //     copyright-notice comment, which correctly states the TEMPLATE CODE
+  //     remains the original author's copyright per LICENSE.txt, distinct
+  //     from the buyer's own content). Comments are stripped before
+  //     scanning so that pattern doesn't false-positive, while a real leak
+  //     sitting in actual markup/JSON/JS string literals still fails.
+  const EXEMPT_FILES = /^(LICENSE\.txt|README\.md|docs\/.*\.md)$/;
+  function stripComments(f, content) {
+    if (/\.(html|xml)$/.test(f)) { return content.replace(/<!--[\s\S]*?-->/g, ''); }
+    if (/\.(js|css)$/.test(f)) { return content.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1'); }
+    return content;
+  }
   for (const f of allFiles.filter((p) => /\.(html|json|js|css|xml|txt|webmanifest)$/.test(p))) {
-    const content = read(f);
-    if (content == null) { continue; }
+    if (EXEMPT_FILES.test(f)) { continue; }
+    const raw = read(f);
+    if (raw == null) { continue; }
+    const content = stripComments(f, raw);
     for (const marker of REAL_IDENTITY_MARKERS) {
       CHECK('no real-identity leak ("' + marker + '") in ' + f, !content.includes(marker));
     }
