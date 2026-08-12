@@ -9,7 +9,15 @@
   var root = document.documentElement;
   var cfg = window.PORTFOLIO_CONFIG || {};
   var themeCfg = cfg.theme || {};
-  var DEFAULT_SECTION_ORDER = ['about', 'experience', 'leadership', 'delivery-framework', 'success-stories', 'expertise', 'ai-leadership', 'recognition', 'insights', 'testimonials', 'contact'];
+  // Order revised in a conversion/executive-positioning pass: 'experience'
+  // (the chronological career timeline) moved from position 2 to position 7,
+  // behind Leadership, Success Stories, AI Leadership and Expertise — those
+  // carry the strongest concrete proof of business impact, and a hiring
+  // manager or recruiter scanning the page should reach that proof before a
+  // resume-style timeline, not after. 'expertise'/'ai-leadership' swapped for
+  // the same reason (transformation experience ranks above general technical
+  // breadth). Nothing else moved.
+  var DEFAULT_SECTION_ORDER = ['about', 'leadership', 'delivery-framework', 'success-stories', 'ai-leadership', 'expertise', 'experience', 'recognition', 'insights', 'testimonials', 'contact'];
   // Default navbar link order. Kept as its own array (rather than derived
   // from DEFAULT_SECTION_ORDER) because the two lists aren't quite the same
   // shape: 'delivery-framework' has no standalone nav link (it isn't
@@ -20,8 +28,9 @@
   // the whole dropdown <li>, not individual items inside it. Even so, the
   // *relative* order of every id both lists share is deliberately identical
   // to DEFAULT_SECTION_ORDER, so scrolling the page and reading the nav
-  // left-to-right land on sections in the same sequence.
-  var DEFAULT_NAV_ORDER = ['about', 'experience', 'leadership', 'success-stories', 'expertise', 'recognition'];
+  // left-to-right land on sections in the same sequence. 'experience' moved
+  // to match DEFAULT_SECTION_ORDER's revised position above.
+  var DEFAULT_NAV_ORDER = ['about', 'leadership', 'success-stories', 'expertise', 'experience', 'recognition'];
 
   var PRESETS = {
     ceo: {

@@ -110,7 +110,8 @@ apply(`"https://www.linkedin.com/in/surajkumar-navodya",
 /* ---------- contact / social URLs (site-wide) ---------- */
 apply('https://www.linkedin.com/in/surajkumar-navodya/details/certifications/', 'https://www.linkedin.com/in/yourprofile/details/certifications/');
 apply('https://www.linkedin.com/in/surajkumar-navodya/', 'https://www.linkedin.com/in/yourprofile/');
-apply('https://www.linkedin.com/in/surajkumar-navodya', 'https://www.linkedin.com/in/yourprofile', 3);
+// 4, not 3, since the hero-cta pass added a LinkedIn icon link to the hero.
+apply('https://www.linkedin.com/in/surajkumar-navodya', 'https://www.linkedin.com/in/yourprofile', 4);
 apply('linkedin.com/in/surajkumar-navodya', 'linkedin.com/in/yourprofile');
 apply('https://www.c-sharpcorner.com/members/suraj-kumar23/articles', 'https://example.com/your-articles', 3);
 apply('https://stackoverflow.com/users/10532500/suraj-kumar', 'https://stackoverflow.com/users/0000000/yourname', 4);
@@ -119,6 +120,10 @@ apply('surajkumar.navodya@gmail.com', 'you@example.com', 2);
 apply('tel:+919049141305', 'tel:+10000000000');
 apply('+91 90491 41305', '[Your Phone]');
 apply('assets/f3230583c0ff/e9bb4c8c8cd214c449ac.pdf', 'assets/downloads/your-resume.pdf');
+// The suggested save-as filename (download="...") is a separate string from
+// the href above — real name baked into a filename, not caught by any other
+// replacement in this map.
+apply('download="Suraj-Kumar-Program-Delivery-Manager-Resume.pdf"', 'download="Your-Name-Resume.pdf"');
 
 /* ---------- KPI board / hero stats / scorecard ---------- */
 apply('Measured across L&amp;T Group accounts at LTIMindtree, 2021–2026.', 'Measured across [Client Group] accounts at [Your Employer], [Year]–[Year].');
